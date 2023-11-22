@@ -1,0 +1,40 @@
+ctv	building_number	dwelling_number	household_number	description	head_name	language	ed	team	_responsible	_quantity	interview	hh_gps__Longitude	hh_gps__Latitude
+1	2	26	9	9	wooden walls painted yellow with zinc roof elevated with bobwire fence	Cathlene Santos	1	49-074-00	1	interviewer1	1	13-47-15-21	-88.9142598623973	17.2209231114374
+2	2	37	18	18	1st floor concrete walls unpainted 2nd floor wooden walls painted green with zinc roof and chain link fence	Winston Hodrington	1	49-074-00	1	interviewer2	1	99-57-56-54	-88.9179156610337	17.2247535633162
+3	2	44	27	27	sheet metal walls with zinc roof and wooden fence	Juan Choto	1	49-074-00	1	interviewer1	1	37-12-40-92	-88.9246971415417	17.2165375114287
+4	2	61	35	36	zinc walls with zinc roof	Selvyn Myers	1	49-074-00	1	interviewer2	1	11-54-90-47	-88.9280069704123	17.2231925384047
+5	2	73	44	45	wood and concrete walls painted green with zinc roof and chain link fence	##N/A##	1	49-074-00	1	interviewer1	1	42-66-56-75	-88.9269776873742	17.2232341003746
+6	2	105	53	54	concrete and wooden house not painted with sheet metal roof	Elmer Calderon	1	49-074-00	1	interviewer2	1	42-79-69-57	-88.9208280248237	17.2232312993001
+7	2	114	62	63	small wooden house painted white with sheet metal roof	David Itch	1	49-074-00	1	interviewer1	1	04-71-13-79	-88.9249243460734	17.219405253671
+8	2	127	71	72	high brown wooden house with sheet metal roof	Geovani Gonzalez	1	49-074-00	1	interviewer2	1	21-30-24-42	-88.9197264404563	17.2166445171295
+9	2	83	80	81	pink wooden house with sheet metal roof	Justa Garcia De Leon	1	49-074-00	1	interviewer1	1	41-35-91-22	-88.9199265432344	17.2240123490154
+10	2	92	87	90	Green wooden house with sheet metal roof	Nathan Isiah Reyes	1	49-074-00	1	interviewer2	1	04-41-30-14	-88.9207186391271	17.225069672322
+11	2	147	96	99	unpainted wooden walls with zinc roof elevated	Shannon Harris	1	49-074-00	1	interviewer1	1	24-56-25-93	-88.919841263692	17.2232016845175
+12	2	158	105	108	wooden walls painted red with white trims and zinc roof elevated with chain link fence	Miguel De La Rosa	1	49-074-00	1	interviewer2	1	77-67-13-42	-88.9199481959416	17.2235084699034
+13	2	177	114	117	Green wooden walls with zinc roof elevated	Yolanda Molina	1	49-074-00	1	interviewer1	1	52-85-53-61	-88.922608955164	17.2255289085956
+14	2	195	122	126	gray and blue wooden house with sheet metal roof	Shirlene Mai	1	49-074-00	1	interviewer2	1	29-25-13-90	-88.9207979914719	17.2259645835198
+15	2	205	129	135	small yellow house with green windows	Keino Green	1	49-074-00	1	interviewer1	1	83-49-62-92	-88.920291254109	17.2271206500192
+16	2	214	137	144	small wooden house not painted with sheet metal roof	Marco Tulio Ortiz	1	49-074-00	1	interviewer2	1	96-19-56-65	-88.9204623410797	17.2294724367153
+17	4	25	9	9	Blue wooden Building with wooden windows	Lucas Gongora	1	49-075-00	2	interviewer3	1	51-44-77-90	-88.8975388288794	17.2239166612182
+18	4	37	18	18	Blue wooden Building with Glass windows	Veronica Cornelio	1	49-075-00	2	interviewer4	1	44-23-26-40	-88.9029143350284	17.2226067469666
+19	4	156	27	27	unpainted board building with zinc roofing	freddy sosa	1	49-075-00	2	interviewer5	1	60-55-67-03	-88.8883523421055	17.220823740664
+20	4	166	36	36	unpainted board building with zinc roofing	Odilio Lopez	1	49-075-00	2	interviewer3	1	11-85-28-51	-88.8897827912915	17.2211640107163
+21	4	49	45	45	small blue wooden house, elevated, zinc roofing	Glen Gill	1	49-075-00	2	interviewer4	1	06-18-92-88	-88.9041694474799	17.2221315286543
+22	4	59	54	54	small unpainted wooden house, zinc roofing	Ronaldo Madril	1	49-075-00	2	interviewer5	1	34-92-58-41	-88.9023724220607	17.2218271813501
+23	4	82	63	63	huge unpainted, unplaster building, zinc roofing, white windows	Nelson Flowers	1	49-075-00	2	interviewer3	1	58-81-75-24	-88.8954283816978	17.2244648715031
+24	4	94	72	72	concrete building painted light green and dark green	Sherry gongora	1	49-075-00	2	interviewer4	1	93-81-57-21	-88.8870082333703	17.2210532344188
+25	4	105	81	81	wooden building painted green	Dennis lamb	1	49-075-00	2	interviewer5	1	94-14-50-14	-88.8913391526753	17.2240598391817
+26	4	114	90	90	plywood house cream in colour	Lloyd Graham	1	49-075-00	2	interviewer3	1	90-00-48-77	-88.8936979527447	17.2253534341364
+27	4	129	99	99	unpainted wooden building	Marva Gillette	1	49-075-00	2	interviewer4	1	99-83-45-03	-88.8902894586716	17.2239743786328
+28	4	140	108	108	unpainted concrete building with zinc roofing	Lisa mackoy	1	49-075-00	2	interviewer5	1	89-26-12-60	-88.888773967299	17.2210815559949
+29	4	150	117	117	plywood dwelling	Adall oroman	1	49-075-00	2	interviewer3	1	87-72-46-34	-88.8875704267327	17.2211734473074
+30	4	8	7	7	cream concrete building	Ronald lefebvra	1	49-076-00	2	interviewer4	1	34-45-85-80	-88.8795454589868	17.228879692195
+31	4	136	16	16	small unpainted wooden house, elevated off the ground, glass windows and wooden doors	Maxwell Wade	1	49-076-00	2	interviewer5	1	61-58-88-60	-88.8863689644059	17.2261502182655
+32	4	19	25	25	green concrete building	Rosalin casey	1	49-076-00	2	interviewer3	1	18-64-88-92	-88.8881112524999	17.2253828688493
+33	4	28	33	34	unpainted concrete building, fenced	Keshawn Francis	1	49-076-00	2	interviewer4	1	51-85-97-84	-88.8893442231641	17.2262398448234
+34	4	40	42	43	Blue painted concrete building with Glass windows	Florin da Lopez	1	49-076-00	2	interviewer5	1	27-11-01-20	-88.8863225258805	17.2244650793351
+35	4	51	51	52	yellow Concrete Building (shop)	Kirk hyde	1	49-076-00	2	interviewer3	1	89-41-53-13	-88.8871507301287	17.2242255405067
+36	4	65	60	61	unpainted concrete building with Glass windows	Junior Thomas	1	49-076-00	2	interviewer4	1	49-35-69-10	-88.8879593592655	17.2240005534245
+37	4	75	69	70	unpainted wooden building with wooden windows an a veranda	Leonel Pineda	1	49-076-00	2	interviewer5	1	43-83-97-13	-88.8871849463533	17.2225273774285
+38	4	88	78	79	wooden building painted brown	Herman morales	1	49-076-00	2	interviewer3	1	43-09-02-56	-88.8893401120154	17.2241233786781
+39	4	102	85	88	wooden building not painted	Angela Escobar	1	49-076-00	2	interviewer4	1	09-16-29-43	-88.8860703350313	17.2230149240359

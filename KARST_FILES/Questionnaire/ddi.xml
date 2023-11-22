@@ -1,0 +1,3773 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<codeBook version="1.2.2" ID="QIDANDREV" xml-lang="en" xmlns="http://www.icpsr.umich.edu/DDI" xsi:SchemaLocation="http://www.icpsr.umich.edu/DDI http://www.icpsr.umich.edu/DDI/Version1-2-2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <docDscr>
+    <citation>
+      <titlStmt>
+        <titl>TMNR KAP Survey</titl>
+      </titlStmt>
+      <prodStmt>
+        <copyright>
+        </copyright>
+        <software version="1.0.0" date="2015-07-08">StatDDI</software>
+      </prodStmt>
+    </citation>
+    <notes>
+    </notes>
+  </docDscr>
+  <stdyDscr>
+    <citation>
+      <titlStmt>
+        <titl>TMNR KAP Survey</titl>
+        <IDNO>QUEST</IDNO>
+      </titlStmt>
+      <prodStmt>
+        <software version="1.0.0" date="2015-07-08">StatDDI</software>
+      </prodStmt>
+    </citation>
+  </stdyDscr>
+  <dataDscr>
+    <var ID="V1" name="interview__id" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Unique 32-character long identifier of the interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V2" name="interview__key" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Interview key (identifier in XX-XX-XX-XX format)]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V3" name="assignment__id" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Assignment id (identifier in numeric format)]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V4" name="sssys_irnd" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Random number in the range 0..1 associated with interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V5" name="has__errors" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Errors count in the interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V6" name="interview__status" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Status of the interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V7" name="ctv" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[City/Town/Village]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Community]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Lower Barton Creek/New Holland/East Land]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Blackman Eddy]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[El Progress (7 Miles)/Upper Barton Creek]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Ontario]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Teakettle]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Arizona]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[Unitedville]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V8" name="building_number" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Building number]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Building]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V9" name="dwelling_number" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Dwelling Number:]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Dwelling Number]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V10" name="household_number" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Household Number:]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Household Number]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V11" name="description" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Dwelling description]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Dwelling description:]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V12" name="head_name" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Name of head of household]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Name of head]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V13" name="language" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Language]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Language]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[English/Kriol]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Spanish]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Low German]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V14" name="ed" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[ED number]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[ED]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V15" name="team" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Team name]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Team]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Team 1]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Team 2]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V16" name="hh_gps__Latitude" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[HH GPS: Latitude]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V17" name="hh_gps__Longitude" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[HH GPS: Longitude]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V18" name="hh_gps__Accuracy" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[HH GPS: Accuracy]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V19" name="hh_gps__Altitude" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[HH GPS: Altitude]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V20" name="hh_gps__Timestamp" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[HH GPS: Timestamp]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V21" name="field_gps__Latitude" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Please capture GPS: Latitude]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Please capture GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V22" name="field_gps__Longitude" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Please capture GPS: Longitude]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Please capture GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V23" name="field_gps__Accuracy" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Please capture GPS: Accuracy]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Please capture GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V24" name="field_gps__Altitude" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Please capture GPS: Altitude]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Please capture GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V25" name="field_gps__Timestamp" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Please capture GPS: Timestamp]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Please capture GPS]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V26" name="visits_household__0" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:0]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V27" name="visits_household__0c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:0c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V28" name="visits_household__1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:1]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V29" name="visits_household__1c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:1c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V30" name="visits_household__2" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:2]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V31" name="visits_household__2c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:2c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V32" name="visits_household__3" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:3]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V33" name="visits_household__3c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:3c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V34" name="visits_household__4" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:4]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V35" name="visits_household__4c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[number of household visits:4c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Visits:]]></qstnLit>
+        <ivuInstr><![CDATA[Enter a number of EACH visit]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V36" name="name__0" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:0]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V37" name="name__0c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:0c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V38" name="name__1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:1]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V39" name="name__1c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:1c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V40" name="name__2" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:2]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V41" name="name__2c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:2c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V42" name="name__3" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:3]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V43" name="name__3c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:3c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V44" name="name__4" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:4]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V45" name="name__4c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:4c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V46" name="name__5" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:5]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V47" name="name__5c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:5c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V48" name="name__6" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:6]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V49" name="name__6c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:6c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V50" name="name__7" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:7]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V51" name="name__7c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:7c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V52" name="name__8" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:8]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V53" name="name__8c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:8c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V54" name="name__9" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:9]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V55" name="name__9c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:9c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V56" name="name__10" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:10]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V57" name="name__10c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:10c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V58" name="name__11" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:11]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V59" name="name__11c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:11c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V60" name="name__12" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:12]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V61" name="name__12c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:12c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V62" name="name__13" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:13]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V63" name="name__13c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:13c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V64" name="name__14" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:14]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V65" name="name__14c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:14c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V66" name="name__15" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:15]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V67" name="name__15c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:15c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V68" name="name__16" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:16]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V69" name="name__16c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:16c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V70" name="name__17" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:17]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V71" name="name__17c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:17c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V72" name="name__18" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:18]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V73" name="name__18c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:18c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V74" name="name__19" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:19]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V75" name="name__19c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:19c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V76" name="name__20" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:20]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V77" name="name__20c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:20c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V78" name="name__21" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:21]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V79" name="name__21c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:21c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V80" name="name__22" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:22]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V81" name="name__22c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:22c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V82" name="name__23" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:23]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V83" name="name__23c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:23c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V84" name="name__24" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:24]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V85" name="name__24c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:24c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V86" name="name__25" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:25]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V87" name="name__25c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:25c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V88" name="name__26" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:26]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V89" name="name__26c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:26c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V90" name="name__27" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:27]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V91" name="name__27c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Household Listing:27c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL1. MEMBER NAMES ]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V92" name="respondent" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Name of the person responding to this questionnaire.]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Name of the person responding to this questionnaire.]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V93" name="k1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K1. Have you ever heard about the term environmental conservation?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K1. Have you ever heard about the term environmental conservation?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V94" name="k2__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[What about env conservation:Protecting wildlife and nature]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K2. Related to environmental conservation, have you heard about...]]></qstnLit>
+        <ivuInstr><![CDATA[Read each option and pause, allow respondent to specify 'Yes' or 'No' for each.]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V95" name="k2__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[What about env conservation:Using Resources Wisely]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K2. Related to environmental conservation, have you heard about...]]></qstnLit>
+        <ivuInstr><![CDATA[Read each option and pause, allow respondent to specify 'Yes' or 'No' for each.]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V96" name="k2__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[What about env conservation:Reducing Pollution]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K2. Related to environmental conservation, have you heard about...]]></qstnLit>
+        <ivuInstr><![CDATA[Read each option and pause, allow respondent to specify 'Yes' or 'No' for each.]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V97" name="k2__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[What about env conservation:Clean and reusable power]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K2. Related to environmental conservation, have you heard about...]]></qstnLit>
+        <ivuInstr><![CDATA[Read each option and pause, allow respondent to specify 'Yes' or 'No' for each.]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V98" name="k2__5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[What about env conservation:Habitat Restoration]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K2. Related to environmental conservation, have you heard about...]]></qstnLit>
+        <ivuInstr><![CDATA[Read each option and pause, allow respondent to specify 'Yes' or 'No' for each.]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V99" name="k2__6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[What about env conservation:Waste Reduction and Recycling]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K2. Related to environmental conservation, have you heard about...]]></qstnLit>
+        <ivuInstr><![CDATA[Read each option and pause, allow respondent to specify 'Yes' or 'No' for each.]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V100" name="k2__7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[What about env conservation:Education and Advocacy]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K2. Related to environmental conservation, have you heard about...]]></qstnLit>
+        <ivuInstr><![CDATA[Read each option and pause, allow respondent to specify 'Yes' or 'No' for each.]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V101" name="k3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K3. Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K3. Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V102" name="k3_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K3.1. Have you heard about a reserve that is located near to this community?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K3.1. Have you heard about a reserve that is located near to this community?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V103" name="k4__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?:Protected Area]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V104" name="k4__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?:Tourism attraction]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V105" name="k4__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?:Hunting area]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V106" name="k4__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?:Logging area]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V107" name="k4__888888" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?:Other (specify)]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V108" name="k4__999999" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?:Not Stated]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K4. What do you know about the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V109" name="k4_1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K4.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V110" name="k5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[reserves boundaries]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K5. How would you rate your knowledge of the reserve’s boundaries?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[No knowledge (does not know any boundaries)]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Some knowledge (knows where some boundaries lie)]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Strong knowledge (is familiar with most/all boundaries)]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V111" name="k6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[who manages]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K6. To your knowledge, who manages the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Belize KARST Habitat Conservation]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Protected Areas Conservation Trust (PACT)]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Belize Audibon Society]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Government of Belize]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Forestry Department]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>888888</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V112" name="k7__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Educating the community]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V113" name="k7__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Protecting wildlife in reserve (from hunting, poaching, specie extraction)]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V114" name="k7__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Protecting the natural habitat in the reserve (logging, plant extraction)]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V115" name="k7__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Protecting reserve from natural disaster (flooding, hurricane) and climate change]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V116" name="k7__5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Managing license for hunting in the reserve]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V117" name="k7__888888" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Other]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V118" name="k7__7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Don't Know]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V119" name="k7__999999" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Responsibiltiies management:Not Stated]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7. To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V120" name="k7_1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K7.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V121" name="k8__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Tapir]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V122" name="k8__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Jaguar]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V123" name="k8__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Pumas]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V124" name="k8__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Ocelots/Margay]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V125" name="k8__5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Deer]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V126" name="k8__6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Peccaries]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V127" name="k8__7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Howler and spider monkeys]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V128" name="k8__8" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Raptors, such as hawks and vultures]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V129" name="k8__9" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Parrots]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V130" name="k8__10" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Snakes]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V131" name="k8__888888" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Other]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V132" name="k8__12" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Don't Know]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V133" name="k8__999999" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Not Stated]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8. To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V134" name="k8_1__0" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR:0]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V135" name="k8_1__0c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR:0c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V136" name="k8_1__1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR:1]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V137" name="k8_1__1c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR:1c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V138" name="k8_1__2" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR:2]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V139" name="k8_1__2c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR:2c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K8.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V140" name="k9_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K9.1. The water from local wells or pumps comes from the watershed in the Tapir]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K9.1. The water from local wells or pumps comes from the waterbasin or water table in the Tapir Mountain Nature Reserve.]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V141" name="k9_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K9.2]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K9.2. People can hunt in the Tapir Mountain Nature Reserve if they have a valid license.]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V142" name="k9_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K9.3. The water from local wells or pumps comes from the watershed in the Tapir]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K9.3. The Belize KARST can authorize persons to hunt in the Tapir Mountain Nature Reserve]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V143" name="k9_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K9.4. The pesticides that people use in their garden/land has a negative impact]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K9.4. The pesticides that people use in their garden/land has a negative impact on water in wells]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V144" name="k9_5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K9.1. The pesticides that people use in their garden/land has a negative impact]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K9.5. The pesticides that people use in their garden/land has a negative impact on piped water]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V145" name="k9_6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K9.6.]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K9.6. Cutting down trees and forests will cause soil to wash away.]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V146" name="k10" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K10. Have you heard of the term sustainable forest management?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K10. Would your household be interested in learning about breeding native stingless bees for the production of honey?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V147" name="k11__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K12. Have you personally noticed any of the following changes in the last 5 year:Changes in the rain]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K11. Have you personally noticed any of the following changes?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V148" name="k11__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K12. Have you personally noticed any of the following changes in the last 5 year:More storms]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K11. Have you personally noticed any of the following changes?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V149" name="k11__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K12. Have you personally noticed any of the following changes in the last 5 year:Stronger storms]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K11. Have you personally noticed any of the following changes?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V150" name="k11__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K12. Have you personally noticed any of the following changes in the last 5 year:Change in temperature during day/night]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K11. Have you personally noticed any of the following changes?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V151" name="k11__5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K12. Have you personally noticed any of the following changes in the last 5 year:More flooding]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K11. Have you personally noticed any of the following changes?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V152" name="k11__6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K12. Have you personally noticed any of the following changes in the last 5 year:Loss of soil or erosion]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K11. Have you personally noticed any of the following changes?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V153" name="k12" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K13. Have you ever heard that the Earth’s climate, or its weather patterns are c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K12. Have you ever heard that the Earth’s climate, or its weather patterns are changing?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V154" name="k13" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[K14. Have you ever heard about the term "Climate Change"?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[K13. Have you ever heard about the term "Climate Change"?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V155" name="a1_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.1. To what extent does waste disposal concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V156" name="a2_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.1. And does water disposal affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V157" name="a3_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.1. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V158" name="a1_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.2. To what extent does water contamination concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V159" name="a2_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.2. And does water contamination affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V160" name="a3_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.2. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V161" name="a1_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.3. To what extent do forest fires concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V162" name="a2_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.3. And do forest fires affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V163" name="a3_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.3. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V164" name="a1_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.4. To what extent does deforestation concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V165" name="a2_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.4. And does deforestation affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V166" name="a3_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.4. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V167" name="a1_5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.5. To what extent does soil erosion (soil washing away) concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V168" name="a2_5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.5. And does soil erosion affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V169" name="a3_5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.5. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V170" name="a1_6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.6. To what extent does flooding concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V171" name="a2_6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.6. And does flooding affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V172" name="a3_6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.6. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V173" name="a1_7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.7. To what extent does use of chemical pesticides concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V174" name="a2_7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.7. And does the use chemical pesticides affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V175" name="a3_7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.7. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V176" name="a1_8" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.8. To what extent does drought concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V177" name="a2_8" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.8. And does drought affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V178" name="a3_8" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.8. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V179" name="a1_9" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.9. To what extent does logging concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V180" name="a2_9" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.9. And does logging affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V181" name="a3_9" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.9. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V182" name="a1_10" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[To what extent do the following concern you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A1.10. To what extent does hunting of wildlife concern you?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Slightly concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Somewhat concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Moderately concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Extremely concerned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Not stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V183" name="a2_10" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A2 And does it affect you?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A2.10. And does hunting of wildlife affect you?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V184" name="a3_10" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Do you think it affects the Tapir Mountain Nature Reserve?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A3.10. Do you think it affects the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V185" name="a4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A4. Do you own livestock or agricultural land in your community?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A4. Do you own livestock or agricultural land in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V186" name="a5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A5. Do you feel that your livestock is threatened by predators like jaguars, pum]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A5. Do you feel that your livestock or agricultural land is threatened by predators like jaguars, pumas, from nearby bushes?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V187" name="a6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A6. Do you own livestock or agricultural land in your community?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A6. Do you think that jaguars and pumas are currently a threat to your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V188" name="a7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A7. Do you own livestock or agricultural land in your community?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A7. In your opinion, have human-wildlife conflicts increased, decreased, or remain the same?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V189" name="a8__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your villag:Report]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your village?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V190" name="a8__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your villag:Scare]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your village?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V191" name="a8__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your villag:Poison or hunt]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your village?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V192" name="a8__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your villag:No action]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your village?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V193" name="a8__888888" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your villag:Other]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your village?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V194" name="a8__999999" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your villag:Not stated]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A8. What would you do if you experienced a conflict with wildlife in your village?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V195" name="a8_1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[A8.1. Please specify other...]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A8.1. Please specify other...]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V196" name="a9__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Tapir]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V197" name="a9__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Jaguar]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V198" name="a9__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Pumas]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V199" name="a9__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Ocelots]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V200" name="a9__5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Deer]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V201" name="a9__6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Peccaries]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V202" name="a9__7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Howler and spider monkeys]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V203" name="a9__8" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Raptors, such as hawks and vultures]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V204" name="a9__9" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Parrots]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V205" name="a9__10" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Animals TMNR:Snakes]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9. Do you dislike any of the following animals?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V206" name="a10_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.1. Climate change poses a serious threat for people around the world]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.1. Climate change poses a serious threat for people around the world]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V207" name="a10_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.1. Climate change poses a threat to my livelihood]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.2. Climate change poses a threat to my livelihood]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V208" name="a10_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.3. Human activity is greatly responsible for climate change]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.3. Human activity is greatly responsible for climate change]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V209" name="a10_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.4.Climate change poses a threat to protected areas]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.4. Climate change poses a threat to protected areas]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V210" name="a10_5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.5. Slash and burn is a threat to protected areas]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.5. Slash and burn is a threat to protected areas]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V211" name="a10_6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.6.Establishing protected areas is bad for the community because the land can]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.6. Establishing protected areas is bad for the community because the land can be used by villagers to provide for their families]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V212" name="a10_7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.7. Our community can benefit from a clean water initiative]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.7. Our community can benefit from a clean water initiative]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V213" name="a10_8" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.8. Climate change poses a serious threat for people around the world]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.8. Our community can benefit from a task force that tackles forest fires]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V214" name="a10_9" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A10.9. There are job opportunities in tourism in my community]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A10.9. There are job opportunities in tourism in my community]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Strongly disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Disagree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Neutral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Strongly Agree]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Don't Know/Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V215" name="a11" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A11. Do you think that your community could benefit from a neighbourhood watch t]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A11. Do you think that your community could benefit from a neighbourhood watch that reports forest fires, or wildlife hunting in the reserve and the surrounding communities?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V216" name="a12" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A12. Would your household be interested in joining a neighbourhood watch?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A12. Would your household be interested in joining a neighbourhood watch?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V217" name="a13" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[A13. Would anyone in your household be interested in receiving training to join]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A13. Would anyone in your household be interested in receiving training to join a fire task force?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V218" name="p1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P1. What is the MAIN way your household disposes of garbage?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P1. What is the MAIN way your household disposes of garbage?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Open burning]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Composting]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Recycling]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Household transport to landfill]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Paid service to transport to landfill]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Dumping]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[Burying]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>8888888</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V219" name="p1_1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P1.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V220" name="p2a" files="F1" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P2A. How much does it cost your household to dispose of garbage?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P2A. How much does it cost your household to dispose of garbage?]]></qstnLit>
+        <ivuInstr><![CDATA[Amount should be in Belize Dollars]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V221" name="p2b" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[frequency p2a]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P2B. The previous amount is paid...]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Per trip]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Biweekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V222" name="p3_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[p3.1 Gardening]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P3.1. Gardening]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V223" name="p4_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P4.1How often does your household engage in ….?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P4.1 How often does your household engage in Gardening?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Daily]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Bi-Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Yearly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V224" name="p3_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[p3.1 Fishing]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P3.2. Fishing]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V225" name="p4_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P4.1How often does your household engage in ….?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P4.2 How often does your household engage in Fishing?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Daily]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Bi-Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Yearly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V226" name="p3_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[p3.1 Raising Livestock]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P3.3. Raising Livestock]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V227" name="p4_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P4.1How often does your household engage in ….?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P4.3 How often does your household engage in Rasing Livestock?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Daily]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Bi-Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Yearly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V228" name="p3_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[p3.4 Hunting]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P3.4. Hunting]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V229" name="p4_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P4.1How often does your household engage in ….?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P4.4 How often does your household engage in Hunting?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Daily]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Bi-Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Yearly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V230" name="p3_5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[p3.5 Gardening]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P3.5. Growing crops]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V231" name="p4_5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P4.1How often does your household engage in ….?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P4.5 How often does your household engage in Crowing crops?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Daily]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Bi-Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Yearly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V232" name="p3_6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[p3.6 Gardening]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P3.6. Carpentry]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V233" name="p4_6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P4.1How often does your household engage in ….?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P4.6 How often does your household engage in Carpentry?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Daily]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Bi-Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Yearly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V234" name="p3_7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[p3.7 Selling lumber]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P3.7. Selling lumber]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V235" name="p4_7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P4.1How often does your household engage in ….?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P4.7 How often does your household engage in Selling lumber?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Daily]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Bi-Weekly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Monthly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Yearly]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Don't Know]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V236" name="p5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P5. Does your household engage in subsistence farming or agricultural production]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P5. Does your household engage in subsistence farming or agricultural production?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V237" name="p6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P6. Environmentally improved crop production methods are ways of growing food th]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P6. Environmentally improved crop production methods are ways of growing food that help protect the environment and make sure we have healthy and safe food. Would your household be interested in learning these crop production methods?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V238" name="p7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P7. Chemical pesticides are lab-made and quickly kill pests but can harm the env]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P7. Chemical pesticides are lab-made and quickly kill pests but can harm the environment. Biological pesticides use living things like bugs or bacteria, work more slowly, and are safer for the environment and other animals. They're like strong medicine versus natural helpers for your plants.Would your household be interested in learning about biological pesticides?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V239" name="p8__1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Television]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V240" name="p8__2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Radio]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V241" name="p8__3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Social Media]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V242" name="p8__4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Newspaper]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V243" name="p8__5" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Internet]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V244" name="p8__6" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Mobile Apps]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V245" name="p8__7" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Word of mouth/community leader]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V246" name="p8__888888" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P8. How do you access information on a daily basis?:Other]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8. How do you access news and information on a daily basis?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V247" name="p8_1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[specify other TMNR]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P8.1. Please specify other]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V248" name="p9_1" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P9. How likely are you or your household to engage with the Belize KARST Habitat]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P9.1. How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Not very likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Nuetral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Somewhat Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Very Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V249" name="p9_2" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P9. How likely are you or your household to engage with the Belize KARST Habitat]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P9.2. How likely are you or your household to engage in educational campaigns to learn about the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Not very likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Nuetral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Somewhat Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Very Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V250" name="p9_3" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P9. How likely are you or your household to engage with the Belize KARST Habitat]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P9.3. How likely are you or our household to follow the social media page of the Belize Karst Habitat Conservation]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Not very likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Nuetral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Somewhat Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Very Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V251" name="p9_4" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P9. How likely are you or your household to engage with the Belize KARST Habitat]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P9.4. How likely are or your household to join training workshops that the Belize Karst Habitat Conservation organize]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Not at all likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Not very likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Nuetral]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Somewhat Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Very Likely]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[Not Stated]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V252" name="p10" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P10. In the past 12 months, has anyone in your household hunted animals from the]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P10. In the past 12 months, has anyone in your household hunted animals from the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V253" name="p11" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P11. In the past 12 months, has anyone in your household extracted plants, trees]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P11. In the past 12 months, has anyone in your household extracted plants, trees, or logs from the Tapir Mountain Nature Reserve?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V254" name="p12" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[P12. We don’t want to know their names, but do you know if persons in the commun]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P12. We don’t want to know their names, but do you know if persons in the community hunted animals or extracted plants, trees, or logs from the Tapir Mountain Nature Reserve within the past 12 months?]]></qstnLit>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V255" name="p13__0" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:0]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V256" name="p13__0c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:0c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V257" name="p13__1" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:1]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V258" name="p13__1c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:1c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V259" name="p13__2" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:2]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V260" name="p13__2c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:2c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V261" name="p13__3" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:3]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V262" name="p13__3c" files="F1" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[P13. What are some environmental activities or projects that you would like to s:3c]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[P13. What are some environmental activities or projects that you would like to see done in your community?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V263" name="result" files="F1" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[FINAL RESULT CODE FOR HOUSEHOLD INTERVIEW]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Household Final Result]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Completed]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Partially Completed]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Refusal]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[No Contact]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Vacant Dwelling]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Demolished/Abandoned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[Vacant Lot]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>8</catValu>
+        <labl><![CDATA[House under construction]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V264" name="visitsrosterhousehold__id" files="F2" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Id in visitsrosterhousehold]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V265" name="interview__key" files="F2" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Interview key (identifier in XX-XX-XX-XX format)]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V266" name="visitDate_household" files="F2" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[date of HH visit]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Date of visit]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V267" name="time_start_household" files="F2" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[time of household visit]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Time Started]]></qstnLit>
+        <ivuInstr><![CDATA[Example: 02:00 pm]]></ivuInstr>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V268" name="timeEnd" files="F2" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[time of visit]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Time Ended]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V269" name="visit_result" files="F2" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[VISIT RESULT CODE INTERVIEW]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Result of Visit]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Completed]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Partially Completed]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Refusal]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[No Contact]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Vacant Dwelling]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Demolished/Abandoned]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[Vacant Lot]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>8</catValu>
+        <labl><![CDATA[House under construction]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V270" name="visits_household" files="F2" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Roster list question]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V271" name="interview__id" files="F2" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Unique 32-character long identifier of the interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V272" name="listingRoster__id" files="F3" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Id in listingRoster]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V273" name="interview__key" files="F3" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Interview key (identifier in XX-XX-XX-XX format)]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V274" name="rel" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Relationship to the head of this household]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL2: What is your/%rostertitle%'s relationship to the head/reference person of this household?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Head/Reference person]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Spouse/Partner]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Child/Stepchild/Foster Child]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Son-in-law/Daughter-in-law]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Nephew/Niece]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Brother/Sister]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[Grandchild]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>8</catValu>
+        <labl><![CDATA[Parent/Parent-in-law]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Other relative (specify)]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>10</catValu>
+        <labl><![CDATA[Unrelated domestic employee]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>11</catValu>
+        <labl><![CDATA[Other unrelated]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[DK/NS]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V275" name="rel_other" files="F3" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[OTHER RELATIVE]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Specify Other relative]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V276" name="sex" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Sex]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL3: What is your/%rostertitle%'s sex?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Male]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Female]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[DK/NS]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V277" name="age" files="F3" intrvl="contin">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Age of individual.]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL4: How old are you/is %rostertitle% now?]]></qstnLit>
+        <ivuInstr><![CDATA[0 = less than 1 year old
+DK/NS is not allowed for age]]></ivuInstr>
+      </qstn>
+      <catgry>
+        <catValu>0</catValu>
+        <labl><![CDATA[Younger than 1]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V278" name="ethnicity" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Ethnicity]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[HL5: Which ethnic group do you/does %rostertitle% identify with most?]]></qstnLit>
+        <ivuInstr><![CDATA[If response is "MIXED", Probe and ask which ethnic group the respondent identifies with the most.]]></ivuInstr>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Mestizo/Hispanic/Latino]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Creole]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Maya Ketchi]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Garifuna]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Mennonite]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Maya Mopan]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[East Indian]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>8</catValu>
+        <labl><![CDATA[Chinese]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[Taiwanese]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>10</catValu>
+        <labl><![CDATA[Caucasian/White]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>11</catValu>
+        <labl><![CDATA[Maya Yucatec]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>12</catValu>
+        <labl><![CDATA[African descent]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>13</catValu>
+        <labl><![CDATA[Indian]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>14</catValu>
+        <labl><![CDATA[Lebanese]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>15</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[DK/NS]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V279" name="ethnicity_other" files="F3" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Other type of ethnic group]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[Specify Other ethnic group]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V280" name="ed_attending" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Presently attending school]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[ED1: Are you/Is %rostertitle% presently attending school?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Yes]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[No]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[DK/NS]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V281" name="ed_clevel" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Present level of education]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[ED2: In what class/form/level of education are you/is %rostertitle% presently?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>0</catValu>
+        <labl><![CDATA[Pre-School]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Infant I]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Infant II]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Standard I]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Standard II]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Standard III]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Standard IV]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[Standard V]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>8</catValu>
+        <labl><![CDATA[Standard VI]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[1st Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>10</catValu>
+        <labl><![CDATA[2nd Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>11</catValu>
+        <labl><![CDATA[3rd Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>12</catValu>
+        <labl><![CDATA[4th Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>13</catValu>
+        <labl><![CDATA[Pre vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>14</catValu>
+        <labl><![CDATA[Level 1 vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>15</catValu>
+        <labl><![CDATA[Level 2 vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>16</catValu>
+        <labl><![CDATA[Level 3 vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>17</catValu>
+        <labl><![CDATA[Associate/6th Form/Junior College]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>18</catValu>
+        <labl><![CDATA[Bachelors]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>19</catValu>
+        <labl><![CDATA[Master's or higher]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>888888</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[DK/NS]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V282" name="ed_llevel" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Last standard/form/level completed]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[ED3: What was the last standard/form/level you have/%rostertitle% has completed?]]></qstnLit>
+      </qstn>
+      <catgry>
+        <catValu>0</catValu>
+        <labl><![CDATA[Pre-School]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Infant I]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Infant II]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Standard I]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Standard II]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Standard III]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>6</catValu>
+        <labl><![CDATA[Standard IV]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>7</catValu>
+        <labl><![CDATA[Standard V]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>8</catValu>
+        <labl><![CDATA[Standard VI]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>9</catValu>
+        <labl><![CDATA[1st Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>10</catValu>
+        <labl><![CDATA[2nd Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>11</catValu>
+        <labl><![CDATA[3rd Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>12</catValu>
+        <labl><![CDATA[4th Form]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>13</catValu>
+        <labl><![CDATA[Pre vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>14</catValu>
+        <labl><![CDATA[Level 1 vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>15</catValu>
+        <labl><![CDATA[Level 2 vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>16</catValu>
+        <labl><![CDATA[Level 3 vocational]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>17</catValu>
+        <labl><![CDATA[Associate/6th Form/Junior College]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>18</catValu>
+        <labl><![CDATA[Bachelors]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>19</catValu>
+        <labl><![CDATA[Master's or higher]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>888888</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>20</catValu>
+        <labl><![CDATA[None]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>21</catValu>
+        <labl><![CDATA[Never attended]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[DK/NS]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V283" name="employed" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Is employed]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[EM1: Are you/Is %rostertitle% currently employed or working for payment? (includes self employed)]]></qstnLit>
+        <ivuInstr><![CDATA[If no, probe for any recent economic activity. Includes the self employed]]></ivuInstr>
+      </qstn>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V284" name="workertype" files="F3" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Type of worker in main job]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[EM2: What type of worker best describes you/ %rostertitle% in your MAIN job?]]></qstnLit>
+        <ivuInstr><![CDATA[[READ LIST]]]></ivuInstr>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[Self-employed with paid help/employees]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[Self-employed without hired help/employees]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[Employee of government, quasi government, or NGO]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[Employee of a private employer or company]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[Contributing family worker]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>888888</catValu>
+        <labl><![CDATA[Other]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>999999</catValu>
+        <labl><![CDATA[DK/NS]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V285" name="jobtitle" files="F3" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[EM3. What is your/N’s MAIN job title?]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[EM3. What is your/%rostertitle%’s MAIN job title?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V286" name="name" files="F3" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Roster list question]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V287" name="interview__id" files="F3" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Unique 32-character long identifier of the interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V288" name="k2_roster__id" files="F4" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Id in k2_roster]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V289" name="interview__key" files="F4" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Interview key (identifier in XX-XX-XX-XX format)]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V290" name="k2_rate" files="F4" intrvl="discrete">
+      <location RecSegNo="1" />
+      <labl><![CDATA[Rating k2]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on %rostertitle%?]]></qstnLit>
+        <ivuInstr><![CDATA[USE FLASHCARD]]></ivuInstr>
+      </qstn>
+      <catgry>
+        <catValu>1</catValu>
+        <labl><![CDATA[1]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>2</catValu>
+        <labl><![CDATA[2]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>3</catValu>
+        <labl><![CDATA[3]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>4</catValu>
+        <labl><![CDATA[4]]></labl>
+      </catgry>
+      <catgry>
+        <catValu>5</catValu>
+        <labl><![CDATA[5]]></labl>
+      </catgry>
+      <varFormat type="numeric" schema="other" />
+    </var>
+    <var ID="V291" name="interview__id" files="F4" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Unique 32-character long identifier of the interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V292" name="a9_roster__id" files="F5" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Id in a9_roster]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V293" name="interview__key" files="F5" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Interview key (identifier in XX-XX-XX-XX format)]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V294" name="a9_reason" files="F5" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[dislike animal reason]]></labl>
+      <qstn>
+        <qstnLit><![CDATA[A9.1. Why do you dislike %rostertitle%?]]></qstnLit>
+      </qstn>
+      <varFormat type="character" schema="other" />
+    </var>
+    <var ID="V295" name="interview__id" files="F5" intrvl="discrete">
+      <location width="255" RecSegNo="1" />
+      <labl><![CDATA[Unique 32-character long identifier of the interview]]></labl>
+      <qstn />
+      <varFormat type="character" schema="other" />
+    </var>
+  </dataDscr>
+  <fileDscr ID="F1" URI="Temp#33.~esstar?Index=0&amp;Name=tmnr">
+    <fileTxt>
+      <fileName>tmnr.NSDstat</fileName>
+      <dimensns>
+        <caseQnty>0</caseQnty>
+        <varQnty>263</varQnty>
+      </dimensns>
+      <fileType>Nesstar 200801</fileType>
+    </fileTxt>
+  </fileDscr>
+  <fileDscr ID="F2" URI="Temp#33.~esstar?Index=1&amp;Name=visitsrosterhousehold">
+    <fileTxt>
+      <fileName>visitsrosterhousehold.NSDstat</fileName>
+      <dimensns>
+        <caseQnty>0</caseQnty>
+        <varQnty>8</varQnty>
+      </dimensns>
+      <fileType>Nesstar 200801</fileType>
+    </fileTxt>
+  </fileDscr>
+  <fileDscr ID="F3" URI="Temp#33.~esstar?Index=2&amp;Name=listingRoster">
+    <fileTxt>
+      <fileName>listingRoster.NSDstat</fileName>
+      <dimensns>
+        <caseQnty>0</caseQnty>
+        <varQnty>16</varQnty>
+      </dimensns>
+      <fileType>Nesstar 200801</fileType>
+    </fileTxt>
+  </fileDscr>
+  <fileDscr ID="F4" URI="Temp#33.~esstar?Index=3&amp;Name=k2_roster">
+    <fileTxt>
+      <fileName>k2_roster.NSDstat</fileName>
+      <dimensns>
+        <caseQnty>0</caseQnty>
+        <varQnty>4</varQnty>
+      </dimensns>
+      <fileType>Nesstar 200801</fileType>
+    </fileTxt>
+  </fileDscr>
+  <fileDscr ID="F5" URI="Temp#33.~esstar?Index=4&amp;Name=a9_roster">
+    <fileTxt>
+      <fileName>a9_roster.NSDstat</fileName>
+      <dimensns>
+        <caseQnty>0</caseQnty>
+        <varQnty>4</varQnty>
+      </dimensns>
+      <fileType>Nesstar 200801</fileType>
+    </fileTxt>
+  </fileDscr>
+</codeBook>

@@ -1,0 +1,13 @@
+name: tmnr
+title: tmnr
+username: gianbz
+account: gianbz
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10366669
+bundleId: 7953266
+url: https://gianbz.shinyapps.io/tmnr/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: BRC_downloader.R|BRC_loader.R|KARST.zip|processing.R|tmnr_11_SPSS_All.zip|TMNR.html|TMNR.qmd|UntitledR.R

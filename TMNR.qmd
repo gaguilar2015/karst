@@ -1,0 +1,441 @@
+---
+title: "TMNR"
+author: "Belize Analytics"
+format: 
+  html:
+    theme: zephyr
+    page-layout: article
+editor: visual
+---
+
+## TMNR Base Analysis
+
+```{r}
+#| include: false
+#| label: libraries
+
+
+library(dplyr)
+library(tidyr)
+library(haven)
+library(ggplot2)
+library(stringr)
+library(janitor)
+library(DBI)
+library(gt)
+
+gg_text_charts <- theme(
+  text = element_text(size = 15)
+)
+
+gg_blank_x <- theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.border = element_blank()
+  )
+
+gg_blank_y <- theme_bw() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.border = element_blank()
+  )
+
+```
+
+## Basic Descriptives
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+#| include: false
+
+
+ignore_qs <- c('79-84-83-57',
+               '30-26-25-41',
+               '66-59-17-95',
+               '92-56-91-59',
+               '70-81-50-38',
+               '17-39-72-74'
+               )
+
+base <- read_sav('./KARST_FILES/tmnr.sav') |> 
+  mutate(
+    ctv = as_factor(ctv)
+  ) |> 
+  filter(
+    !interview__key %in% ignore_qs
+  )
+
+base_vars <- base |> 
+  select(interview__key, 
+         ctv, 
+         ed, 
+         building_number, 
+         household_number, 
+         dwelling_number, 
+         result) 
+  
+listing <- read_sav('./KARST_FILES/listingRoster.sav')
+k2 <- read_sav('./KARST_FILES/k2_roster.sav')
+
+ksample <- readxl::read_excel('./ksample2.xlsx') |> 
+  select(interview_key, 
+         ed, 
+         head_name,
+         ctv_official, 
+         building_number, 
+         dwelling_number, 
+         household_number,
+         GPS_Building_Navig__Latitude,
+         GPS_Building_Navig__Longitude
+         ) |> 
+  mutate(
+    GPS_Building_Navig__Latitude = as.double(GPS_Building_Navig__Latitude),
+    GPS_Building_Navig__Longitude = as.double(GPS_Building_Navig__Longitude)
+  ) |> 
+  mutate(
+    ctv = case_when(
+      ctv_official == 'Lower Barton Creek' ~ 'Lower Barton Creek/New Holland/East Land',
+      ctv_official == 'Upper Barton Creek' ~ 'El Progress (7 Miles)/Upper Barton Creek',
+      TRUE ~ ctv_official
+    )
+  )
+
+listing2 <- base_vars |> 
+  left_join(
+    listing,
+    by = c('interview__key')
+  ) |> 
+  filter(
+    result == 1,
+    !interview__key %in% ignore_qs
+  ) |> 
+  mutate(
+    age_group = case_when(
+      age >= 50 ~ '50+',
+      age %in% 36:49 ~ '36-49',
+      age %in% 18:35 ~ '18-35',
+      age %in% 5:17 ~ '5-17',
+      age %in% 0:15 ~ '0-4'
+    )
+  ) 
+
+listing2$age_group <- factor(listing2$age_group, levels = c(
+                                                  '0-4',
+                                                  '5-17',
+                                                  '18-35',
+                                                  '36-49',
+                                                  '50+'
+                                                ))
+
+write_sav(base, './household.sav')
+write_sav(listing2, './members.sav')
+write_sav(k2, './k2.sav')
+
+```
+
+Submitted questionnaires (any result), by community and by ED.
+
+```{r}
+#| echo: false
+
+sample_ctv <- ksample |> 
+  count(ctv) |> 
+  rename(
+    Sampled = n
+  )
+
+sample_ed <- ksample |> 
+  count(ctv, ed) |> 
+  rename(
+    Sampled = n
+  )
+
+submitted_ctv <- base |> 
+  count(ctv) |> 
+    rename(
+    Submitted = n
+  )
+
+submitted_ed <- base |> 
+  count(ctv, ed) |> 
+    rename(
+    Submitted = n
+  )
+
+completed_ctv <- base |> 
+  filter(result == 1) |> 
+  count(ctv) |> 
+    rename(
+    Completed = n
+  )
+
+completed_ed <- base |> 
+  filter(result == 1) |> 
+  count(ctv, ed) |> 
+    rename(
+    Completed = n
+  )
+
+df_ctv <- sample_ctv |> 
+  left_join(
+    submitted_ctv, 
+    by = c('ctv')
+  ) |> 
+  left_join(
+    completed_ctv,
+    by = c('ctv')
+  ) 
+  
+
+
+df_ed <- sample_ed |> 
+  left_join(
+    submitted_ed, 
+    by = c('ctv', 'ed')
+  ) |> 
+  left_join(
+    completed_ed,
+    by = c('ctv', 'ed')
+  ) 
+  
+df_all <- df_ctv |> 
+  summarise(
+    Sampled = sum(Sampled),
+    Submitted = sum(Submitted),
+    Completed = sum(Completed),
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(), '%')
+  ) |> 
+  mutate(
+    ctv = 'All',
+    ed = 'All',
+    .before = 'Sampled'
+  )
+
+
+```
+
+::: panel-tabset
+### Community
+
+```{r}
+#| echo: false
+
+df_ctv <- df_ctv |> 
+  mutate(
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(1), '%')
+  ) |> 
+  rbind(df_all |> select(-ed))
+
+
+df_ctv |> gt()
+
+downloadthis::download_this(
+  df_ctv,
+  output_name = 'submitted_ctv',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+
+### ED
+
+```{r}
+#| echo: false
+
+df_ed <- df_ed |> 
+    mutate(
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(1), '%')
+  ) |> 
+    rbind(df_all)
+
+df_ed |> gt()
+
+downloadthis::download_this(
+  df_ed,
+  output_name = 'submitted_ed',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+```
+:::
+
+Characteristics of individuals.
+
+```{r}
+#| echo: false
+
+inds <- listing2 |> 
+  count(ctv, age_group) |> 
+  pivot_wider(names_from = age_group, values_from = n) 
+
+
+
+```
+
+::: panel-tabset
+### Totals
+
+```{r}
+#| echo: false
+
+inds <- listing2 |> 
+  count(age_group) |> 
+  pivot_wider(names_from = age_group, values_from = n) 
+
+inds |> 
+  gt() |> 
+  tab_header(
+    title = md("**Distribution of household members by age groups**"),
+    subtitle = md("Survey totals")
+  )
+
+downloadthis::download_this(
+  inds,
+  output_name = 'inds_ages',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+
+### Community
+
+```{r}
+#| echo: false
+
+inds2 <- listing2 |> 
+  count(ctv, age_group) |> 
+  pivot_wider(names_from = age_group, values_from = n) 
+
+inds2 |> 
+  gt() |> 
+  tab_header(
+    title = md("**Distribution of household members by age groups**"),
+    subtitle = md("Community totals")
+  )
+
+downloadthis::download_this(
+  inds2,
+  output_name = 'inds_ages',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+:::
+
+The chart below graphically illustrates the age and age group distributions.
+
+::: panel-tabset
+### Age
+
+```{r}
+#| echo: false
+#| warning: false
+
+listing2 |> 
+  ggplot(aes(x = age)) +
+  geom_bar(fill = 'aquamarine4') +
+  theme(
+    panel.background = element_blank()
+  ) +
+  gg_text_charts +
+  labs(
+    x = "Age Group",
+    y = ''
+  )
+
+```
+
+### Age Groups
+
+```{r}
+#| echo: false
+#| warning: false
+
+listing2 |> 
+  ggplot(aes(x = age_group)) +
+  geom_bar(fill = 'aquamarine4') +
+  gg_blank_y +
+  gg_text_charts +
+  geom_text(
+        aes(y = ..count.., label = ..count..),
+        stat = 'count', 
+        size = 3.5, 
+        color = 'white',
+        fontface = "bold",
+        position = position_stack(0.5), 
+        vjust = 0.5
+      ) +
+  labs(
+    x = "Age Group",
+    y = ''
+  )
+
+```
+:::
+
+Sex
+
+::: panel-tabset
+### Totals
+
+```{r}
+#| echo: false
+#| warning: false
+
+sex1 <- listing2 |> 
+  mutate(
+    sex = as_factor(sex)
+  ) |> 
+  tabyl(sex, show_missing_levels = F) |> 
+  adorn_pct_formatting(digits = 2) |> 
+  rename(Count = n) |> as.data.frame()
+
+sex1 |> gt()
+
+downloadthis::download_this(
+  sex1,
+  output_name = 'inds_sex1',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+```
+
+### Community
+
+```{r}
+#| echo: false
+#| warning: false
+
+sex2 <- listing2 |> 
+  mutate(
+    sex = as_factor(sex)
+  ) |> 
+  tabyl(ctv, sex, show_missing_levels = F) |> 
+  adorn_percentages(c('row')) |> 
+  adorn_pct_formatting(digits = 1) |> 
+  adorn_ns() |> as.data.frame()
+
+sex2 |> 
+  gt()
+
+downloadthis::download_this(
+  sex2,
+  output_name = 'inds_sex2',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+```
+:::
+
+```{r}
+
+
+```
