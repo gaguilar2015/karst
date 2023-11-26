@@ -1,0 +1,608 @@
+---
+title: "TMNR"
+author: "Belize Analytics"
+format: 
+  html:
+    theme: zephyr
+    page-layout: article
+editor: visual
+---
+
+## TMNR Base Analysis
+
+```{r}
+#| include: false
+#| label: libraries
+
+# load libraries
+library(dplyr)
+library(tidyr)
+library(haven)
+library(ggplot2)
+library(stringr)
+library(janitor)
+library(DBI)
+library(gt)
+
+# for modifying text size in charts
+
+gg_text_charts <- theme(
+  text = element_text(size = 15)
+)
+
+# theme for charts where we want to remove x-axis labels and lines
+
+gg_blank_x <- theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.border = element_blank()
+  )
+
+# theme for charts where we want to remove y-axis labels and lines
+
+gg_blank_y <- theme_bw() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.border = element_blank()
+  )
+
+```
+
+
+
+
+```{r}
+#| include: false
+#| label: load-data
+
+# interview keys of questionnaires to ignore/exclude
+
+ignore_qs <- c('79-84-83-57',
+               '30-26-25-41',
+               '66-59-17-95',
+               '92-56-91-59',
+               '70-81-50-38',
+               '17-39-72-74'
+               )
+
+# import base (household) file, change CTVs to use factor labels, 
+# filter out questionnaires to ignore
+
+base <- read_sav('./KARST_FILES/tmnr.sav') |> 
+  mutate(
+    ctv = as_factor(ctv)
+  ) |> 
+  filter(
+    !interview__key %in% ignore_qs
+  )
+
+# extract cover-page variables from the base file
+# these will later be merged to other child datasets
+
+base_vars <- base |> 
+  select(interview__key, 
+         ctv, 
+         ed, 
+         building_number, 
+         household_number, 
+         dwelling_number, 
+         result) 
+
+# import member listing dataset
+
+listing <- read_sav('./KARST_FILES/listingRoster.sav')
+
+# merge cover variables to the listing data 
+
+listing <- base_vars |> 
+  left_join(
+    listing,
+    by = c('interview__key')
+  ) 
+
+# import k2 roster dataset
+
+k2 <- read_sav('./KARST_FILES/k2_roster.sav') 
+
+# merge cover variables to the k2 dataset
+
+k2 <- base_vars |> 
+  left_join(
+    k2, 
+    by = c('interview__key')
+  )
+
+
+# import sample file and fix/standardize ctv variable to match
+# the ctv names in the actual dataset
+
+ksample <- readxl::read_excel('./ksample2.xlsx') |> 
+  select(interview_key, 
+         ed, 
+         head_name,
+         ctv_official, 
+         building_number, 
+         dwelling_number, 
+         household_number,
+         GPS_Building_Navig__Latitude,
+         GPS_Building_Navig__Longitude
+         ) |> 
+  mutate(
+    ctv = case_when(
+      ctv_official == 'Lower Barton Creek' ~ 'Lower Barton Creek/New Holland/East Land',
+      ctv_official == 'Upper Barton Creek' ~ 'El Progress (7 Miles)/Upper Barton Creek',
+      TRUE ~ ctv_official
+    )
+  )
+
+
+```
+
+```{r}
+#| include: false
+#| label: extra-prep
+
+# add age group variable
+
+listing <- listing |>  
+  mutate(
+    age_group = case_when(
+      age >= 50 ~ '50+',
+      age %in% 36:49 ~ '36-49',
+      age %in% 18:35 ~ '18-35',
+      age %in% 5:17 ~ '5-17',
+      age %in% 0:15 ~ '0-4'
+    )
+  ) 
+
+# fix the factor-levels of the age-group variable
+
+listing$age_group <- factor(listing$age_group, levels = c(
+                                                  '0-4',
+                                                  '5-17',
+                                                  '18-35',
+                                                  '36-49',
+                                                  '50+'
+                                                ))
+
+# simplify ethnicity groups
+
+listing <- listing |> 
+  mutate(
+    ethnicity = as_factor(ethnicity)
+  ) |> 
+  mutate(
+    ethnicity_group = case_when(
+      ethnicity %in% c('Mestizo/Hispanic/Latino', 'Creole', 'Mennonite') ~ 
+        as.character(ethnicity),
+      TRUE ~ 'Other'
+    )
+  ) 
+
+# add educational attainment level
+
+listing <- listing |> 
+  mutate(
+    ed_attainment = case_when(
+      ed_attending == 1 & ed_clevel %in% 0:8 ~ 'None/Some Primary',
+      ed_attending == 1 & ed_clevel %in% 9:12 ~ 'Primary',
+      ed_attending == 1 & ed_clevel %in% 17 ~ 'Secondary',
+      ed_attending == 1 & ed_clevel %in% 18:19 ~ 'Tertiary',
+      ed_attending == 2 & ed_llevel %in% 0:7 ~ 'None/Some Primary',
+      ed_attending == 2 & ed_llevel %in% 8:11 ~ 'Primary',
+      ed_attending == 2 & ed_llevel %in% 12 ~ 'Secondary',
+      ed_attending == 2 & ed_llevel %in% 17:19 ~ 'Tertiary',
+      ed_llevel == 21 ~ 'Never Attended',
+      ed_llevel == 20 ~ 'None/Some Primary',
+      ed_llevel == 999999 | ed_clevel == 999999 ~ 'Not Stated',
+      !is.na(ed_attending) ~ 'Other'
+    )
+  )
+  
+# derive educational attainment level for HH head
+
+listing_head_vars <- listing |> 
+  filter(rel == 1) |> 
+  mutate(
+    ed_attainment_head = case_when(
+      ed_clevel %in% 0:8 ~ 'None/Some Primary',
+      ed_clevel %in% 9:12 ~ 'Primary',
+      ed_clevel %in% 17 ~ 'Secondary',
+      ed_clevel %in% 18:19 ~ 'Tertiary',
+      ed_llevel %in% 0:7 ~ 'None/Some Primary',
+      ed_llevel %in% 8:11 ~ 'Primary',
+      ed_llevel %in% 12 ~ 'Secondary',
+      ed_llevel %in% 17:19 ~ 'Tertiary',
+      ed_llevel == 21 ~ 'Never Attended',
+      ed_llevel == 20 ~ 'None/Some Primary',
+      ed_llevel == 999999 | ed_clevel == 999999 ~ 'Not Stated',
+      !is.na(ed_attending) ~ 'Not Stated'
+    )
+  ) 
+
+# fix factor levels for ed attainment variables
+
+listing$ed_attainment <- factor(listing$ed_attainment, 
+                                levels = c('Primary',
+                                           'Secondary',
+                                           'Tertiary',
+                                           'None/Some Primary',
+                                           'Never Attended',
+                                           'Not Stated'))
+
+# fix factor levels for ed attainment variables
+
+listing_head_vars$ed_attainment_head <- factor(listing_head_vars$ed_attainment_head, 
+                                levels = c('Primary',
+                                           'Secondary',
+                                           'Tertiary',
+                                           'None/Some Primary',
+                                           'Never Attended',
+                                           'Not Stated'))
+
+
+# simplify employment groups
+
+listing <- listing |> 
+  mutate(
+    workertype_group = case_when(
+      workertype %in% 1:2 ~ 'Self Employed',
+      workertype %in% 3:4 ~ 'Employee',
+      workertype %in% 5:888888 ~ 'Other',
+      workertype == 999999 ~ 'Not Stated',
+      employed == 2 ~ 'Not Employed'
+    )
+  ) 
+
+# derive worker type of HH head
+
+listing_head_vars <- listing_head_vars |> 
+  mutate(
+    workertype_group = case_when(
+      workertype %in% 1:2 ~ 'Self Employed',
+      workertype %in% 3:4 ~ 'Employee',
+      workertype %in% 5:888888 ~ 'Other',
+      workertype == 999999 ~ 'Not Stated',
+      TRUE ~ 'Not Employed'
+    )
+  ) 
+
+# fix factor levels for worker type variables
+
+listing$workertype_group <- factor(listing$workertype_group, 
+                                levels = c('Employee',
+                                           'Self Employed',
+                                           'Other',
+                                           'Not Employed',
+                                           'Not Stated'))
+
+# fix factor levels for worker type variables
+
+listing_head_vars$workertype_group <- factor(listing_head_vars$workertype_group, 
+                                levels = c('Employee',
+                                           'Self Employed',
+                                           'Other',
+                                           'Not Employed',
+                                           'Not Stated'))
+
+```
+
+## Basic Descriptives
+Submitted questionnaires (any result), by community and by ED.
+
+```{r}
+#| echo: false
+
+# A tables ---------
+
+# SAMPLE frequencies, by CTV and ED
+
+sample_ctv <- ksample |> 
+  count(ctv) |> 
+  rename(
+    Sampled = n
+  )
+
+sample_ed <- ksample |> 
+  count(ctv, ed) |> 
+  rename(
+    Sampled = n
+  )
+
+# SUBMITTED QUESTIONNAIRE frequencies
+
+submitted_ctv <- base |> 
+  count(ctv) |> 
+    rename(
+    Submitted = n
+  )
+
+submitted_ed <- base |> 
+  count(ctv, ed) |> 
+    rename(
+    Submitted = n
+  )
+
+# COMPLETED QUESTIONNAIRE frequencies
+
+completed_ctv <- base |> 
+  filter(result == 1) |> 
+  count(ctv) |> 
+    rename(
+    Completed = n
+  )
+
+completed_ed <- base |> 
+  filter(result == 1) |> 
+  count(ctv, ed) |> 
+    rename(
+    Completed = n
+  )
+
+# MERGE CTV-level frequencies
+
+df_ctv <- sample_ctv |> 
+  left_join(
+    submitted_ctv, 
+    by = c('ctv')
+  ) |> 
+  left_join(
+    completed_ctv,
+    by = c('ctv')
+  ) 
+  
+
+# MERGE ED-level frequencies
+
+df_ed <- sample_ed |> 
+  left_join(
+    submitted_ed, 
+    by = c('ctv', 'ed')
+  ) |> 
+  left_join(
+    completed_ed,
+    by = c('ctv', 'ed')
+  ) 
+  
+# derive totals at the national level
+
+df_all <- df_ctv |> 
+  summarise(
+    Sampled = sum(Sampled),
+    Submitted = sum(Submitted),
+    Completed = sum(Completed),
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(), '%')
+  ) |> 
+  mutate(
+    ctv = 'All',
+    ed = 'All',
+    .before = 'Sampled'
+  )
+
+
+```
+
+::: panel-tabset
+### Community
+
+```{r}
+#| echo: false
+
+df_ctv <- df_ctv |> 
+  mutate(
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(1), '%')
+  ) |> 
+  rbind(df_all |> select(-ed))
+
+
+df_ctv |> gt()
+
+downloadthis::download_this(
+  df_ctv,
+  output_name = 'submitted_ctv',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+
+### ED
+
+```{r}
+#| echo: false
+
+df_ed <- df_ed |> 
+    mutate(
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(1), '%')
+  ) |> 
+    rbind(df_all)
+
+df_ed |> gt()
+
+downloadthis::download_this(
+  df_ed,
+  output_name = 'submitted_ed',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+```
+:::
+
+Characteristics of individuals.
+
+```{r}
+#| echo: false
+
+inds <- listing2 |> 
+  count(ctv, age_group) |> 
+  pivot_wider(names_from = age_group, values_from = n) 
+
+
+
+```
+
+::: panel-tabset
+### Totals
+
+```{r}
+#| echo: false
+
+inds <- listing2 |> 
+  count(age_group) |> 
+  pivot_wider(names_from = age_group, values_from = n) 
+
+inds |> 
+  gt() |> 
+  tab_header(
+    title = md("**Distribution of household members by age groups**"),
+    subtitle = md("Survey totals")
+  )
+
+downloadthis::download_this(
+  inds,
+  output_name = 'inds_ages',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+
+### Community
+
+```{r}
+#| echo: false
+
+inds2 <- listing2 |> 
+  count(ctv, age_group) |> 
+  pivot_wider(names_from = age_group, values_from = n) 
+
+inds2 |> 
+  gt() |> 
+  tab_header(
+    title = md("**Distribution of household members by age groups**"),
+    subtitle = md("Community totals")
+  )
+
+downloadthis::download_this(
+  inds2,
+  output_name = 'inds_ages',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+:::
+
+The chart below graphically illustrates the age and age group distributions.
+
+::: panel-tabset
+### Age
+
+```{r}
+#| echo: false
+#| warning: false
+
+listing2 |> 
+  ggplot(aes(x = age)) +
+  geom_bar(fill = 'aquamarine4') +
+  theme(
+    panel.background = element_blank()
+  ) +
+  gg_text_charts +
+  labs(
+    x = "Age Group",
+    y = ''
+  )
+
+```
+
+### Age Groups
+
+```{r}
+#| echo: false
+#| warning: false
+
+listing2 |> 
+  ggplot(aes(x = age_group)) +
+  geom_bar(fill = 'aquamarine4') +
+  gg_blank_y +
+  gg_text_charts +
+  geom_text(
+        aes(y = ..count.., label = ..count..),
+        stat = 'count', 
+        size = 3.5, 
+        color = 'white',
+        fontface = "bold",
+        position = position_stack(0.5), 
+        vjust = 0.5
+      ) +
+  labs(
+    x = "Age Group",
+    y = ''
+  )
+
+```
+:::
+
+Sex
+
+::: panel-tabset
+### Totals
+
+```{r}
+#| echo: false
+#| warning: false
+
+sex1 <- listing2 |> 
+  mutate(
+    sex = as_factor(sex)
+  ) |> 
+  tabyl(sex, show_missing_levels = F) |> 
+  adorn_pct_formatting(digits = 2) |> 
+  rename(Count = n) |> as.data.frame()
+
+sex1 |> gt()
+
+downloadthis::download_this(
+  sex1,
+  output_name = 'inds_sex1',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+```
+
+### Community
+
+```{r}
+#| echo: false
+#| warning: false
+
+sex2 <- listing2 |> 
+  mutate(
+    sex = as_factor(sex)
+  ) |> 
+  tabyl(ctv, sex, show_missing_levels = F) |> 
+  adorn_percentages(c('row')) |> 
+  adorn_pct_formatting(digits = 1) |> 
+  adorn_ns() |> as.data.frame()
+
+sex2 |> 
+  gt()
+
+downloadthis::download_this(
+  sex2,
+  output_name = 'inds_sex2',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+```
+:::
+
+```{r}
+
+
+```
