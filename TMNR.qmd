@@ -660,7 +660,7 @@ downloadthis::download_this(
 ```
 :::
 
-## Tabulations
+## KNOWLEDGE Area
 
 ```{r}
 #| include: false
@@ -1702,4 +1702,593 @@ df |>
 ```
 :::
 
-### 
+## Attitude Area
+
+### A1
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.1
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.1',
+    sub = 'To what extent does waste disposal concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.1
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.1',
+    sub = 'And does water disposal affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.1
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.1',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+### A2
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.2
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.2',
+    sub = 'To what extent does waste contamination concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.2
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.2',
+    sub = 'And does water contamination affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.2
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.2',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A3
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.3
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.3',
+    sub = 'To what extent do forest fires concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.3
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.3',
+    sub = 'And do forest fires affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.3
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.3',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A4
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.4
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.4',
+    sub = 'To what extent does deforestation concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.4
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.4',
+    sub = 'And does deforestation affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.4
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.4',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A5
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.5
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.5',
+    sub = 'To what extent does soil erosion concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.5
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.5',
+    sub = 'And does soil erosion affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.5
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.5',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A6
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.6
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.6',
+    sub = 'To what extent does flooding concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.6
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.6',
+    sub = 'And does flooding affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.6
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.6',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A7
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.7
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_7')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.7',
+    sub = 'To what extent do chemical pesticides concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.7
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_7')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.7',
+    sub = 'And do chemical pesticides affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.7
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_7')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.7',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A8
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.8
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_8')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.8',
+    sub = 'To what extent does drought concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.8
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_8')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.8',
+    sub = 'And does drought affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.8
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_8')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.8',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A9
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.9
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_9')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.9',
+    sub = 'To what extent does logging concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.9
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_9')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.9',
+    sub = 'And does logging affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.9
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_9')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.9',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### A10
+
+::: panel-tabset
+### Concern
+
+```{r}
+#| label: a1.10
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a1_10')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A1.10',
+    sub = 'To what extent does hunting of wildlife concern you?'
+  ) 
+```
+
+### Affect Personally
+
+```{r}
+#| label: a2.10
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a2_10')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A2.10',
+    sub = 'And does hunting of wildlife affect you?'
+  ) 
+
+```
+
+### Affect TMNR
+
+```{r}
+#| label: a3.10
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('a3_10')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question A3.10',
+    sub = 'Do you think it affects the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
