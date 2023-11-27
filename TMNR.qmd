@@ -664,14 +664,22 @@ downloadthis::download_this(
 
 ```{r}
 #| include: false
-#| label: tabulation-prep
+#| label: tabulation-preparation
+
+# households <- 
+#   households |> 
+#   mutate(
+#     k1 = as_factor(k1),
+#     k3 = as_factor(k3),
+#     k3_1 = as_factor(k3_1),
+#   )
 
 households <- 
-  households |> 
-  mutate(
-    k1 = as_factor(k1),
-    k3 = as_factor(k3)
-  )
+  households |> as_factor()
+
+# variables to use in crosstab analyses
+
+anal_vars <- c('strata', 'age_group', 'ethnicity', 'education', 'workertype_group')
 
 # function to tabulation a specified variable
 
@@ -679,12 +687,12 @@ ct_single <- function(var, national = F){
   
   
   table_strata <- households |> 
-    tabyl(strata, !!as.name(var), show_missing_levels = F) |> 
+    tabyl(strata, !!as.name(var), show_missing_levels = F, show_na = F) |> 
     adorn_totals(c("col")) |> 
     rename(Item = strata)
   
   table_age <- households |> 
-    tabyl(age_group, !!as.name(var), show_missing_levels = F) |> 
+    tabyl(age_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
     adorn_totals(c("col")) |> 
     rename(Item = age_group)
   
@@ -710,6 +718,13 @@ ct_single <- function(var, national = F){
                  table_education, 
                  table_ethnicity, 
                  table_worker)
+  
+  table
+  
+}
+
+ct_gt <- function(table, tit, sub){
+  
   
   table |> 
     gt(rowname_col = 'Item') |> 
@@ -739,35 +754,952 @@ ct_single <- function(var, national = F){
     tab_style(
       style = cell_text(align = "left", indent = px(20)),
       locations = cells_stub()
+    ) |> 
+    tab_header(
+      title = tit,
+      subtitle = sub
+  )
+  
+}
+
+ct_single_pct <- function(var, national = F){
+  
+  
+  table_strata <- households |> 
+    tabyl(strata, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = strata)
+  
+  table_age <- households |> 
+    tabyl(age_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = age_group)
+  
+  table_ethnicity <- households |> 
+    tabyl(ethnicity, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = ethnicity)
+  
+  table_education <- households |> 
+    tabyl(education, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = education)
+  
+  table_worker <- households |> 
+    tabyl(workertype_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("row", "col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = workertype_group)
+  
+  
+  
+  table <- rbind(table_strata, 
+                 table_age, 
+                 table_education, 
+                 table_ethnicity, 
+                 table_worker)
+  
+  table 
+  
+}
+
+
+# tabulation functions for multi-select variables
+
+ct_multi <- function(row, col, format = 'pct'){
+  
+  
+  households |> 
+    select(all_of(anal_vars), starts_with(col)) |> 
+    pivot_longer(
+      cols = starts_with(col),
+      names_to = 'item',
+      values_to = 'value'
+    ) |> 
+    group_by(!!as.name(row), item) |> 
+    summarise(
+      .groups = 'drop',
+      selected = sum(value == 1, na.rm = T),
+      total = sum(!is.na(value), na.rm = T),
+      prop = selected/total,
+      pct = paste0(round(prop * 100, 1), '%'),
+      full = paste0(pct, '(', selected,')')
+    ) |> 
+    select(!!as.name(row), item, full) |> 
+    mutate(
+      item = stringr::str_replace(item, paste0(col, '_'), '')
+    ) |> 
+    pivot_wider(
+      names_from = item,
+      values_from = full
     )
   
+}
+
+
+ct_multi_aggregate <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_multi(.x, var))
+  
+  rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group)
+  )
 }
 
 ```
 
 ### K1
 
+::: panel-tabset
+### Counts
+
 ```{r}
 #| echo: false
 #| label: k1
+#| warning: false
 
-ct_single('k1') |> 
-  tab_header(
-    title = 'Tabulations for question K1',
-    subtitle = 'Have you ever heard about the term <i>environmental conservation?'
+df <- ct_single('k1') 
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K1',
+    sub = 'Have you ever heard about the term environmental conservation?'
   )
 
 ```
 
+### Percentages
+
+```{r}
+#| echo: false
+#| label: k1-pct
+#| warning: false
+
+df <- ct_single_pct('k1')
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K1',
+    sub = 'Have you ever heard about the term environmental conservation?'
+  )
+
+```
+:::
+
 ### K3
+
+::: panel-tabset
+### Counts
 
 ```{r}
 #| echo: false
 #| label: k3
+#| warning: false
 
-ct_single('k3') |> 
-  tab_header(
-    title = 'Tabulations for question K3',
-    subtitle = 'Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?'
+df <- ct_single('k3') 
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K3',
+    sub = 'Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?'
   )
 ```
+
+### Percentages
+
+```{r}
+#| echo: false
+#| label: k3-pct
+#| warning: false
+
+df <- ct_single_pct('k3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K3',
+    sub = 'Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?'
+  )
+```
+:::
+
+### K3_1
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| echo: false
+#| label: k3_1_n
+#| warning: false
+
+df <- ct_single('k3_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K3.1',
+    sub = ' Have you heard about a reserve that is located near to this community?'
+  )
+```
+
+### Percentages
+
+```{r}
+#| echo: false
+#| label: k3_1-pct
+#| warning: false
+
+df <- ct_single_pct('k3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K3.1',
+    sub = ' Have you heard about a reserve that is located near to this community?'
+  )
+
+```
+:::
+
+### K4
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| echo: false
+#| label: k4
+#| warning: false
+
+df <- ct_multi_aggregate('k4')
+
+df |> 
+  select(-`1`) |> 
+  ct_gt(
+    tit = 'Tabulations for question K4',
+    sub = 'What do you know about the Tapir Mountain Nature Reserve?'
+  ) |>
+  tab_footnote(
+    footnote = "Protected Area",
+    locations = cells_column_labels(columns = `_1`)
+  ) |>
+  tab_footnote(
+    footnote = "Tourism attraction",
+    locations = cells_column_labels(columns = `_2`)
+  ) |>
+  tab_footnote(
+    footnote = "Hunting area",
+    locations = cells_column_labels(columns = `_3`)
+  ) |>
+  tab_footnote(
+    footnote = "Logging area",
+    locations = cells_column_labels(columns = `_4`)
+  ) |>
+  tab_footnote(
+    footnote = "Other",
+    locations = cells_column_labels(columns = `_888888`)
+  )  |>
+  tab_footnote(
+    footnote = "Not Stated",
+    locations = cells_column_labels(columns = `_999999`)
+  )
+
+```
+
+### Percentages
+:::
+
+### K5
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k5
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k5')
+
+df |> 
+  rename(
+    `No Knowledge` = `No knowledge (does not know any boundaries)`,
+    `Some Knowledge` = `Some knowledge (knows where some boundaries lie)`,
+    `Strong Knowledge` = `Strong knowledge (is familiar with most/all boundaries)`
+  ) |> 
+  ct_gt(
+    tit = 'Tabulations for question K5',
+    sub = 'How would you rate your knowledge of the reserve’s boundaries?'
+  )  |>
+  tab_footnote(
+    footnote = "Does not know any boundaries",
+    locations = cells_column_labels(columns = `No Knowledge`)
+  )  |>
+  tab_footnote(
+    footnote = "Knows where some boundaries lie",
+    locations = cells_column_labels(columns = `Some Knowledge`)
+  )  |>
+  tab_footnote(
+    footnote = "Is familiar with most/all boundaries",
+    locations = cells_column_labels(columns = `Strong Knowledge`)
+  )
+```
+
+### Percentages
+
+```{r}
+#| label: k5-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k5')
+
+df |> 
+  rename(
+    `No Knowledge` = `No knowledge (does not know any boundaries)`,
+    `Some Knowledge` = `Some knowledge (knows where some boundaries lie)`,
+    `Strong Knowledge` = `Strong knowledge (is familiar with most/all boundaries)`
+  ) |> 
+  ct_gt(
+    tit = 'Tabulations for question K5',
+    sub = 'How would you rate your knowledge of the reserve’s boundaries?'
+  )  |>
+  tab_footnote(
+    footnote = "Does not know any boundaries",
+    locations = cells_column_labels(columns = `No Knowledge`)
+  )  |>
+  tab_footnote(
+    footnote = "Knows where some boundaries lie",
+    locations = cells_column_labels(columns = `Some Knowledge`)
+  )  |>
+  tab_footnote(
+    footnote = "Is familiar with most/all boundaries",
+    locations = cells_column_labels(columns = `Strong Knowledge`)
+  )
+```
+:::
+
+### K6
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k6
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K6',
+    sub = 'To your knowledge, who manages the Tapir Mountain Nature Reserve?'
+  )  
+```
+
+### Percentages
+
+```{r}
+#| label: k6-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K6',
+    sub = 'To your knowledge, who manages the Tapir Mountain Nature Reserve?'
+  ) 
+```
+:::
+
+### K7
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k7
+#| echo: false
+#| warning: false
+
+
+df <- ct_multi_aggregate('k7')
+
+df |> 
+  select(-`1`) |> 
+  ct_gt(
+    tit = 'Tabulations for question K7',
+    sub = 'To your knowledge, what responsibilities are involved in managing the (TMNR) reserve?'
+  ) |>
+  tab_footnote(
+    footnote = "Educating the community",
+    locations = cells_column_labels(columns = `_1`)
+  ) |>
+  tab_footnote(
+    footnote = "Protecting wildlife in reserve (from hunting, poaching, specie extraction)",
+    locations = cells_column_labels(columns = `_2`)
+  ) |>
+  tab_footnote(
+    footnote = "Protecting the natural habitat in the reserve (logging, plant extraction)",
+    locations = cells_column_labels(columns = `_3`)
+  ) |>
+  tab_footnote(
+    footnote = "Protecting reserve from natural disaster (flooding, hurricane) and climate change",
+    locations = cells_column_labels(columns = `_4`)
+  ) |>
+  tab_footnote(
+    footnote = "Managing license for hunting in the reserve",
+    locations = cells_column_labels(columns = `_5`)
+  )  |>
+  tab_footnote(
+    footnote = "Don't Know",
+    locations = cells_column_labels(columns = `_7`)
+  )  |>
+  tab_footnote(
+    footnote = "Other",
+    locations = cells_column_labels(columns = `_888888`)
+  )  |>
+  tab_footnote(
+    footnote = "Not Stated",
+    locations = cells_column_labels(columns = `_999999`)
+  )
+```
+
+### Percentages
+:::
+
+### K8
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k8
+#| echo: false
+#| warning: false
+
+
+df <- ct_multi_aggregate('k8__') |> 
+  rename(
+    `_1` = k8__1,
+    `_2` = k8__2,
+    `_3` = k8__3,
+    `_4` = k8__4,
+    `_5` = k8__5,
+    `_6` = k8__6,
+    `_7` = k8__7,
+    `_8` = k8__8,
+    `_9` = k8__9,
+    `_10` = k8__10,
+    `_12` = k8__12,
+    `_888888` = k8__888888,
+    `_999999` = k8__999999
+  ) |> 
+  relocate(
+   `_10`, `_12`, `_888888`,
+   .after = `_9`
+  )
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K8',
+    sub = 'To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?'
+  ) |>
+  tab_footnote(
+    footnote = "Tapir",
+    locations = cells_column_labels(columns = `_1`)
+  )  |>
+  tab_footnote(
+    footnote = "Jaguar",
+    locations = cells_column_labels(columns = `_2`)
+  )  |>
+  tab_footnote(
+    footnote = "Pumas",
+    locations = cells_column_labels(columns = `_3`)
+  )  |>
+  tab_footnote(
+    footnote = "Ocelots/Margay",
+    locations = cells_column_labels(columns = `_4`)
+  )  |>
+  tab_footnote(
+    footnote = "Deer",
+    locations = cells_column_labels(columns = `_5`)
+  )  |>
+  tab_footnote(
+    footnote = "Peccaries",
+    locations = cells_column_labels(columns = `_6`)
+  )  |>
+  tab_footnote(
+    footnote = "Howler and spider monkeys",
+    locations = cells_column_labels(columns = `_7`)
+  )  |>
+  tab_footnote(
+    footnote = "Raptors, such as hawks and vultures",
+    locations = cells_column_labels(columns = `_8`)
+  )  |>
+  tab_footnote(
+    footnote = "Parrots",
+    locations = cells_column_labels(columns = `_9`)
+  )  |>
+  tab_footnote(
+    footnote = "Snakes",
+    locations = cells_column_labels(columns = `_10`)
+  )  |>
+  tab_footnote(
+    footnote = "Don't Know",
+    locations = cells_column_labels(columns = `_12`)
+  )  |>
+  tab_footnote(
+    footnote = "Other",
+    locations = cells_column_labels(columns = `_888888`)
+  )  |>
+  tab_footnote(
+    footnote = "Not Stated",
+    locations = cells_column_labels(columns = `_999999`)
+  ) 
+```
+
+### Percentages
+:::
+
+### K9.1
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k9
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k9_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_1',
+    sub = 'The water from local wells or pumps comes from the waterbasin or water table in the Tapir Mountain Nature Reserve.'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k9-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k9_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_1',
+    sub = 'The water from local wells or pumps comes from the waterbasin or water table in the Tapir Mountain Nature Reserve.'
+  ) 
+
+```
+:::
+
+### K9.2
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k9.2
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k9_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_2',
+    sub = 'People can hunt in the Tapir Mountain Nature Reserve if they have a valid license.'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k9.2-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k9_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_2',
+    sub = 'People can hunt in the Tapir Mountain Nature Reserve if they have a valid license.'
+  ) 
+
+```
+:::
+
+### 
+
+### K9.3
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k9.3
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k9_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_3',
+    sub = 'The Belize KARST can authorize persons to hunt in the Tapir Mountain Nature Reserve.'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k9.3-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k9_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_3',
+    sub = 'The Belize KARST can authorize persons to hunt in the Tapir Mountain Nature Reserve'
+  ) 
+
+```
+:::
+
+### 
+
+### K9.4
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k9.4
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k9_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_4',
+    sub = 'The pesticides that people use in their garden/land has a negative impact on water in wells.'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k9.4-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k9_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_4',
+    sub = 'The pesticides that people use in their garden/land has a negative impact on water in wells.'
+  ) 
+
+```
+:::
+
+### 
+
+### K9.5
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k9.5
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k9_5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_5',
+    sub = 'The pesticides that people use in their garden/land has a negative impact on piped water.'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k9.5-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k9_5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_5',
+    sub = 'The pesticides that people use in their garden/land has a negative impact on piped water.'
+  ) 
+
+```
+:::
+
+### 
+
+### K9.6
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k9.6
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k9_6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_6',
+    sub = 'Cutting down trees and forests will cause soil to wash away.'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k9.6-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k9_6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K9_6',
+    sub = 'Cutting down trees and forests will cause soil to wash away.'
+  ) 
+
+```
+:::
+
+### K10
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k10
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k10')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K10',
+    sub = 'Would your household be interested in learning about breeding native stingless bees for the production of honey?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k10-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k10')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K10',
+    sub = 'Would your household be interested in learning about breeding native stingless bees for the production of honey?'
+  ) 
+
+```
+:::
+
+### 
+
+### K11
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k11
+#| echo: false
+#| warning: false
+
+
+df <- ct_multi_aggregate('k11') 
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K11',
+    sub = 'Have you personally noticed any of the following changes?'
+  ) |>
+  tab_footnote(
+    footnote = "Changes in the rain",
+    locations = cells_column_labels(columns = `_1`)
+  )  |>
+  tab_footnote(
+    footnote = "More storms",
+    locations = cells_column_labels(columns = `_2`)
+  )  |>
+  tab_footnote(
+    footnote = "Stronger storms",
+    locations = cells_column_labels(columns = `_3`)
+  )  |>
+  tab_footnote(
+    footnote = "Change in temperature during day/night",
+    locations = cells_column_labels(columns = `_4`)
+  )  |>
+  tab_footnote(
+    footnote = "More flooding",
+    locations = cells_column_labels(columns = `_5`)
+  )  |>
+  tab_footnote(
+    footnote = "Loss of soil or erosion",
+    locations = cells_column_labels(columns = `_6`)
+  ) 
+
+```
+
+### Percentages
+
+```{r}
+#| label: k11-pct
+#| echo: false
+#| warning: false
+
+
+
+```
+:::
+
+### 
+
+### K12
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k12
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k12')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K12',
+    sub = 'Have you ever heard that the Earth’s climate, or its weather patterns are changing?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k12-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k12')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K12',
+    sub = 'Have you ever heard that the Earth’s climate, or its weather patterns are changing?'
+  ) 
+
+```
+:::
+
+### K13
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: k13
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('k13')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K13',
+    sub = 'Have you ever heard about the term "Climate Change"?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: k13-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('k13')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K13',
+    sub = 'Have you ever heard about the term "Climate Change"?'
+  ) 
+
+```
+:::
+
+### 
