@@ -2976,3 +2976,327 @@ df |>
 
 ```
 :::
+
+## PRACTICE AREA
+
+### P1
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p1
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P1',
+    sub = 'What is the MAIN way your household disposes of garbage?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p1-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P1',
+    sub = 'What is the MAIN way your household disposes of garbage?'
+  ) 
+
+```
+:::
+
+### P3.1
+
+::: panel-tabset
+### Practice
+
+```{r}
+#| label: p3.1
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p3_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P3.1',
+    sub = 'Does anyone in your household engage in Gardening?'
+  ) 
+```
+
+### Frequency
+
+```{r}
+#| label: p3.1-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p4_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P4.1',
+    sub = 'How often does your household engage in Gardening?'
+  ) 
+
+```
+:::
+
+
+### P3.2
+
+::: panel-tabset
+### Practice
+
+```{r}
+#| label: p3.2
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p3_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P3.1',
+    sub = 'Does anyone in your household engage in Fishing?'
+  ) 
+```
+
+### Frequency
+
+```{r}
+#| label: p3.2-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p4_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P4.2',
+    sub = 'How often does your household engage in Fishing?'
+  ) 
+
+```
+:::
+
+
+### P3.3
+
+::: panel-tabset
+### Practice
+
+```{r}
+#| label: p3.3
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p3_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P3.3',
+    sub = 'Does anyone in your household engage in Raising Livestock?'
+  ) 
+```
+
+### Frequency
+
+```{r}
+#| label: p3.3-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p4_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P4.3',
+    sub = 'How often does your household engage in Raising Livestock?'
+  ) 
+
+```
+:::
+
+
+### P3.4
+
+::: panel-tabset
+### Practice
+
+```{r}
+#| label: p3.4
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p3_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P3.4',
+    sub = 'Does anyone in your household engage in Hunting?'
+  ) 
+```
+
+### Frequency
+
+```{r}
+#| label: p3.4-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p4_4')
+
+df |> 
+  gt(
+    title = 'Tabulations for question P4.4',
+    subtitle = 'How often does your household engage in Hunting?'
+  ) 
+
+```
+:::
+
+
+### P3.5
+
+::: panel-tabset
+### Practice
+
+```{r}
+#| label: p3.5
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p3_5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P3.5',
+    sub = 'Does anyone in your household engage in Growing Crops?'
+  ) 
+```
+
+### Frequency
+
+```{r}
+#| label: p3.5-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p4_5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P4.5',
+    sub = 'How often does your household engage in Growing Crops?'
+  ) 
+
+```
+:::
+
+
+### P3.6
+
+::: panel-tabset
+### Practice
+
+```{r}
+#| label: p3.6
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p3_6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P3.6',
+    sub = 'Does anyone in your household engage in Carpentry?'
+  ) 
+```
+
+### Frequency
+
+```{r}
+#| label: p3.6-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p4_6')
+
+df |> 
+  gt(
+    title = 'Tabulations for question P4.6',
+    subtitle = 'How often does your household engage in Carpentry?'
+  ) 
+
+```
+:::
+
+
+### P3.7
+
+::: panel-tabset
+### Practice
+
+```{r}
+#| label: p3.7
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p3_7')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P3.7',
+    sub = 'Does anyone in your household engage in Selling Lumber?'
+  ) 
+```
+
+### Frequency
+
+```{r}
+#| label: p3.7-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p4_7')
+
+df |> 
+  gt(
+    title = 'Tabulations for question P4.7',
+    subtitle = 'How often does your household engage in Selling Lumber?'
+  ) 
+
+```
+:::
+
+
+
+
