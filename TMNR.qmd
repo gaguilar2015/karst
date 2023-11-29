@@ -1763,7 +1763,6 @@ df |>
 ```
 :::
 
-
 ### A1.2
 
 ::: panel-tabset
@@ -1820,8 +1819,6 @@ df |>
 
 ```
 :::
-
-
 
 ### A1.3
 
@@ -1880,8 +1877,6 @@ df |>
 ```
 :::
 
-
-
 ### A1.4
 
 ::: panel-tabset
@@ -1938,8 +1933,6 @@ df |>
 
 ```
 :::
-
-
 
 ### A1.5
 
@@ -1998,8 +1991,6 @@ df |>
 ```
 :::
 
-
-
 ### A1.6
 
 ::: panel-tabset
@@ -2056,8 +2047,6 @@ df |>
 
 ```
 :::
-
-
 
 ### A1.7
 
@@ -2116,8 +2105,6 @@ df |>
 ```
 :::
 
-
-
 ### A1.8
 
 ::: panel-tabset
@@ -2174,8 +2161,6 @@ df |>
 
 ```
 :::
-
-
 
 ### A1.9
 
@@ -2234,8 +2219,6 @@ df |>
 ```
 :::
 
-
-
 ### A1.10
 
 ::: panel-tabset
@@ -2292,7 +2275,6 @@ df |>
 
 ```
 :::
-
 
 ### A4
 
@@ -2540,7 +2522,6 @@ df |>
 ```
 :::
 
-
 ### A10.2
 
 ::: panel-tabset
@@ -2579,7 +2560,6 @@ df |>
 
 ```
 :::
-
 
 ### A10.3
 
@@ -2620,7 +2600,6 @@ df |>
 ```
 :::
 
-
 ### A10.4
 
 ::: panel-tabset
@@ -2659,7 +2638,6 @@ df |>
 
 ```
 :::
-
 
 ### A10.5
 
@@ -2700,7 +2678,6 @@ df |>
 ```
 :::
 
-
 ### A10.6
 
 ::: panel-tabset
@@ -2739,7 +2716,6 @@ df |>
 
 ```
 :::
-
 
 ### A10.7
 
@@ -2780,7 +2756,6 @@ df |>
 ```
 :::
 
-
 ### A10.8
 
 ::: panel-tabset
@@ -2819,7 +2794,6 @@ df |>
 
 ```
 :::
-
 
 ### A10.9
 
@@ -3057,7 +3031,6 @@ df |>
 ```
 :::
 
-
 ### P3.2
 
 ::: panel-tabset
@@ -3096,7 +3069,6 @@ df |>
 
 ```
 :::
-
 
 ### P3.3
 
@@ -3137,7 +3109,6 @@ df |>
 ```
 :::
 
-
 ### P3.4
 
 ::: panel-tabset
@@ -3169,14 +3140,14 @@ df |>
 df <- ct_single_pct('p4_4')
 
 df |> 
-  gt(
+  gt() |> 
+  tab_header(
     title = 'Tabulations for question P4.4',
     subtitle = 'How often does your household engage in Hunting?'
   ) 
 
 ```
 :::
-
 
 ### P3.5
 
@@ -3217,7 +3188,6 @@ df |>
 ```
 :::
 
-
 ### P3.6
 
 ::: panel-tabset
@@ -3249,14 +3219,14 @@ df |>
 df <- ct_single_pct('p4_6')
 
 df |> 
-  gt(
+  gt() |> 
+  tab_header(
     title = 'Tabulations for question P4.6',
     subtitle = 'How often does your household engage in Carpentry?'
   ) 
 
 ```
 :::
-
 
 ### P3.7
 
@@ -3289,7 +3259,8 @@ df |>
 df <- ct_single_pct('p4_7')
 
 df |> 
-  gt(
+  gt() |> 
+  tab_header(
     title = 'Tabulations for question P4.7',
     subtitle = 'How often does your household engage in Selling Lumber?'
   ) 
@@ -3298,5 +3269,427 @@ df |>
 :::
 
 
+### P5
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p5
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P5',
+    sub = 'Does your household engage in subsistence farming or agricultural production?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p5-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p5')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P5',
+    sub = 'Does your household engage in subsistence farming or agricultural production?'
+  ) 
+
+```
+:::
+
+
+### P6
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p6
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P5',
+    sub = 'Would your household be interested in learning environmentally improved crop production crop production methods?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p6-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p6')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P6',
+    sub = 'Would your household be interested in learning environmentally improved crop production crop production methods?'
+  ) 
+
+```
+:::
+
+
+### P7
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p7
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p7')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P7',
+    sub = 'Would your household be interested in learning about biological pesticides?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p7-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p7')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P7',
+    sub = 'Would your household be interested in learning about biological pesticides?'
+  ) 
+
+```
+:::
+
+### P8
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p8
+#| echo: false
+#| warning: false
+
+
+df <- ct_multi_aggregate('p8') 
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P8',
+    sub = 'How do you access news and information on a daily basis?'
+  ) 
+```
+:::
+
+
+### P9.1
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p9.1
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p9_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.1',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p9.1-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p9_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.1',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+
+```
+:::
+
+
+### P9.2
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p9.2
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p9_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.2',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p9.2-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p9_2')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.2',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+
+```
+:::
+
+
+### P9.3
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p9.3
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p9_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.3',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p9.3-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p9_3')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.3',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+
+```
+:::
+
+
+### P9.4
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p9.4
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p9_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.4',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p9.4-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p9_4')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P9.4',
+    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+  ) 
+
+```
+:::
+
+
+
+### P10
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p10
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p10')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P10',
+    sub = 'In the past 12 months, has anyone in your household hunted animals from the Tapir Mountain Nature Reserve?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p10-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p10')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P10',
+    sub = 'In the past 12 months, has anyone in your household hunted animals from the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### P11
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p11
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p11')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P11',
+    sub = 'In the past 12 months, has anyone in your household extracted plants, trees, or logs from the Tapir Mountain Nature Reserve?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p11-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p11')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P11',
+    sub = 'In the past 12 months, has anyone in your household extracted plants, trees, or logs from the Tapir Mountain Nature Reserve?'
+  ) 
+
+```
+:::
+
+
+
+### P12
+
+::: panel-tabset
+### Counts
+
+```{r}
+#| label: p12
+#| echo: false
+#| warning: false
+
+
+df <- ct_single('p12')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P12',
+    sub = 'We don’t want to know their names, but do you know if persons in the community hunted animals or extracted plants, trees, or logs from the Tapir Mountain Nature Reserve within the past 12 months?'
+  ) 
+```
+
+### Percentages
+
+```{r}
+#| label: p12-pct
+#| echo: false
+#| warning: false
+
+
+df <- ct_single_pct('p12')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question P12',
+    sub = 'We don’t want to know their names, but do you know if persons in the community hunted animals or extracted plants, trees, or logs from the Tapir Mountain Nature Reserve within the past 12 months?'
+  ) 
+
+```
+:::
 
 
