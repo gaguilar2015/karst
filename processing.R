@@ -146,3 +146,131 @@ multi_aggregate <- function(var){
 }
 
 
+households |> 
+  count(strata, age_group, wt = ind_weights) |>
+  mutate(total = sum(n)) |>
+  mutate(
+    pct = n/total
+  ) |>
+  select(-c(total, n)) |>
+  pivot_wider(
+    names_from = age_group,
+    values_from = pct
+  )
+
+
+households |> 
+  tabyl(strata, age_group, show_missing_levels = F, show_na = F) |> 
+  adorn_totals(c("col")) |> 
+  adorn_percentages(c('row')) |> 
+  adorn_pct_formatting(digits = 1) |> 
+  adorn_ns() |> 
+  rename(Item = strata)
+households |>
+  count(strata, wt = hh_final_weight)
+
+households |> 
+  count(strata, age_group, wt = ind_weights) |>
+  group_by(strata) |>
+  mutate(total = sum(n)) |>
+  ungroup() |>
+  mutate(
+    prop = n/total,
+    pct = paste0(round(prop * 100, 1), '%')
+  ) |>
+  mutate(
+    n_pct = paste0(pct, ' (', ceiling(n), ')')
+  )  |>
+  select(strata, age_group, n_pct) |>
+  pivot_wider(
+    names_from = age_group,
+    values_from = n_pct
+  )
+
+households |> 
+  tabyl(strata, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+  adorn_totals(c("col")) |> 
+  rename(Item = strata)
+
+
+#----------- function
+
+households |> 
+  count(strata, age_group, wt = ind_weights) |>
+  group_by(strata) |>
+  mutate(total = sum(n)) |>
+  ungroup() |>
+  mutate(
+    prop = n/total,
+    pct = paste0(round(prop * 100, 1), '%')
+  ) |>
+  mutate(
+    n_pct = paste0(pct, ' (', ceiling(n), ')')
+  )  |>
+  select(strata, age_group, n_pct) |>
+  pivot_wider(
+    names_from = age_group,
+    values_from = n_pct
+  )
+
+
+
+ct_single <- function(row, col, format = 'pct'){
+  
+  households |> 
+    count(strata, age_group, wt = ind_weights) |>
+    group_by(strata) |>
+    mutate(total = sum(n)) |>
+    ungroup() |>
+    mutate(
+      prop = n/total,
+      pct = paste0(round(prop * 100, 1), '%')
+    ) |>
+    mutate(
+      n_pct = paste0(pct, ' (', ceiling(n), ')')
+    )  |>
+    select(strata, age_group, n_pct) |>
+    pivot_wider(
+      names_from = age_group,
+      values_from = n_pct
+    )
+  
+  
+  households |> 
+    select(all_of(anal_vars), starts_with(col)) |> 
+    pivot_longer(
+      cols = starts_with(col),
+      names_to = 'item',
+      values_to = 'value'
+    ) |> 
+    group_by(!!as.name(row), item) |> 
+    summarise(
+      .groups = 'drop',
+      selected = sum(value == 1, na.rm = T),
+      total = sum(!is.na(value), na.rm = T),
+      prop = selected/total,
+      pct = paste0(round(prop * 100, 1), '%'),
+      full = paste0(pct, '(', selected,')')
+    ) |> 
+    select(!!as.name(row), item, full) |> 
+    mutate(
+      item = stringr::str_replace(item, paste0(col, '_'), '')
+    ) |> 
+    pivot_wider(
+      names_from = item,
+      values_from = full
+    )
+  
+}
+
+
+ct_single_aggregate <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_multi(.x, var))
+  
+  rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group)
+  )
+}

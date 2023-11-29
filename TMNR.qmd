@@ -167,8 +167,8 @@ listing <- listing |>
   mutate(
     age_group = case_when(
       age >= 50 ~ '50+',
-      age %in% 36:49 ~ '36-49',
-      age %in% 18:35 ~ '18-35',
+      age %in% 35:49 ~ '35-49',
+      age %in% 18:34 ~ '18-34',
       age %in% 5:17 ~ '5-17',
       age %in% 0:15 ~ '0-4'
     )
@@ -179,8 +179,8 @@ listing <- listing |>
 listing$age_group <- factor(listing$age_group, levels = c(
                                                   '0-4',
                                                   '5-17',
-                                                  '18-35',
-                                                  '36-49',
+                                                  '18-34',
+                                                  '35-49',
                                                   '50+'
                                                 ))
 
@@ -286,6 +286,30 @@ households <- households |>
         TRUE ~ 'Other'
       )
     )
+
+## add weights
+kweights <- readr::read_csv('./karst_weights.csv')
+
+listing <- listing |> 
+  left_join(
+    kweights,
+    by = c('interview__key')
+  )
+
+
+households <- households |> 
+  left_join(
+    kweights,
+    by = c('interview__key')
+  )
+
+
+
+k2 <- k2 |> 
+  left_join(
+    kweights,
+    by = c('interview__key')
+  )
 ```
 
 ```{r}
