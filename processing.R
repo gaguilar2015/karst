@@ -196,8 +196,9 @@ households |>
 #----------- function
 
 households |> 
-  count(strata, age_group, wt = ind_weights) |>
-  group_by(strata) |>
+  count(k1, wt = ind_weights) |>
+  mutate(Item = 'Total') |> 
+  group_by(Item) |>
   mutate(total = sum(n)) |>
   ungroup() |>
   mutate(
@@ -207,19 +208,19 @@ households |>
   mutate(
     n_pct = paste0(pct, ' (', ceiling(n), ')')
   )  |>
-  select(strata, age_group, n_pct) |>
+  select(Item, k1, n_pct) |>
   pivot_wider(
-    names_from = age_group,
+    names_from = k1,
     values_from = n_pct
-  )
+  ) 
 
 
 
 ct_single <- function(row, col, format = 'pct'){
   
   households |> 
-    count(strata, age_group, wt = ind_weights) |>
-    group_by(strata) |>
+    count(!!as.name(row), !!as.name(col), wt = ind_weights) |>
+    group_by(!!as.name(row)) |>
     mutate(total = sum(n)) |>
     ungroup() |>
     mutate(
@@ -229,15 +230,39 @@ ct_single <- function(row, col, format = 'pct'){
     mutate(
       n_pct = paste0(pct, ' (', ceiling(n), ')')
     )  |>
-    select(strata, age_group, n_pct) |>
+    select(!!as.name(row), !!as.name(col), n_pct) |>
     pivot_wider(
-      names_from = age_group,
+      names_from = !!as.name(col),
       values_from = n_pct
     )
   
+}
+
+ct_single_aggregate <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_single(.x, var))
+  
+  df <- rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group)
+  )
+  
+  df[is.na(df)] <- '0% (0)'
+  
+  df
+}
+
+ct_single_aggregate('k1')
+
+
+#######----
+
+ct_multi <- function(row, col, format = 'pct'){
+  
   
   households |> 
-    select(all_of(anal_vars), starts_with(col)) |> 
+    select(all_of(anal_vars), starts_with(col), ind_weights) |> 
     pivot_longer(
       cols = starts_with(col),
       names_to = 'item',
@@ -246,8 +271,8 @@ ct_single <- function(row, col, format = 'pct'){
     group_by(!!as.name(row), item) |> 
     summarise(
       .groups = 'drop',
-      selected = sum(value == 1, na.rm = T),
-      total = sum(!is.na(value), na.rm = T),
+      selected = sum((value == 1) * ind_weights, na.rm = T) ,
+      total = sum(!is.na(value) * ind_weights, na.rm = T),
       prop = selected/total,
       pct = paste0(round(prop * 100, 1), '%'),
       full = paste0(pct, '(', selected,')')
@@ -264,7 +289,7 @@ ct_single <- function(row, col, format = 'pct'){
 }
 
 
-ct_single_aggregate <- function(var){
+ct_multi_aggregate <- function(var){
   df_list <- purrr::map(anal_vars, ~ct_multi(.x, var))
   
   rbind(df_list[[1]] |> rename(Item = strata),
@@ -274,3 +299,54 @@ ct_single_aggregate <- function(var){
         df_list[[5]] |> rename(Item = workertype_group)
   )
 }
+
+ct_multi_aggregate('k4')
+
+
+households |> 
+  select(strata, starts_with('k4'), ind_weights) |> 
+  pivot_longer(
+    cols = starts_with('k4'),
+    names_to = 'item',
+    values_to = 'value'
+  ) |> 
+  mutate(
+    value = as.numeric(value) * ind_weights,
+    ind_weights = ind_weights * !is.na(value)
+  ) |> 
+  group_by(strata, item) |> 
+  summarise(
+    .groups = 'drop',
+    selected = ceiling(sum(value, na.rm = T)),
+    total = ceiling(sum(ind_weights, na.rm = T)),
+    prop = selected/total,
+    pct = paste0(round(prop * 100, 1), '%'),
+    full = paste0(pct, '(', selected,')')
+  ) |> 
+  select(!!as.name(row), item, full) |> 
+  mutate(
+    item = stringr::str_replace(item, paste0(col, '_'), '')
+  ) |> 
+  pivot_wider(
+    names_from = item,
+    values_from = full
+  )
+
+k2 |> as_factor() |> 
+  filter(!is.na(k2_roster__id)) |> 
+  select(interview__key, k2_roster__id, k2_rate) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = k2_rate
+  )
+
+
+k2 |> as_factor() |> 
+  filter(!is.na(k2_roster__id)) |> 
+  ggplot(aes(x = k2_roster__id)) +
+  geom_bar(aes(fill = k2_rate)) +
+  coord_flip() + 
+  scale_fill_manual(values = MetBrewer::met.brewer(name="Hokusai2", n=5, type="discrete"))
+
+library(HH)  
+

@@ -25,6 +25,9 @@ library(stringr)
 library(janitor)
 library(DBI)
 library(gt)
+library(HH)
+
+select <- dplyr::select
 
 # for modifying text size in charts
 
@@ -90,6 +93,7 @@ base <- read_sav('./KARST_FILES/tmnr.sav') |>
 base_vars <- base |> 
   select(interview__key, 
          ctv, 
+         strata,
          ed, 
          building_number, 
          household_number, 
@@ -271,6 +275,24 @@ households <- households |>
     listing_head_vars,
     by = c('interview__key')
   )
+
+k2 <- k2 |> 
+  left_join(
+    listing_head_vars,
+    by = c('interview__key')
+  ) |> 
+      mutate(
+      education = case_when(
+        ed_attainment == 'Primary' ~ 'Primary',
+        ed_attainment %in% c('Secondary', 'Tertiary') ~ 'Secondary or Higher',
+        TRUE ~ 'Other'
+      ),
+      ethnicity = case_when(
+        ethnicity_group %in% 
+          c('Creole', 'Mestizo/Hispanic/Latino') ~ ethnicity_group,
+        TRUE ~ 'Other'
+      )
+    )
 
 
 households <- households |> 
@@ -709,44 +731,61 @@ anal_vars <- c('strata', 'age_group', 'ethnicity', 'education', 'workertype_grou
 
 # function to tabulation a specified variable
 
-ct_single <- function(var, national = F){
+ct_single_helper <- function(row, col, format = 'pct'){
   
+  households |> 
+    count(!!as.name(row), !!as.name(col), wt = ind_weights) |>
+    group_by(!!as.name(row)) |>
+    mutate(total = sum(n)) |>
+    ungroup() |>
+    mutate(
+      prop = n/total,
+      pct = paste0(round(prop * 100, 1), '%')
+    ) |>
+    mutate(
+      n_pct = paste0(pct, ' (', ceiling(n), ')')
+    )  |>
+    select(!!as.name(row), !!as.name(col), n_pct) |>
+    pivot_wider(
+      names_from = !!as.name(col),
+      values_from = n_pct
+    )
   
-  table_strata <- households |> 
-    tabyl(strata, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    rename(Item = strata)
-  
-  table_age <- households |> 
-    tabyl(age_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    rename(Item = age_group)
-  
-  table_ethnicity <- households |> 
-    tabyl(ethnicity, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    rename(Item = ethnicity) 
- 
-  table_education <- households |> 
-    tabyl(education, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    rename(Item = education) 
-  
-  table_worker <- households |> 
-    tabyl(workertype_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("row", "col")) |> 
-    rename(Item = workertype_group) 
-  
+}
 
+ct_single <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_single_helper(.x, var))
   
-  table <- rbind(table_strata, 
-                 table_age, 
-                 table_education, 
-                 table_ethnicity, 
-                 table_worker)
+  totals <-  households |> 
+    count(!!as.name(var), wt = ind_weights) |>
+    mutate(Item = 'Total') |> 
+    group_by(Item) |>
+    mutate(total = sum(n)) |>
+    ungroup() |>
+    mutate(
+      prop = n/total,
+      pct = paste0(round(prop * 100, 1), '%')
+    ) |>
+    mutate(
+      n_pct = paste0(pct, ' (', ceiling(n), ')')
+    )  |>
+    select(Item, !!as.name(var), n_pct) |>
+    pivot_wider(
+      names_from = !!as.name(var),
+      values_from = n_pct
+    )
   
-  table
+  df <- rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group),
+        totals
+  )
   
+  df[is.na(df)] <- '0% (0)'
+  
+  df
 }
 
 ct_gt <- function(table, tit, sub){
@@ -763,11 +802,11 @@ ct_gt <- function(table, tit, sub){
       rows = 3:5
     ) |> 
     tab_row_group(
-      label = md('**Education Completed**'),
+      label = md('**Ethnicity**'),
       rows = 6:8
     ) |> 
     tab_row_group(
-      label = md('**Ethnicity**'),
+      label = md('**Education Completed**'),
       rows = 9:11
     ) |> 
     tab_row_group(
@@ -850,21 +889,25 @@ ct_multi <- function(row, col, format = 'pct'){
   
   
   households |> 
-    select(all_of(anal_vars), starts_with(col)) |> 
+    select(all_of(anal_vars), starts_with(col), ind_weights) |> 
     pivot_longer(
       cols = starts_with(col),
       names_to = 'item',
       values_to = 'value'
     ) |> 
+    mutate(
+      value = as.numeric(value) * ind_weights,
+      ind_weights = ind_weights * !is.na(value)
+    ) |> 
     group_by(!!as.name(row), item) |> 
     summarise(
       .groups = 'drop',
-      selected = sum(value == 1, na.rm = T),
-      total = sum(!is.na(value), na.rm = T),
+      selected = ceiling(sum(value, na.rm = T)),
+      total = ceiling(sum(ind_weights, na.rm = T)),
       prop = selected/total,
       pct = paste0(round(prop * 100, 1), '%'),
       full = paste0(pct, '(', selected,')')
-    ) |> 
+    ) |>
     select(!!as.name(row), item, full) |> 
     mutate(
       item = stringr::str_replace(item, paste0(col, '_'), '')
@@ -888,12 +931,13 @@ ct_multi_aggregate <- function(var){
   )
 }
 
+
 ```
 
 ### K1
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| echo: false
@@ -910,7 +954,7 @@ df |>
 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| echo: false
@@ -927,10 +971,175 @@ df |>
 ```
 :::
 
+### K2
+
+```{r}
+#| label: k2-prep
+#| echo: false
+
+ct_k2_helper <- function(row, k2_var){
+  k2 |> 
+  filter(k2_roster__id == k2_var) |> 
+  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+  count(!!as.name(row), k2_rate, wt = ind_weights) |> 
+  mutate(n = ceiling(n)) |> 
+  group_by(!!as.name(row)) |>
+  mutate(total = sum(n)) |>
+  ungroup() |>
+  mutate(
+    prop = n/total,
+    pct = paste0(round(prop * 100, 1), '%')
+  ) |>
+  mutate(
+    n_pct = paste0(pct, ' (', ceiling(n), ')')
+  ) |> 
+  select(!!as.name(row), k2_rate, n_pct) |> 
+  pivot_wider(names_from = k2_rate, values_from = n_pct) |> 
+  select(!!as.name(row), `1`, `2`, `3`, `4`, `5`)
+}
+
+ct_k2 <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_k2_helper(.x, var))
+  
+  totals <- k2 |> 
+    filter(k2_roster__id == var) |> 
+    mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+    count(k2_rate, wt = ind_weights) |> 
+    mutate(Item = 'Total') |> 
+    mutate(n = ceiling(n)) |> 
+    group_by(Item) |>
+    mutate(total = sum(n)) |>
+    ungroup() |>
+    mutate(
+      prop = n/total,
+      pct = paste0(round(prop * 100, 1), '%')
+    ) |>
+    mutate(
+      n_pct = paste0(pct, ' (', ceiling(n), ')')
+    ) |> 
+    select(Item, k2_rate, n_pct) |> 
+    pivot_wider(names_from = k2_rate, values_from = n_pct) |> 
+    select(Item, `1`, `2`, `3`, `4`, `5`)
+  
+  
+  df <- rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group),
+        totals
+  )
+  
+  df[is.na(df)] <- '0% (0)'
+  
+  df
+}
+
+ct_k2_avg_helper <- function(var){
+  k2 |> 
+  filter(!is.na(k2_roster__id)) |> 
+  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+  group_by(!!as.name(var), k2_roster__id) |> 
+  summarise(
+    .groups = 'drop',
+    avg = round(mean(k2_rate),2)
+  ) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = avg
+  )
+}
+
+
+```
+
+::: panel-tabset
+### K2.1
+
+```{r}
+#| echo: false
+ct_k2(1) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Protecting wildlife and nature*')
+  )
+```
+
+### K2.2
+
+```{r}
+#| echo: false
+ct_k2(2) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Using Resources Wisely*')
+  )
+```
+
+### K2.3
+
+```{r}
+#| echo: false
+ct_k2(3) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Reducing Pollution*')
+  )
+```
+
+### K2.4
+
+```{r}
+#| echo: false
+ct_k2(4) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Clean and reusable power*')
+  )
+```
+
+### K2.5
+
+```{r}
+#| echo: false
+ct_k2(5) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Habitat Restoration*')
+  )
+```
+
+### K2.6
+
+```{r}
+#| echo: false
+ct_k2(6) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Waste Reduction and Recycling*')
+  )
+```
+
+### K2.7
+
+```{r}
+#| echo: false
+ct_k2(7) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Education and Advocacy*')
+  )
+
+```
+:::
+
+
+
+
 ### K3
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| echo: false
@@ -946,7 +1155,7 @@ df |>
   )
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| echo: false
@@ -966,7 +1175,7 @@ df |>
 ### K3_1
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| echo: false
@@ -982,7 +1191,7 @@ df |>
   )
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| echo: false
@@ -1003,7 +1212,7 @@ df |>
 ### K4
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| echo: false
@@ -1045,13 +1254,13 @@ df |>
 
 ```
 
-### Percentages
+### Unweighted
 :::
 
 ### K5
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k5
@@ -1085,7 +1294,7 @@ df |>
   )
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k5-pct
@@ -1123,7 +1332,7 @@ df |>
 ### K6
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k6
@@ -1140,7 +1349,7 @@ df |>
   )  
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k6-pct
@@ -1161,7 +1370,7 @@ df |>
 ### K7
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k7
@@ -1211,13 +1420,13 @@ df |>
   )
 ```
 
-### Percentages
+### Unweighted
 :::
 
 ### K8
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k8
@@ -1305,13 +1514,13 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 :::
 
 ### K9.1
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k9
@@ -1328,7 +1537,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k9-pct
@@ -1350,7 +1559,7 @@ df |>
 ### K9.2
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k9.2
@@ -1367,7 +1576,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k9.2-pct
@@ -1391,7 +1600,7 @@ df |>
 ### K9.3
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k9.3
@@ -1408,7 +1617,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k9.3-pct
@@ -1432,7 +1641,7 @@ df |>
 ### K9.4
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k9.4
@@ -1449,7 +1658,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k9.4-pct
@@ -1473,7 +1682,7 @@ df |>
 ### K9.5
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k9.5
@@ -1490,7 +1699,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k9.5-pct
@@ -1514,7 +1723,7 @@ df |>
 ### K9.6
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k9.6
@@ -1531,7 +1740,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k9.6-pct
@@ -1553,7 +1762,7 @@ df |>
 ### K10
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k10
@@ -1570,7 +1779,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k10-pct
@@ -1594,7 +1803,7 @@ df |>
 ### K11
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k11
@@ -1636,7 +1845,7 @@ df |>
 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k11-pct
@@ -1653,7 +1862,7 @@ df |>
 ### K12
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k12
@@ -1670,7 +1879,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k12-pct
@@ -1692,7 +1901,7 @@ df |>
 ### K13
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: k13
@@ -1709,7 +1918,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: k13-pct
@@ -2303,7 +2512,7 @@ df |>
 ### A4
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a4
@@ -2320,7 +2529,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a4-pct
@@ -2342,7 +2551,7 @@ df |>
 ### A5
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a5
@@ -2359,7 +2568,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a5-pct
@@ -2381,7 +2590,7 @@ df |>
 ### A6
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a6
@@ -2398,7 +2607,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a6-pct
@@ -2420,7 +2629,7 @@ df |>
 ### A7
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a7
@@ -2437,7 +2646,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a7-pct
@@ -2459,7 +2668,7 @@ df |>
 ### A8
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a82
@@ -2489,7 +2698,7 @@ df |>
 ### A9
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a8
@@ -2510,7 +2719,7 @@ df |>
 ### A10.1
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.1
@@ -2527,7 +2736,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.1-pct
@@ -2549,7 +2758,7 @@ df |>
 ### A10.2
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.2
@@ -2566,7 +2775,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.2-pct
@@ -2588,7 +2797,7 @@ df |>
 ### A10.3
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.3
@@ -2605,7 +2814,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.3-pct
@@ -2627,7 +2836,7 @@ df |>
 ### A10.4
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.4
@@ -2644,7 +2853,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.4-pct
@@ -2666,7 +2875,7 @@ df |>
 ### A10.5
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.5
@@ -2683,7 +2892,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.5-pct
@@ -2705,7 +2914,7 @@ df |>
 ### A10.6
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.6
@@ -2722,7 +2931,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.6-pct
@@ -2744,7 +2953,7 @@ df |>
 ### A10.7
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.7
@@ -2761,7 +2970,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.7-pct
@@ -2783,7 +2992,7 @@ df |>
 ### A10.8
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.8
@@ -2800,7 +3009,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.8-pct
@@ -2822,7 +3031,7 @@ df |>
 ### A10.9
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a10.9
@@ -2839,7 +3048,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a10.9-pct
@@ -2861,7 +3070,7 @@ df |>
 ### A11
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a11
@@ -2878,7 +3087,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a11-pct
@@ -2900,7 +3109,7 @@ df |>
 ### A12
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a12
@@ -2917,7 +3126,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a12-pct
@@ -2939,7 +3148,7 @@ df |>
 ### A13
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: a13
@@ -2956,7 +3165,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: a13-pct
@@ -2980,7 +3189,7 @@ df |>
 ### P1
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p1
@@ -2997,7 +3206,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p1-pct
@@ -3296,7 +3505,7 @@ df |>
 ### P5
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p5
@@ -3313,7 +3522,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p5-pct
@@ -3336,7 +3545,7 @@ df |>
 ### P6
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p6
@@ -3353,7 +3562,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p6-pct
@@ -3376,7 +3585,7 @@ df |>
 ### P7
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p7
@@ -3393,7 +3602,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p7-pct
@@ -3415,7 +3624,7 @@ df |>
 ### P8
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p8
@@ -3437,7 +3646,7 @@ df |>
 ### P9.1
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p9.1
@@ -3454,7 +3663,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p9.1-pct
@@ -3477,7 +3686,7 @@ df |>
 ### P9.2
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p9.2
@@ -3494,7 +3703,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p9.2-pct
@@ -3517,7 +3726,7 @@ df |>
 ### P9.3
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p9.3
@@ -3534,7 +3743,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p9.3-pct
@@ -3557,7 +3766,7 @@ df |>
 ### P9.4
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p9.4
@@ -3574,7 +3783,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p9.4-pct
@@ -3598,7 +3807,7 @@ df |>
 ### P10
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p10
@@ -3615,7 +3824,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p10-pct
@@ -3639,7 +3848,7 @@ df |>
 ### P11
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p11
@@ -3656,7 +3865,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p11-pct
@@ -3680,7 +3889,7 @@ df |>
 ### P12
 
 ::: panel-tabset
-### Counts
+### Weighted
 
 ```{r}
 #| label: p12
@@ -3697,7 +3906,7 @@ df |>
   ) 
 ```
 
-### Percentages
+### Unweighted
 
 ```{r}
 #| label: p12-pct

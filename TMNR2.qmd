@@ -1,0 +1,1116 @@
+---
+title: "TMNR2"
+author: "Belize Analytics"
+format: 
+  html:
+    theme: zephyr
+    page-layout: article
+    toc: true
+    toc-depth: 4
+editor: visual
+---
+
+## TMNR Base Analysis
+
+```{r}
+#| include: false
+#| label: libraries
+
+# load libraries
+library(dplyr)
+library(tidyr)
+library(haven)
+library(ggplot2)
+library(stringr)
+library(janitor)
+library(DBI)
+library(gt)
+library(HH)
+
+select <- dplyr::select
+
+# for modifying text size in charts
+
+gg_text_charts <- theme(
+  text = element_text(size = 15)
+)
+
+# theme for charts where we want to remove x-axis labels and lines
+
+gg_blank_x <- theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.border = element_blank()
+  )
+
+# theme for charts where we want to remove y-axis labels and lines
+
+gg_blank_y <- theme_bw() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.border = element_blank()
+  )
+
+```
+
+```{r}
+#| include: false
+#| label: load-data
+
+# interview keys of questionnaires to ignore/exclude
+
+ignore_qs <- c('79-84-83-57',
+               '30-26-25-41',
+               '66-59-17-95',
+               '92-56-91-59',
+               '70-81-50-38',
+               '17-39-72-74'
+               )
+
+# import base (household) file, change CTVs to use factor labels, 
+# filter out questionnaires to ignore
+
+base <- read_sav('./KARST_FILES/tmnr.sav') |> 
+  mutate(
+    ctv = as_factor(ctv),
+    strata = case_when(
+      ctv %in% c('El Progress (7 Miles)/Upper Barton Creek', 
+                 'Lower Barton Creek/New Holland/East Land') ~ 'Mennonite',
+      TRUE ~ 'Non-Mennonite'
+    )
+  ) |> 
+  filter(
+    !interview__key %in% ignore_qs
+  )
+
+# extract cover-page variables from the base file
+# these will later be merged to other child datasets
+
+base_vars <- base |> 
+  select(interview__key, 
+         ctv, 
+         strata,
+         ed, 
+         building_number, 
+         household_number, 
+         dwelling_number, 
+         result) 
+
+# import member listing dataset
+
+listing <- read_sav('./KARST_FILES/listingRoster.sav')
+
+# merge cover variables to the listing data 
+
+listing <- base_vars |> 
+  left_join(
+    listing,
+    by = c('interview__key')
+  ) 
+
+# import k2 roster dataset
+
+k2 <- read_sav('./KARST_FILES/k2_roster.sav') 
+
+# merge cover variables to the k2 dataset
+
+k2 <- base_vars |> 
+  left_join(
+    k2, 
+    by = c('interview__key')
+  )
+
+
+# import sample file and fix/standardize ctv variable to match
+# the ctv names in the actual dataset
+
+ksample <- readxl::read_excel('./ksample2.xlsx') |> 
+  select(interview_key, 
+         ed, 
+         head_name,
+         ctv_official, 
+         building_number, 
+         dwelling_number, 
+         household_number,
+         GPS_Building_Navig__Latitude,
+         GPS_Building_Navig__Longitude
+         ) |> 
+  mutate(
+    ctv = case_when(
+      ctv_official == 'Lower Barton Creek' ~ 'Lower Barton Creek/New Holland/East Land',
+      ctv_official == 'Upper Barton Creek' ~ 'El Progress (7 Miles)/Upper Barton Creek',
+      TRUE ~ ctv_official
+    )
+  )
+
+
+```
+
+```{r}
+#| include: false
+#| label: extra-prep
+
+# derive respondent datasets
+
+households <- base |> 
+  filter(result == 1)
+
+listing <- listing |> 
+  filter(result == 1)
+
+k2 <- k2 |> 
+  filter(result == 1)
+
+# add age group variable
+
+listing <- listing |>  
+  mutate(
+    age_group = case_when(
+      age >= 50 ~ '50+',
+      age %in% 35:49 ~ '35-49',
+      age %in% 18:34 ~ '18-34',
+      age %in% 5:17 ~ '5-17',
+      age %in% 0:15 ~ '0-4'
+    )
+  ) 
+
+# fix the factor-levels of the age-group variable
+
+listing$age_group <- factor(listing$age_group, levels = c(
+                                                  '0-4',
+                                                  '5-17',
+                                                  '18-34',
+                                                  '35-49',
+                                                  '50+'
+                                                ))
+
+# simplify ethnicity groups
+
+listing <- listing |> 
+  mutate(
+    ethnicity = as_factor(ethnicity)
+  ) |> 
+  mutate(
+    ethnicity_group = case_when(
+      ethnicity %in% c('Mestizo/Hispanic/Latino', 'Creole', 'Mennonite') ~ 
+        as.character(ethnicity),
+      TRUE ~ 'Other'
+    )
+  ) 
+
+# add educational attainment level
+
+listing <- listing |> 
+  mutate(
+    ed_attainment = case_when(
+      ed_attending == 1 & ed_clevel %in% 0:8 ~ 'None/Some Primary',
+      ed_attending == 1 & ed_clevel %in% 9:12 ~ 'Primary',
+      ed_attending == 1 & ed_clevel %in% 17 ~ 'Secondary',
+      ed_attending == 1 & ed_clevel %in% 18:19 ~ 'Tertiary',
+      ed_attending == 2 & ed_llevel %in% 0:7 ~ 'None/Some Primary',
+      ed_attending == 2 & ed_llevel %in% 8:11 ~ 'Primary',
+      ed_attending == 2 & ed_llevel %in% 12 ~ 'Secondary',
+      ed_attending == 2 & ed_llevel %in% 17:19 ~ 'Tertiary',
+      ed_llevel == 21 ~ 'Never Attended',
+      ed_llevel == 20 ~ 'None/Some Primary',
+      ed_llevel == 999999 | ed_clevel == 999999 ~ 'Not Stated',
+      !is.na(ed_attending) ~ 'Other'
+    )
+  )
+
+# fix factor levels for ed attainment variables
+
+listing$ed_attainment <- factor(listing$ed_attainment, 
+                                levels = c('Primary',
+                                           'Secondary',
+                                           'Tertiary',
+                                           'None/Some Primary',
+                                           'Never Attended',
+                                           'Not Stated'))
+
+
+# simplify employment groups
+
+listing <- listing |> 
+  mutate(
+    workertype_group = case_when(
+      workertype %in% 1:2 ~ 'Self Employed',
+      workertype %in% 3:4 ~ 'Employee',
+      workertype %in% 5:888888 ~ 'Other',
+      workertype == 999999 ~ 'Not Stated',
+      employed == 2 ~ 'Not Employed'
+    )
+  ) 
+
+
+# fix factor levels for worker type variables
+
+listing$workertype_group <- factor(listing$workertype_group, 
+                                levels = c('Employee',
+                                           'Self Employed',
+                                           'Other',
+                                           'Not Employed',
+                                           'Not Stated'))
+
+# extract HH head demographic variables to merge with household data
+
+listing_head_vars <- listing |> 
+  filter(rel == 1) |> 
+  select(interview__key, 
+         ctv,
+         sex,
+         age_group,
+         ethnicity_group,
+         ed_attainment, 
+         employed,
+         workertype_group)
+
+# merge variables back with HH data
+households <- households |> 
+  left_join(
+    listing_head_vars,
+    by = c('interview__key')
+  )
+
+k2 <- k2 |> 
+  left_join(
+    listing_head_vars,
+    by = c('interview__key')
+  ) |> 
+      mutate(
+      education = case_when(
+        ed_attainment == 'Primary' ~ 'Primary',
+        ed_attainment %in% c('Secondary', 'Tertiary') ~ 'Secondary or Higher',
+        TRUE ~ 'Other'
+      ),
+      ethnicity = case_when(
+        ethnicity_group %in% 
+          c('Creole', 'Mestizo/Hispanic/Latino') ~ ethnicity_group,
+        TRUE ~ 'Other'
+      )
+    )
+
+
+households <- households |> 
+    mutate(
+      education = case_when(
+        ed_attainment == 'Primary' ~ 'Primary',
+        ed_attainment %in% c('Secondary', 'Tertiary') ~ 'Secondary or Higher',
+        TRUE ~ 'Other'
+      ),
+      ethnicity = case_when(
+        ethnicity_group %in% 
+          c('Creole', 'Mestizo/Hispanic/Latino') ~ ethnicity_group,
+        TRUE ~ 'Other'
+      )
+    )
+
+## add weights
+kweights <- readr::read_csv('./karst_weights.csv')
+
+listing <- listing |> 
+  left_join(
+    kweights,
+    by = c('interview__key')
+  )
+
+
+households <- households |> 
+  left_join(
+    kweights,
+    by = c('interview__key')
+  )
+
+
+
+k2 <- k2 |> 
+  left_join(
+    kweights,
+    by = c('interview__key')
+  )
+```
+
+```{r}
+#| include: false
+#| label: export-datasets
+
+# write_sav(households, './respondent/households.sav')
+# write_sav(listing, './respondent/members.sav')
+# write_sav(k2, './respondent/k2.sav')
+```
+
+## Basic Descriptives
+
+Survey results.
+
+```{r}
+#| echo: false
+
+# A tables ---------
+
+# SAMPLE frequencies, by CTV and ED
+
+sample_ctv <- ksample |> 
+  count(ctv) |> 
+  rename(
+    Sampled = n
+  )
+
+sample_ed <- ksample |> 
+  count(ctv, ed) |> 
+  rename(
+    Sampled = n
+  )
+
+# SUBMITTED QUESTIONNAIRE frequencies
+
+submitted_ctv <- base |> 
+  count(ctv) |> 
+    rename(
+    Submitted = n
+  )
+
+submitted_ed <- base |> 
+  count(ctv, ed) |> 
+    rename(
+    Submitted = n
+  )
+
+# COMPLETED QUESTIONNAIRE frequencies
+
+completed_ctv <- base |> 
+  filter(result == 1) |> 
+  count(ctv) |> 
+    rename(
+    Completed = n
+  )
+
+completed_ed <- base |> 
+  filter(result == 1) |> 
+  count(ctv, ed) |> 
+    rename(
+    Completed = n
+  )
+
+# MERGE CTV-level frequencies
+
+df_ctv <- sample_ctv |> 
+  left_join(
+    submitted_ctv, 
+    by = c('ctv')
+  ) |> 
+  left_join(
+    completed_ctv,
+    by = c('ctv')
+  ) 
+  
+
+# MERGE ED-level frequencies
+
+df_ed <- sample_ed |> 
+  left_join(
+    submitted_ed, 
+    by = c('ctv', 'ed')
+  ) |> 
+  left_join(
+    completed_ed,
+    by = c('ctv', 'ed')
+  ) 
+  
+# derive totals at the national level
+
+df_all <- df_ctv |> 
+  summarise(
+    Sampled = sum(Sampled),
+    Submitted = sum(Submitted),
+    Completed = sum(Completed),
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(), '%')
+  ) |> 
+  mutate(
+    ctv = 'All',
+    ed = 'All',
+    .before = 'Sampled'
+  )
+
+
+```
+
+::: panel-tabset
+### Community
+
+```{r}
+#| echo: false
+
+df_ctv <- df_ctv |> 
+  mutate(
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(1), '%')
+  ) |> 
+  rbind(df_all |> select(-ed))
+
+
+df_ctv |> gt()
+
+downloadthis::download_this(
+  df_ctv,
+  output_name = 'submitted_ctv',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+
+### ED
+
+```{r}
+#| echo: false
+
+df_ed <- df_ed |> 
+    mutate(
+    `Completed %` = paste0(((Completed/Sampled) * 100) |> round(1), '%')
+  ) |> 
+    rbind(df_all)
+
+df_ed |> gt()
+
+downloadthis::download_this(
+  df_ed,
+  output_name = 'submitted_ed',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+```
+:::
+
+Characteristics of respondents
+
+```{r}
+#| echo: false
+#| warning: false
+
+# derive tabulations for basic demographic variables
+# for ALL individuals
+
+ind_ages <- listing |> 
+  tabyl(age_group, show_missing_levels = F) |> 
+  select(Item = age_group, Count = n, Percent = percent)
+
+ind_sex <- listing |> 
+  mutate(sex = as_factor(sex)) |> 
+  tabyl(sex, show_missing_levels = F) |> 
+  select(Item = sex, Count = n, Percent = percent)
+
+ind_community <- listing |> 
+  tabyl(ctv, show_missing_levels = F) |> 
+  select(Item = ctv, Count = n, Percent = percent)
+
+ind_ethnicity <- listing |> 
+  tabyl(ethnicity_group, show_missing_levels = F) |> 
+  select(Item = ethnicity_group, Count = n, Percent = percent)
+
+ind_education <- listing |> 
+  tabyl(ed_attainment, show_missing_levels = F) |> 
+  select(Item = ed_attainment, Count = n, Percent = percent)
+
+ind_employment <- listing |> 
+  mutate(employed = as_factor(employed)) |> 
+  tabyl(employed, show_missing_levels = F) |> 
+  select(Item = employed, Count = n, Percent = percent)
+
+ind_worker <- listing |> 
+  tabyl(workertype_group, show_missing_levels = F) |> 
+  select(Item = workertype_group, Count = n, Percent = percent)
+
+ind_descriptives <- 
+  rbind(ind_sex, 
+        ind_ages, 
+        ind_ethnicity, 
+        ind_education,
+        ind_employment,
+        ind_worker,
+        ind_community
+        ) |> 
+  mutate(
+    Percent = paste0(round(Percent*100,1), '%')
+  )
+
+
+all_ind_descriptives <- ind_descriptives |> 
+  gt(rowname_col = "Item") |>
+  tab_row_group(
+    label = md("**Community**"),
+    rows = 27:33
+  ) |> 
+  tab_row_group(
+    label = md("**Worker Type**"),
+    rows = 22:26
+  )  |> 
+  tab_row_group(
+    label = md("**Employed**"),
+    rows = 19:21
+  ) |> 
+  tab_row_group(
+    label = md("**Highest Education Completed**"),
+    rows = 12:18
+  ) |> 
+  tab_row_group(
+    label = md("**Ethnicity**"),
+    rows = 8:11
+  ) |> 
+  tab_row_group(
+    label = md("**Age Group**"),
+    rows = 3:7
+  ) |> 
+  tab_row_group(
+    label = md("**Sex**"),
+    rows = 1:2
+  ) |> 
+  cols_align(
+  align = 'left',
+  columns = c('Item')
+) |> 
+      tab_style(
+        style = cell_text(align = "left", indent = px(20)),
+        locations = cells_stub()
+    )
+
+# derive tabulations for basic demographic variables
+# for HH HEAD ONLY
+
+ind_ages <- listing_head_vars |> 
+  tabyl(age_group, show_missing_levels = F) |> 
+  select(Item = age_group, Count = n, Percent = percent)
+
+ind_sex <- listing_head_vars |> 
+  mutate(sex = as_factor(sex)) |> 
+  tabyl(sex, show_missing_levels = F) |> 
+  select(Item = sex, Count = n, Percent = percent)
+
+ind_community <- listing_head_vars |> 
+  tabyl(ctv, show_missing_levels = F) |> 
+  select(Item = ctv, Count = n, Percent = percent)
+
+ind_ethnicity <- listing_head_vars |> 
+  tabyl(ethnicity_group, show_missing_levels = F) |> 
+  select(Item = ethnicity_group, Count = n, Percent = percent)
+
+ind_education <- listing_head_vars |> 
+  tabyl(ed_attainment, show_missing_levels = F) |> 
+  select(Item = ed_attainment, Count = n, Percent = percent)
+
+ind_employment <- listing_head_vars |> 
+  mutate(employed = as_factor(employed)) |> 
+  tabyl(employed, show_missing_levels = F) |> 
+  select(Item = employed, Count = n, Percent = percent)
+
+ind_worker <- listing_head_vars |> 
+  tabyl(workertype_group, show_missing_levels = F) |> 
+  select(Item = workertype_group, Count = n, Percent = percent)
+
+head_descriptives <- 
+  rbind(ind_sex, 
+        ind_ages, 
+        ind_ethnicity, 
+        ind_education,
+        ind_employment,
+        ind_worker,
+        ind_community
+        ) |> 
+  mutate(
+    Percent = paste0(round(Percent*100,1), '%')
+  )
+
+
+head_ind_descriptives <- head_descriptives |> 
+  gt(rowname_col = "Item") |>
+  tab_row_group(
+    label = md("**Community**"),
+    rows = 22:28
+  ) |> 
+  tab_row_group(
+    label = md("**Worker Type**"),
+    rows = 19:21
+  )  |> 
+  tab_row_group(
+    label = md("**Employed**"),
+    rows = 17:18
+  ) |> 
+  tab_row_group(
+    label = md("**Highest Education Completed**"),
+    rows = 10:16
+  ) |> 
+  tab_row_group(
+    label = md("**Ethnicity**"),
+    rows = 6:9
+  ) |> 
+  tab_row_group(
+    label = md("**Age Group**"),
+    rows = 3:5
+  ) |> 
+  tab_row_group(
+    label = md("**Sex**"),
+    rows = 1:2
+  ) |> 
+  cols_align(
+  align = 'left',
+  columns = c('Item')
+) |> 
+      tab_style(
+        style = cell_text(align = "left", indent = px(20)),
+        locations = cells_stub()
+    )
+
+```
+
+::: panel-tabset
+### Household Heads
+
+```{r}
+#| echo: false
+#| label: descriptives-all
+
+head_ind_descriptives |> 
+  tab_header(
+    title = "Characterstics of Household Heads"
+  )
+
+downloadthis::download_this(
+  head_descriptives,
+  output_name = 'head_descriptives',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+
+### All Individuals
+
+```{r}
+#| echo: false
+#| label: descriptives-head
+
+
+all_ind_descriptives |> 
+  tab_header(
+    title = "Characterstics of Individuals"
+  )
+
+downloadthis::download_this(
+  ind_descriptives,
+  output_name = 'ind_descriptives',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+:::
+
+## KNOWLEDGE Area
+
+```{r}
+#| include: false
+#| label: tabulation-preparation
+
+# households <- 
+#   households |> 
+#   mutate(
+#     k1 = as_factor(k1),
+#     k3 = as_factor(k3),
+#     k3_1 = as_factor(k3_1),
+#   )
+
+households <- 
+  households |> as_factor()
+
+# variables to use in crosstab analyses
+
+anal_vars <- c('strata', 'age_group', 'ethnicity', 'education', 'workertype_group')
+
+# function to tabulation a specified variable
+
+ct_single_helper <- function(row, col, format = 'pct'){
+  
+  households |> 
+    count(!!as.name(row), !!as.name(col), wt = ind_weights) |>
+    group_by(!!as.name(row)) |>
+    mutate(total = sum(n)) |>
+    ungroup() |>
+    mutate(
+      prop = n/total,
+      pct = paste0(round(prop * 100, 1), '%')
+    ) |>
+    mutate(
+      n_pct = paste0(pct, ' (', ceiling(n), ')')
+    )  |>
+    select(!!as.name(row), !!as.name(col), n_pct) |>
+    pivot_wider(
+      names_from = !!as.name(col),
+      values_from = n_pct
+    )
+  
+}
+
+ct_single <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_single_helper(.x, var))
+  
+  totals <-  households |> 
+    count(!!as.name(var), wt = ind_weights) |>
+    mutate(Item = 'Total') |> 
+    group_by(Item) |>
+    mutate(total = sum(n)) |>
+    ungroup() |>
+    mutate(
+      prop = n/total,
+      pct = paste0(round(prop * 100, 1), '%')
+    ) |>
+    mutate(
+      n_pct = paste0(pct, ' (', ceiling(n), ')')
+    )  |>
+    select(Item, !!as.name(var), n_pct) |>
+    pivot_wider(
+      names_from = !!as.name(var),
+      values_from = n_pct
+    )
+  
+  df <- rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group),
+        totals
+  )
+  
+  df[is.na(df)] <- '0% (0)'
+  
+  df
+}
+
+ct_gt <- function(table, tit, sub){
+  
+  
+  table |> 
+    gt(rowname_col = 'Item') |> 
+    tab_row_group(
+      label = md('**Community Type**'),
+      rows = 1:2
+    ) |> 
+    tab_row_group(
+      label = md('**Age Group**'),
+      rows = 3:5
+    ) |> 
+    tab_row_group(
+      label = md('**Ethnicity**'),
+      rows = 6:8
+    ) |> 
+    tab_row_group(
+      label = md('**Education Completed**'),
+      rows = 9:11
+    ) |> 
+    tab_row_group(
+      label = md('**Worker Type**'),
+      rows = 12:14
+    ) |> 
+    row_group_order(
+      groups = c('**Community Type**', '**Age Group**', '**Education Completed**', '**Ethnicity**')
+    ) |> 
+    tab_style(
+      style = cell_text(align = "left", indent = px(20)),
+      locations = cells_stub()
+    ) |> 
+    tab_header(
+      title = tit,
+      subtitle = sub
+  )
+  
+}
+
+ct_single_pct <- function(var, national = F){
+  
+  
+  table_strata <- households |> 
+    tabyl(strata, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = strata)
+  
+  table_age <- households |> 
+    tabyl(age_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = age_group)
+  
+  table_ethnicity <- households |> 
+    tabyl(ethnicity, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = ethnicity)
+  
+  table_education <- households |> 
+    tabyl(education, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = education)
+  
+  table_worker <- households |> 
+    tabyl(workertype_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
+    adorn_totals(c("row", "col")) |> 
+    adorn_percentages(c('row')) |> 
+    adorn_pct_formatting(digits = 1) |> 
+    adorn_ns() |> 
+    rename(Item = workertype_group)
+  
+  
+  
+  table <- rbind(table_strata, 
+                 table_age, 
+                 table_education, 
+                 table_ethnicity, 
+                 table_worker)
+  
+  table 
+  
+}
+
+
+# tabulation functions for multi-select variables
+
+ct_multi <- function(row, col, format = 'pct'){
+  
+  
+  households |> 
+    select(all_of(anal_vars), starts_with(col), ind_weights) |> 
+    pivot_longer(
+      cols = starts_with(col),
+      names_to = 'item',
+      values_to = 'value'
+    ) |> 
+    mutate(
+      value = as.numeric(value) * ind_weights,
+      ind_weights = ind_weights * !is.na(value)
+    ) |> 
+    group_by(!!as.name(row), item) |> 
+    summarise(
+      .groups = 'drop',
+      selected = ceiling(sum(value, na.rm = T)),
+      total = ceiling(sum(ind_weights, na.rm = T)),
+      prop = selected/total,
+      pct = paste0(round(prop * 100, 1), '%'),
+      full = paste0(pct, '(', selected,')')
+    ) |>
+    select(!!as.name(row), item, full) |> 
+    mutate(
+      item = stringr::str_replace(item, paste0(col, '_'), '')
+    ) |> 
+    pivot_wider(
+      names_from = item,
+      values_from = full
+    )
+  
+}
+
+
+ct_multi_aggregate <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_multi(.x, var))
+  
+  rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group)
+  )
+}
+
+```
+
+## K2
+
+```{r}
+#| label: k2-prep
+#| echo: false
+
+ct_k2_helper <- function(row, k2_var){
+  k2 |> 
+  filter(k2_roster__id == k2_var) |> 
+  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+  count(!!as.name(row), k2_rate, wt = ind_weights) |> 
+  mutate(n = ceiling(n)) |> 
+  group_by(!!as.name(row)) |>
+  mutate(total = sum(n)) |>
+  ungroup() |>
+  mutate(
+    prop = n/total,
+    pct = paste0(round(prop * 100, 1), '%')
+  ) |>
+  mutate(
+    n_pct = paste0(pct, ' (', ceiling(n), ')')
+  ) |> 
+  select(!!as.name(row), k2_rate, n_pct) |> 
+  pivot_wider(names_from = k2_rate, values_from = n_pct) |> 
+  select(!!as.name(row), `1`, `2`, `3`, `4`, `5`)
+}
+
+ct_k2 <- function(var){
+  df_list <- purrr::map(anal_vars, ~ct_k2_helper(.x, var))
+  
+  totals <- k2 |> 
+    filter(k2_roster__id == var) |> 
+    mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+    count(k2_rate, wt = ind_weights) |> 
+    mutate(Item = 'Total') |> 
+    mutate(n = ceiling(n)) |> 
+    group_by(Item) |>
+    mutate(total = sum(n)) |>
+    ungroup() |>
+    mutate(
+      prop = n/total,
+      pct = paste0(round(prop * 100, 1), '%')
+    ) |>
+    mutate(
+      n_pct = paste0(pct, ' (', ceiling(n), ')')
+    ) |> 
+    select(Item, k2_rate, n_pct) |> 
+    pivot_wider(names_from = k2_rate, values_from = n_pct) |> 
+    select(Item, `1`, `2`, `3`, `4`, `5`)
+  
+  
+  df <- rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group),
+        totals
+  )
+  
+  df[is.na(df)] <- '0% (0)'
+  
+  df
+}
+
+ct_k2_avg_helper <- function(var){
+  k2 |> 
+  filter(!is.na(k2_roster__id)) |> 
+  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+  group_by(!!as.name(var), k2_roster__id) |> 
+  summarise(
+    .groups = 'drop',
+    avg = round(mean(k2_rate),2)
+  ) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = avg
+  )
+}
+
+
+```
+
+::: panel-tabset
+### K2.1
+
+```{r}
+#| echo: false
+ct_k2(1) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Protecting wildlife and nature*')
+  )
+```
+
+### K2.2
+
+```{r}
+#| echo: false
+ct_k2(2) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Using Resources Wisely*')
+  )
+```
+
+### K2.3
+
+```{r}
+#| echo: false
+ct_k2(3) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Reducing Pollution*')
+  )
+```
+
+### K2.4
+
+```{r}
+#| echo: false
+ct_k2(4) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Clean and reusable power*')
+  )
+```
+
+### K2.5
+
+```{r}
+#| echo: false
+ct_k2(5) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Habitat Restoration*')
+  )
+```
+
+### K2.6
+
+```{r}
+#| echo: false
+ct_k2(6) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Waste Reduction and Recycling*')
+  )
+```
+
+### K2.7
+
+```{r}
+#| echo: false
+ct_k2(7) |> 
+  ct_gt(
+    tit = 'Tabulations for question K2.1',
+    sub = md('On a scale of 1 to 5, with 5 being the highest, how would you rate your knowledge on *Education and Advocacy*')
+  )
+
+```
+:::
+
+### 
+
+Averages
+
+```{r}
+
+k2 |> 
+  filter(!is.na(k2_roster__id)) |> 
+  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+  group_by(strata, k2_roster__id) |> 
+  summarise(
+    .groups = 'drop',
+    avg = round(mean(k2_rate),2)
+  ) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = avg
+  )
+```
