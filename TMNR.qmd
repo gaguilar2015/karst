@@ -1035,19 +1035,53 @@ ct_k2 <- function(var){
   df
 }
 
-ct_k2_avg_helper <- function(var){
-  k2 |> 
-  filter(!is.na(k2_roster__id)) |> 
+
+ct_k2_avg_helper <- function(row){
+k2 |> 
+  filter(!is.na(k2_roster__id), !is.na(ind_weights)) |> 
   mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
-  group_by(!!as.name(var), k2_roster__id) |> 
+  group_by(!!as.name(row), k2_roster__id) |> 
   summarise(
     .groups = 'drop',
-    avg = round(mean(k2_rate),2)
+    avg = round(weighted.mean(k2_rate, ind_weights, na.rm = T),2)
   ) |> 
   pivot_wider(
     names_from = k2_roster__id,
     values_from = avg
   )
+}
+
+ct_k2_avg <- function(){
+  df_list <- purrr::map(anal_vars, ~ct_k2_avg_helper(.x))
+  
+
+  
+  totals <- k2 |> 
+  filter(!is.na(k2_roster__id), !is.na(ind_weights)) |> 
+  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+  mutate(Item = 'Total') |> 
+  group_by(Item, k2_roster__id) |> 
+  summarise(
+    .groups = 'drop',
+    avg = round(weighted.mean(k2_rate, ind_weights, na.rm = T),2)
+  ) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = avg
+  )
+  
+  
+  df <- rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group),
+        totals
+  )
+  
+  df[is.na(df)] <- '0% (0)'
+  
+  df
 }
 
 
@@ -1131,6 +1165,20 @@ ct_k2(7) |>
   )
 
 ```
+
+
+### AVERAGES
+
+```{r}
+#| echo: false
+ct_k2_avg() |> 
+  ct_gt(
+    tit = 'Tabulation of average rating for items in question K2',
+    sub = ''
+  )
+
+```
+
 :::
 
 
