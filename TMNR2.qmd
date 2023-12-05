@@ -485,6 +485,7 @@ downloadthis::download_this(
 ```
 :::
 
+
 Characteristics of respondents
 
 ```{r}
@@ -939,6 +940,12 @@ ct_multi_aggregate <- function(var){
 #| label: k2-prep
 #| echo: false
 
+k3 <- k2 |> filter(!is.na(ind_weights))
+
+w_vec <- round(k3$ind_weights)
+
+k3 <- k3[rep(seq_len(nrow(k3)), w_vec), ]
+
 ct_k2_helper <- function(row, k2_var){
   k2 |> 
   filter(k2_roster__id == k2_var) |> 
@@ -997,14 +1004,14 @@ ct_k2 <- function(var){
   df
 }
 
-ct_k2_avg_helper <- function(var){
-  k2 |> 
-  filter(!is.na(k2_roster__id)) |> 
+ct_k2_avg_helper <- function(row){
+k2 |> 
+  filter(!is.na(k2_roster__id), !is.na(ind_weights)) |> 
   mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
-  group_by(!!as.name(var), k2_roster__id) |> 
+  group_by(!!as.name(row), k2_roster__id) |> 
   summarise(
     .groups = 'drop',
-    avg = round(mean(k2_rate),2)
+    avg = round(weighted.mean(k2_rate, ind_weights, na.rm = T),2)
   ) |> 
   pivot_wider(
     names_from = k2_roster__id,
@@ -1012,9 +1019,184 @@ ct_k2_avg_helper <- function(var){
   )
 }
 
+ct_k2_avg <- function(){
+  df_list <- purrr::map(anal_vars, ~ct_k2_avg_helper(.x))
+  
+
+  
+  totals <- k2 |> 
+  filter(!is.na(k2_roster__id), !is.na(ind_weights)) |> 
+  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+  mutate(Item = 'Total') |> 
+  group_by(Item, k2_roster__id) |> 
+  summarise(
+    .groups = 'drop',
+    avg = round(weighted.mean(k2_rate, ind_weights, na.rm = T),2)
+  ) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = avg
+  )
+  
+  
+  df <- rbind(df_list[[1]] |> rename(Item = strata),
+        df_list[[2]] |> rename(Item = age_group),
+        df_list[[3]] |> rename(Item = ethnicity),
+        df_list[[4]] |> rename(Item = education),
+        df_list[[5]] |> rename(Item = workertype_group),
+        totals
+  )
+  
+  df[is.na(df)] <- '0% (0)'
+  
+  df
+}
+
+likert_df <- function(row){
+  b2 <- k3 |> 
+  filter(!is.na(k2_roster__id)) |> 
+  mutate(
+    k2_roster__id = as_factor(k2_roster__id),
+    id = row_number()
+  ) |> 
+  select(id, !!as.name(row), k2_roster__id, k2_rate) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = k2_rate
+  ) |> 
+  mutate(
+    `Protecting wildlife and nature` = as_factor(`Protecting wildlife and nature`),
+    `Using Resources Wisely` = as_factor(`Using Resources Wisely`),
+    `Reducing Pollution` = as_factor(`Reducing Pollution`),
+    `Clean and reusable power` = as_factor(`Clean and reusable power`),
+    `Habitat Restoration` = as_factor(`Habitat Restoration`),
+    `Waste Reduction and Recycling` = as_factor(`Waste Reduction and Recycling`),
+    `Education and Advocacy` = as_factor(`Education and Advocacy`),
+  ) |> as.data.frame()
+b2 <- purrr::modify_if(b2, is.factor, ~ forcats::fct_drop(.x))
+
+b2
+}
+
+
+likert_plot <- function(df){
+  plot(likert::likert(df[,3:9]), legend.position = 'top')
+}
+
+likert_plot_grouped <- function(df, grouped){
+  df[[grouped]] <- forcats::fct_rev(df[[grouped]])
+  plot(likert::likert(df[,3:9], grouping = df[,2]), legend.position = 'top')
+}
 
 ```
 
+::: panel-tabset
+### Charts
+
+::: panel-tabset
+
+### Overall
+
+::: panel-tabset
+
+### Type 1
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 5
+
+p <- k3 |> as_factor() |> 
+  filter(!is.na(k2_roster__id)) |> 
+  ggplot(aes(x = k2_roster__id)) +
+  geom_bar(position = position_stack(reverse = TRUE), fill = 'aquamarine4') + 
+  geom_text(
+    aes(y = ..count.., label = ..count..),
+    stat = 'count',
+    size = 4,
+    color = 'white',
+    position = position_stack(0.5)
+  ) +
+  scale_fill_brewer(palette = "BrBG") +
+  coord_flip() +
+  gg_blank_x +
+  gg_text_charts +
+  labs(
+    y = 'Frequency',
+    x = 'K2 Item'
+  )
+p
+```
+
+### Type 2
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 5
+
+b2 <- likert_df('strata')
+
+likert_plot(b2)
+```
+
+:::
+
+
+### Community Type
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('strata')
+likert_plot_grouped(df, 'strata')
+```
+
+### Age Group
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('age_group')
+likert_plot_grouped(df, 'age_group')
+```
+
+### Ethnicity
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('ethnicity')
+likert_plot_grouped(df, 'ethnicity')
+```
+
+### Education Completed
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('education')
+likert_plot_grouped(df, 'education')
+```
+
+### Worker Type
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('workertype_group')
+likert_plot_grouped(df, 'workertype_group')
+```
+
+:::
+
+
+
+### Tables
 ::: panel-tabset
 ### K2.1
 
@@ -1093,24 +1275,19 @@ ct_k2(7) |>
   )
 
 ```
-:::
 
-### 
-
-Averages
+### AVERAGES
 
 ```{r}
-
-k2 |> 
-  filter(!is.na(k2_roster__id)) |> 
-  mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
-  group_by(strata, k2_roster__id) |> 
-  summarise(
-    .groups = 'drop',
-    avg = round(mean(k2_rate),2)
-  ) |> 
-  pivot_wider(
-    names_from = k2_roster__id,
-    values_from = avg
+ct_k2_avg() |> 
+  ct_gt(
+    tit = 'Tabulation of average rating for items in question K2',
+    sub = ''
   )
+
 ```
+:::
+
+
+:::
+

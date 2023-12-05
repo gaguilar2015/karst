@@ -26,6 +26,7 @@ library(janitor)
 library(DBI)
 library(gt)
 library(HH)
+library(forcats)
 
 select <- dplyr::select
 
@@ -977,6 +978,12 @@ df |>
 #| label: k2-prep
 #| echo: false
 
+k3 <- k2 |> filter(!is.na(ind_weights))
+
+w_vec <- round(k3$ind_weights)
+
+k3 <- k3[rep(seq_len(nrow(k3)), w_vec), ]
+
 ct_k2_helper <- function(row, k2_var){
   k2 |> 
   filter(k2_roster__id == k2_var) |> 
@@ -1035,7 +1042,6 @@ ct_k2 <- function(var){
   df
 }
 
-
 ct_k2_avg_helper <- function(row){
 k2 |> 
   filter(!is.na(k2_roster__id), !is.na(ind_weights)) |> 
@@ -1084,9 +1090,198 @@ ct_k2_avg <- function(){
   df
 }
 
+likert_df <- function(row){
+  b2 <- k3 |> 
+  filter(!is.na(k2_roster__id)) |> 
+  mutate(
+    k2_roster__id = as_factor(k2_roster__id),
+    id = row_number()
+  ) |> 
+  select(id, !!as.name(row), k2_roster__id, k2_rate) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = k2_rate
+  ) |> 
+  mutate(
+    `Protecting wildlife and nature` = as_factor(`Protecting wildlife and nature`),
+    `Using Resources Wisely` = as_factor(`Using Resources Wisely`),
+    `Reducing Pollution` = as_factor(`Reducing Pollution`),
+    `Clean and reusable power` = as_factor(`Clean and reusable power`),
+    `Habitat Restoration` = as_factor(`Habitat Restoration`),
+    `Waste Reduction and Recycling` = as_factor(`Waste Reduction and Recycling`),
+    `Education and Advocacy` = as_factor(`Education and Advocacy`),
+  ) |> as.data.frame()
+b2 <- purrr::modify_if(b2, is.factor, ~ forcats::fct_drop(.x))
+
+b2
+}
+
+
+likert_plot <- function(df){
+  plot(likert::likert(df[,3:9]), legend.position = 'top',
+       group.order = c(  'Clean and reusable power',
+  'Education and Advocacy',
+  'Habitat Restoration',
+'Protecting wildlife and nature',
+  'Reducing Pollution',
+'Using Resources Wisely',
+'Waste Reduction and Recycling'))
+}
+
+likert_plot_grouped <- function(df, grouped){
+  df[[grouped]] <- forcats::fct_rev(df[[grouped]])
+  plot(likert::likert(df[,3:9], grouping = df[,2]), legend.position = 'top')
+}
 
 ```
 
+::: panel-tabset
+### Charts
+
+::: panel-tabset
+
+### Overall
+
+::: panel-tabset
+
+### Filter
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 5
+
+  k2_hh <- households |> filter(!is.na(k2__1), !is.na(ind_weights))
+  
+  w_vec_hh <- round(k2_hh$ind_weights)
+  
+  k2_hh_2 <- k2_hh[rep(seq_len(nrow(k2_hh)), w_vec_hh), ]
+  
+  k2_3 <- k2_hh_2 |> 
+    select(strata, starts_with('k2')) |> 
+    filter(!is.na(k2__1)) |> 
+    pivot_longer(
+      starts_with('k2'),
+      names_to = 'Item',
+      values_to = 'Value'
+    ) |> 
+    mutate(
+      Value = case_when(
+        Value == 1 ~ 'Yes',
+        TRUE ~ 'No'
+      ),
+      Item = case_when(
+        Item == 'k2__1' ~ 'Protecting wildlife and nature',
+        Item == 'k2__2' ~ 'Using Resources Wisely',
+        Item == 'k2__3' ~ 'Reducing Pollution',
+        Item == 'k2__4' ~ 'Clean and reusable power',
+        Item == 'k2__5' ~ 'Habitat Restoration',
+        Item == 'k2__6' ~ 'Waste Reduction and Recycling',
+        Item == 'k2__7' ~ 'Education and Advocacy'
+      )
+    ) 
+  
+  k2_3$Item <- factor(k2_3$Item, levels = c(  'Clean and reusable power',
+                                              'Education and Advocacy',
+                                              'Habitat Restoration',
+                                              'Protecting wildlife and nature',
+                                              'Reducing Pollution',
+                                              'Using Resources Wisely',
+                                              'Waste Reduction and Recycling'))
+  
+  k2_3$Item <- fct_rev(k2_3$Item)
+  
+  
+  k2_3 |> 
+    ggplot(aes(x = Item, fill = Value)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+    size = 4, 
+    color = 'white',
+    stat="count", 
+    position=position_fill(0.5)
+    ) + 
+    coord_flip() +
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Has heard of the term...') +
+    scale_fill_manual(values = c('burlywood3', 'lightseagreen')) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    )
+```
+
+### Items
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 5
+
+b2 <- likert_df('strata')
+
+likert_plot(b2)
+```
+
+:::
+
+
+### Community Type
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('strata')
+likert_plot_grouped(df, 'strata')
+```
+
+### Age Group
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('age_group')
+likert_plot_grouped(df, 'age_group')
+```
+
+### Ethnicity
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('ethnicity')
+likert_plot_grouped(df, 'ethnicity')
+```
+
+### Education Completed
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('education')
+likert_plot_grouped(df, 'education')
+```
+
+### Worker Type
+```{r}
+#| echo: false
+#| warning: false
+#| fig-height: 9
+
+df <- likert_df('workertype_group')
+likert_plot_grouped(df, 'workertype_group')
+```
+
+:::
+
+
+
+### Tables
 ::: panel-tabset
 ### K2.1
 
@@ -1166,11 +1361,9 @@ ct_k2(7) |>
 
 ```
 
-
 ### AVERAGES
 
 ```{r}
-#| echo: false
 ct_k2_avg() |> 
   ct_gt(
     tit = 'Tabulation of average rating for items in question K2',
@@ -1178,10 +1371,10 @@ ct_k2_avg() |>
   )
 
 ```
-
 :::
 
 
+:::
 
 
 ### K3

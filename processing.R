@@ -340,13 +340,269 @@ k2 |> as_factor() |>
     values_from = k2_rate
   )
 
+k2 <- k2 |> filter(!is.na(ind_weights))
+
+w_vec <- round(k2$ind_weights)
+
+k2 <- k2[rep(seq_len(nrow(k2)), w_vec), ]
 
 k2 |> as_factor() |> 
   filter(!is.na(k2_roster__id)) |> 
-  ggplot(aes(x = k2_roster__id)) +
-  geom_bar(aes(fill = k2_rate)) +
-  coord_flip() + 
-  scale_fill_manual(values = MetBrewer::met.brewer(name="Hokusai2", n=5, type="discrete"))
+  ggplot(aes(x = k2_roster__id, fill = k2_rate)) +
+  geom_bar( position = position_stack(reverse = TRUE))  +
+  scale_fill_brewer(palette = "BrBG") 
+
+(values = MetBrewer::met.brewer(name="Hokusai2", n=5, type="discrete"))
 
 library(HH)  
 
+k2 |> 
+  mutate(
+    k2_roster__id = as_factor(k2_roster__id),
+    k2_rate = as_factor(k2_rate)
+  ) |> 
+  filter(!is.na(k2_roster__id)) |> 
+  dplyr::select(
+    interview__key, k2_roster__id, k2_rate
+  ) |> 
+  pivot_wider(names_from = k2_rate, values_from = k2_rate) |> 
+  group_by(
+    k2_roster__id
+  ) |> summarise(
+    One = sum(!is.na(`1`), na.rm = T)
+  )
+
+
+b <- k2 |> 
+  mutate(
+    k2_roster__id = as_factor(k2_roster__id),
+    k2_rate = as_factor(k2_rate)
+  ) |> 
+  filter(!is.na(k2_roster__id)) |> 
+  dplyr::select(
+    interview__key, k2_roster__id, k2_rate
+  ) |> 
+  group_by(
+    k2_roster__id
+  ) |> summarise(
+    One = sum(k2_rate == 1, na.rm = T),
+    Two = sum(k2_rate == 2, na.rm = T),
+    Three = sum(k2_rate == 3, na.rm = T),
+    Four = sum(k2_rate == 4, na.rm = T),
+    Five = sum(k2_rate == 5, na.rm = T)
+  ) |> 
+  mutate(
+    Onep = One/(One + Two + Three + Four + Five),
+    Twop = Two/(One + Two + Three + Four + Five),
+    Threep = Three/(One + Two + Three + Four + Five),
+    Fourp = Four/(One + Two + Three + Four + Five),
+    Fivep = Five/(One + Two + Three + Four + Five)
+  ) |> 
+  dplyr::select(k2_roster__id, Onep, Twop, Threep, Fourp, Fivep)
+
+# use function likert() to plot likert data
+HH::likert(k2_roster__id~., b, positive.order=TRUE, as.percent = TRUE,
+           main="At my child's school my child is safe.",
+           xlab="percentage",ylab="School Code")
+
+b <- k2 |> 
+  mutate(
+    k2_roster__id = as_factor(k2_roster__id)
+  ) |> 
+  tabyl(k2_roster__id, k2_rate, show_missing_levels = F, show_na = F) |> 
+  adorn_percentages()
+
+
+HH::likert(k2_roster__id~., b, positive.order=TRUE, as.percent = TRUE,
+           rightAxis = F,
+           main="Knowledge",
+           xlab="percentage",ylab="Item")
+
+library(likert)
+
+data(pisaitems) 
+items28 <- pisaitems[, substr(names(pisaitems), 1, 5) == "ST24Q"] 
+
+b2 <- k2 |> 
+  filter(!is.na(k2_roster__id)) |> 
+  select(interview__key, strata, k2_roster__id, k2_rate) |> 
+  mutate(
+    k2_roster__id = as_factor(k2_roster__id)
+  ) |> 
+  pivot_wider(
+    names_from = k2_roster__id,
+    values_from = k2_rate
+  ) |> 
+  mutate(
+    `Protecting wildlife and nature` = as_factor(`Protecting wildlife and nature`),
+    `Using Resources Wisely` = as_factor(`Using Resources Wisely`),
+    `Reducing Pollution` = as_factor(`Reducing Pollution`),
+    `Clean and reusable power` = as_factor(`Clean and reusable power`),
+    `Habitat Restoration` = as_factor(`Habitat Restoration`),
+    `Waste Reduction and Recycling` = as_factor(`Waste Reduction and Recycling`),
+    `Education and Advocacy` = as_factor(`Education and Advocacy`),
+  ) |> as.data.frame()
+
+b2 <- purrr::modify_if(b2, is.factor, ~ forcats::fct_drop(.x))
+
+plot(likert::likert(b2[,3:9], grouping = b2[,2]))
+
+k2 |> 
+  mutate(
+    k2_roster__id = as_factor(k2_roster__id)
+  ) 
+
+k2 |>   
+  mutate(
+    strata = case_when(
+      ctv.x %in% c('El Progress (7 Miles)/Upper Barton Creek', 
+                   'Lower Barton Creek/New Holland/East Land') ~ 'Mennonite',
+      TRUE ~ 'Non-Mennonite'
+    )
+  ) |> 
+  count(k2_roster__id, k2_rate, wt = ind_weights)
+  
+  
+  group_by(!!as.name(row)) |>
+  mutate(total = sum(n)) |>
+  ungroup() |>
+  mutate(
+    prop = n/total,
+    pct = paste0(round(prop * 100, 1), '%')
+  ) |>
+  mutate(
+    n_pct = paste0(pct, ' (', ceiling(n), ')')
+  )  |>
+  select(!!as.name(row), !!as.name(col), n_pct) |>
+  pivot_wider(
+    names_from = !!as.name(col),
+    values_from = n_pct
+  )
+  
+  
+  
+  k2 |> 
+    filter(!is.na(k2_roster__id), !is.na(ind_weights)) |> 
+    group_by(k2_roster__id) |> 
+    summarise(
+      .groups = 'drop',
+      avg = weighted.mean(k2_rate, ind_weights, na.rm = T)
+    )
+  
+  k2 |> 
+    filter(!is.na(k2_roster__id)) |> 
+    select(strata, ind_weights, k2_rate) |> 
+    group_by(strata) |> 
+    summarise(
+      weighted.mean(k2_rate, ind_weights, na.rm = T)
+    )
+
+  k2 |> 
+    mutate(k2_roster__id = as_factor(k2_roster__id)) |> 
+    group_by(k2_roster__id) |> 
+    summarise(
+      n = sum(!is.na(k2_rate)),
+      total = sum(ind_weights, na.rm = T)
+    )
+  
+  
+  ## Create df
+  Item <- c("Oatmeal Raisin is The Best Type of Cookie", "Chocolate Chip is The Best Type of Cookie", "Snickerdoodle is The Best Type of Cookie")
+  Strata <- c(1,1,2)
+  strong_disagree <- c(60, 20, 10)
+  disagree <- c(7, 25, 47)
+  neutral <- c(0,0,0)
+  agree <- c(3, 15, 38)
+  strong_agree  <- c(30, 40, 05)
+  df <- data.frame(Strata, Item, strong_disagree, disagree, neutral, agree, strong_agree)
+  
+  ## Rename Cols (for legend)
+  df <- df  %>% 
+    rename("Strong Disagree" = strong_disagree,
+           "Disagree" = disagree,
+           "Agree" = agree,
+           "Strong Agree" = strong_agree)
+  
+  ## Basic Plot (not image below)
+  plot(likert(summary = df[,2:7], grouping = df[,1]))
+  
+  ## Pretty Plot (Image Below)
+  plot(likert(summary = df), plot.percent.neutral=FALSE, legend.position="right")
+  
+  
+  
+  
+  k3 |> 
+    mutate(id = row_number()) |> 
+    filter(!is.na(k2_roster__id)) |> 
+    select(id, !!as.name(row), k2_roster__id, k2_rate) |> 
+    mutate(
+      k2_roster__id = as_factor(k2_roster__id)
+    ) |> 
+    pivot_wider(
+      names_from = k2_roster__id,
+      values_from = k2_rate
+    )
+  df2 <- df[,c(5,8,7,6,9,4,3)]
+  df$age_group <- reverse.levels(df$age_group)
+  plot(likert::likert(df2, grouping = df[,2]), legend.position = 'top')
+  
+  
+  k2_hh <- households |> filter(!is.na(k2__1), !is.na(ind_weights))
+  
+  w_vec_hh <- round(k2_hh$ind_weights)
+  
+  k2_hh_2 <- k2_hh[rep(seq_len(nrow(k2_hh)), w_vec_hh), ]
+  
+  k2_3 <- k2_hh_2 |> 
+    select(strata, starts_with('k2')) |> 
+    filter(!is.na(k2__1)) |> 
+    pivot_longer(
+      starts_with('k2'),
+      names_to = 'Item',
+      values_to = 'Value'
+    ) |> 
+    mutate(
+      Value = case_when(
+        Value == 1 ~ 'Yes',
+        TRUE ~ 'No'
+      ),
+      Item = case_when(
+        Item == 'k2__1' ~ 'Protecting wildlife and nature',
+        Item == 'k2__2' ~ 'Using Resources Wisely',
+        Item == 'k2__3' ~ 'Reducing Pollution',
+        Item == 'k2__4' ~ 'Clean and reusable power',
+        Item == 'k2__5' ~ 'Habitat Restoration',
+        Item == 'k2__6' ~ 'Waste Reduction and Recycling',
+        Item == 'k2__7' ~ 'Education and Advocacy'
+      )
+    ) 
+  
+  k2_3$Item <- factor(k2_3$Item, levels = c(  'Clean and reusable power',
+                                              'Education and Advocacy',
+                                              'Habitat Restoration',
+                                              'Protecting wildlife and nature',
+                                              'Reducing Pollution',
+                                              'Using Resources Wisely',
+                                              'Waste Reduction and Recycling'))
+  
+  k2_3$Item <- fct_rev(k2_3$Item)
+  
+  
+  k2_3 |> 
+    ggplot(aes(x = Item, fill = Value)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+    size = 4, 
+    color = 'white',
+    stat="count", 
+    position=position_fill(0.5)
+    ) + 
+    coord_flip() +
+    gg_blank_x
+  
+  
+
+
+  
