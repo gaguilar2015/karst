@@ -319,6 +319,12 @@ listing <- listing |>
     by = c('interview__key')
   )
 
+listing_head_vars <- listing_head_vars |> 
+  left_join(
+    kweights,
+    by = c('interview__key')
+  )
+
 
 households <- households |> 
   left_join(
@@ -664,10 +670,146 @@ head_ind_descriptives <- head_descriptives |>
         locations = cells_stub()
     )
 
+# derive WEIGHTED tabulations for basic demographic variables
+# for HH HEAD ONLY
+
+ind_ages <- listing_head_vars |> 
+  count(age_group, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = age_group, Count, Percent
+  )
+
+ind_sex <- listing_head_vars |> 
+  mutate(sex = as_factor(sex)) |> 
+  count(sex, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = sex, Count, Percent
+  )
+
+ind_community <- listing_head_vars |> 
+  count(ctv, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = ctv, Count, Percent
+  )
+
+ind_ethnicity <- listing_head_vars |> 
+  count(ethnicity_group, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = ethnicity_group, Count, Percent
+  )
+
+ind_education <- listing_head_vars |> 
+  count(ed_attainment, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = ed_attainment, Count, Percent
+  )
+
+ind_employment <- listing_head_vars |> 
+  mutate(employed = as_factor(employed)) |> 
+  count(employed, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = employed, Count, Percent
+  )
+
+ind_worker <- listing_head_vars |> 
+  count(workertype_group, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = workertype_group, Count, Percent
+  )
+
+head_descriptives2 <- 
+  rbind(ind_sex, 
+        ind_ages, 
+        ind_ethnicity, 
+        ind_education,
+        ind_employment,
+        ind_worker,
+        ind_community
+        ) 
+
+
+head_ind_descriptives2 <- head_descriptives2 |> 
+  gt(rowname_col = "Item") |>
+  tab_row_group(
+    label = md("**Community**"),
+    rows = 22:28
+  ) |> 
+  tab_row_group(
+    label = md("**Worker Type**"),
+    rows = 19:21
+  )  |> 
+  tab_row_group(
+    label = md("**Employed**"),
+    rows = 17:18
+  ) |> 
+  tab_row_group(
+    label = md("**Highest Education Completed**"),
+    rows = 10:16
+  ) |> 
+  tab_row_group(
+    label = md("**Ethnicity**"),
+    rows = 6:9
+  ) |> 
+  tab_row_group(
+    label = md("**Age Group**"),
+    rows = 3:5
+  ) |> 
+  tab_row_group(
+    label = md("**Sex**"),
+    rows = 1:2
+  ) |> 
+  cols_align(
+  align = 'left',
+  columns = c('Item')
+) |> 
+      tab_style(
+        style = cell_text(align = "left", indent = px(20)),
+        locations = cells_stub()
+    )
+
 ```
 
 ::: panel-tabset
-### Household Heads
+### Respondents
+
+::: panel-tabset
+
+### Unweighted
 
 ```{r}
 #| echo: false
@@ -686,6 +828,29 @@ downloadthis::download_this(
 )
 
 ```
+### Weighted
+
+```{r}
+#| echo: false
+#| label: descriptives-allw
+
+head_ind_descriptives2 |> 
+  tab_header(
+    title = "Characterstics of Weighted Individuals"
+  )
+
+downloadthis::download_this(
+  head_descriptives2,
+  output_name = 'head_descriptives',
+  output_extension = '.xlsx',
+  button_label = 'Download'
+)
+
+```
+
+:::
+
+
 
 ### All Individuals
 
