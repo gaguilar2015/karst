@@ -7,6 +7,7 @@ format:
     page-layout: article
     toc: true
     toc-depth: 4
+    fontsize: '11'
 editor: visual
 ---
 
@@ -582,7 +583,10 @@ all_ind_descriptives <- ind_descriptives |>
       tab_style(
         style = cell_text(align = "left", indent = px(20)),
         locations = cells_stub()
-    )
+    ) |> 
+  tab_options(
+    table.font.size = '85%'
+  )
 
 # derive tabulations for basic demographic variables
 # for HH HEAD ONLY
@@ -668,7 +672,10 @@ head_ind_descriptives <- head_descriptives |>
       tab_style(
         style = cell_text(align = "left", indent = px(20)),
         locations = cells_stub()
-    )
+    ) |> 
+  tab_options(
+    table.font.size = '85%'
+  )
 
 # derive WEIGHTED tabulations for basic demographic variables
 # for HH HEAD ONLY
@@ -800,7 +807,10 @@ head_ind_descriptives2 <- head_descriptives2 |>
       tab_style(
         style = cell_text(align = "left", indent = px(20)),
         locations = cells_stub()
-    )
+    ) |> 
+  tab_options(
+    table.font.size = '85%'
+  )
 
 ```
 
@@ -989,6 +999,9 @@ ct_gt <- function(table, tit, sub){
     tab_header(
       title = tit,
       subtitle = sub
+  )  |> 
+  tab_options(
+    table.font.size = '85%'
   )
   
 }
@@ -1305,11 +1318,11 @@ likert_plot_grouped <- function(df, grouped){
 
 ::: panel-tabset
 
-### Overall
+#### Overall
 
 ::: panel-tabset
 
-### Filter
+#### Filter
 ```{r}
 #| echo: false
 #| warning: false
@@ -1377,7 +1390,7 @@ likert_plot_grouped <- function(df, grouped){
     )
 ```
 
-### Items
+#### Items
 ```{r}
 #| echo: false
 #| warning: false
@@ -1391,7 +1404,7 @@ likert_plot(b2)
 :::
 
 
-### Community Type
+#### Community Type
 ```{r}
 #| echo: false
 #| warning: false
@@ -1401,7 +1414,7 @@ df <- likert_df('strata')
 likert_plot_grouped(df, 'strata')
 ```
 
-### Age Group
+#### Age Group
 ```{r}
 #| echo: false
 #| warning: false
@@ -1411,7 +1424,7 @@ df <- likert_df('age_group')
 likert_plot_grouped(df, 'age_group')
 ```
 
-### Ethnicity
+#### Ethnicity
 
 ```{r}
 #| echo: false
@@ -1422,7 +1435,7 @@ df <- likert_df('ethnicity')
 likert_plot_grouped(df, 'ethnicity')
 ```
 
-### Education Completed
+#### Education 
 ```{r}
 #| echo: false
 #| warning: false
@@ -1432,7 +1445,7 @@ df <- likert_df('education')
 likert_plot_grouped(df, 'education')
 ```
 
-### Worker Type
+#### Worker Type
 ```{r}
 #| echo: false
 #| warning: false
