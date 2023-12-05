@@ -1075,7 +1075,7 @@ ct_multi <- function(row, col, format = 'pct'){
       values_to = 'value'
     ) |> 
     mutate(
-      value = as.numeric(value) * ind_weights,
+      value = as.numeric(as.character(value)) * ind_weights,
       ind_weights = ind_weights * !is.na(value)
     ) |> 
     group_by(!!as.name(row), item) |> 
