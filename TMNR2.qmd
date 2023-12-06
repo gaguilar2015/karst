@@ -341,6 +341,12 @@ k2 <- k2 |>
 # write_sav(households, './respondent/households.sav')
 # write_sav(listing, './respondent/members.sav')
 # write_sav(k2, './respondent/k2.sav')
+
+ households_wexpand <- households |> filter(!is.na(ind_weights))
+ 
+ w_vec <- round(households_wexpand$ind_weights)
+ 
+ households_wexpand <- households_wexpand[rep(seq_len(nrow(households_wexpand)), w_vec), ]
 ```
 
 ## Basic Descriptives

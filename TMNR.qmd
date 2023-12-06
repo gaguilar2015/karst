@@ -349,6 +349,8 @@ k2 <- k2 |>
 # write_sav(households, './respondent/households.sav')
 # write_sav(listing, './respondent/members.sav')
 # write_sav(k2, './respondent/k2.sav')
+
+
 ```
 
 ## Basic Descriptives
@@ -901,6 +903,12 @@ downloadthis::download_this(
 households <- 
   households |> as_factor()
 
+ households_wexpand <- households |> filter(!is.na(ind_weights))
+ 
+ w_vec <- round(households_wexpand$ind_weights)
+ 
+ households_wexpand <- households_wexpand[rep(seq_len(nrow(households_wexpand)), w_vec), ]
+
 # variables to use in crosstab analyses
 
 anal_vars <- c('strata', 'age_group', 'ethnicity', 'education', 'workertype_group')
@@ -910,6 +918,7 @@ anal_vars <- c('strata', 'age_group', 'ethnicity', 'education', 'workertype_grou
 ct_single_helper <- function(row, col, format = 'pct'){
   
   households |> 
+    filter(!is.na(!!as.name(col))) |> 
     count(!!as.name(row), !!as.name(col), wt = ind_weights) |>
     group_by(!!as.name(row)) |>
     mutate(total = sum(n)) |>
@@ -933,6 +942,7 @@ ct_single <- function(var){
   df_list <- purrr::map(anal_vars, ~ct_single_helper(.x, var))
   
   totals <-  households |> 
+    filter(!is.na(!!as.name(var))) |> 
     count(!!as.name(var), wt = ind_weights) |>
     mutate(Item = 'Total') |> 
     group_by(Item) |>
@@ -1557,6 +1567,38 @@ ct_k2_avg() |>
 
 ### K3
 
+```{r}
+#| echo: false
+#| warning: false
+
+households_wexpand |> 
+    mutate(
+      k3 = case_when(
+        k3 == 'Yes' ~ 'Yes',
+        TRUE ~ 'No or DK'
+      )
+    ) |> 
+    ggplot(aes(x = "", fill = k3)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+              size = 5, 
+              color = 'white',
+              stat="count", 
+              position=position_fill(0.5)
+    ) + 
+    coord_flip() +
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Proportion of respondends who have heard about TMNR') +
+    scale_fill_manual(values = c('burlywood3', 'lightseagreen')) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    ) + coord_polar("y", start=0)  
+
+```
+
 ::: panel-tabset
 ### Weighted
 
@@ -1592,6 +1634,40 @@ df |>
 :::
 
 ### K3_1
+
+```{r}
+#| echo: false
+#| warning: false
+
+households_wexpand |> 
+  filter(!is.na(k3_1)) |> 
+    mutate(
+      k3_1 = case_when(
+        k3_1 == 'Yes' ~ 'Yes',
+        TRUE ~ 'No or DK'
+      )
+    ) |> 
+    ggplot(aes(x = "", fill = k3_1)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+              size = 5, 
+              color = 'white',
+              stat="count", 
+              position=position_fill(0.5)
+    ) + 
+    coord_flip() +
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Proportion of respondends who have heard about a park nearby') +
+    scale_fill_manual(values = c('burlywood3', 'lightseagreen')) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    ) + coord_polar("y", start=0)  
+
+```
+
 
 ::: panel-tabset
 ### Weighted

@@ -600,9 +600,109 @@ k2 |>
     position=position_fill(0.5)
     ) + 
     coord_flip() +
-    gg_blank_x
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Has heard of the term...') +
+    scale_fill_manual(values = c('burlywood3', 'lightseagreen')) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    )
   
   
+listing_head_vars |> 
+  count(age_group, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = age_group, Count, Percent
+  )
+  
+listing_head_vars |> 
+  mutate(sex = as)
+  count(sex, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = sex, Count, Percent
+  )
 
+  
+  col <- 'k8__'
+  
+  households |> 
+    select(all_of(anal_vars), starts_with(col), ind_weights) |> 
+    pivot_longer(
+      cols = starts_with(col),
+      names_to = 'item',
+      values_to = 'value'
+    ) |> 
+    mutate(
+      value = as.numeric(as.character(value)) * ind_weights,
+      ind_weights = ind_weights * !is.na(value)
+    ) |> 
+    group_by(!!as.name(row), item) |> 
+    summarise(
+      .groups = 'drop',
+      selected = ceiling(sum(value, na.rm = T)),
+      total = ceiling(sum(ind_weights, na.rm = T)),
+      prop = selected/total,
+      pct = paste0(round(prop * 100, 1), '%'),
+      full = paste0(pct, '(', selected,')')
+    ) |>
+    select(!!as.name(row), item, full) |> 
+    mutate(
+      item = stringr::str_replace(item, paste0(col, '_'), '')
+    ) |> 
+    pivot_wider(
+      names_from = item,
+      values_from = full
+    )
 
   
+ bar <-  households |> 
+    mutate(
+      k3 = case_when(
+        k3 == 'Yes' ~ 'Yes',
+        TRUE ~ 'No or DK'
+      )
+    ) |> 
+    ggplot(aes(x = "", fill = k3)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+              size = 5, 
+              color = 'white',
+              stat="count", 
+              position=position_fill(0.5)
+    ) + 
+    coord_flip() +
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Proportion of respondends who have heard about TMNR') +
+    scale_fill_manual(values = c('burlywood3', 'lightseagreen')) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    )
+
+ bar + coord_polar("y", start=0)  
+ 
+ 
+ 
+ households |> 
+   mutate(
+   k3 = case_when(
+     k3 == 'Yes' ~ 'Yes',
+     TRUE ~ 'No or DK'
+   )) |> 
+  count(k3, wt = ind_weights)
+   
+   
+ 
