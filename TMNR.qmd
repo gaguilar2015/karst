@@ -930,10 +930,10 @@ ct_single_helper <- function(row, col, format = 'pct'){
     mutate(
       n_pct = paste0(pct, ' (', ceiling(n), ')')
     )  |>
-    select(!!as.name(row), !!as.name(col), n_pct) |>
+    select(!!as.name(row), !!as.name(col), pct) |>
     pivot_wider(
       names_from = !!as.name(col),
-      values_from = n_pct
+      values_from = pct
     )
   
 }
@@ -1016,61 +1016,6 @@ ct_gt <- function(table, tit, sub){
   
 }
 
-ct_single_pct <- function(var, national = F){
-  
-  
-  table_strata <- households |> 
-    tabyl(strata, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    adorn_percentages(c('row')) |> 
-    adorn_pct_formatting(digits = 1) |> 
-    adorn_ns() |> 
-    rename(Item = strata)
-  
-  table_age <- households |> 
-    tabyl(age_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    adorn_percentages(c('row')) |> 
-    adorn_pct_formatting(digits = 1) |> 
-    adorn_ns() |> 
-    rename(Item = age_group)
-  
-  table_ethnicity <- households |> 
-    tabyl(ethnicity, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    adorn_percentages(c('row')) |> 
-    adorn_pct_formatting(digits = 1) |> 
-    adorn_ns() |> 
-    rename(Item = ethnicity)
-  
-  table_education <- households |> 
-    tabyl(education, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("col")) |> 
-    adorn_percentages(c('row')) |> 
-    adorn_pct_formatting(digits = 1) |> 
-    adorn_ns() |> 
-    rename(Item = education)
-  
-  table_worker <- households |> 
-    tabyl(workertype_group, !!as.name(var), show_missing_levels = F, show_na = F) |> 
-    adorn_totals(c("row", "col")) |> 
-    adorn_percentages(c('row')) |> 
-    adorn_pct_formatting(digits = 1) |> 
-    adorn_ns() |> 
-    rename(Item = workertype_group)
-  
-  
-  
-  table <- rbind(table_strata, 
-                 table_age, 
-                 table_education, 
-                 table_ethnicity, 
-                 table_worker)
-  
-  table 
-  
-}
-
 
 # tabulation functions for multi-select variables
 
@@ -1126,7 +1071,7 @@ ct_multi_aggregate <- function(var){
 ### K1
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| echo: false
@@ -1142,25 +1087,9 @@ df |>
   )
 
 ```
-
-### Unweighted
-
-```{r}
-#| echo: false
-#| label: k1-pct
-#| warning: false
-
-df <- ct_single_pct('k1')
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K1',
-    sub = 'Have you ever heard about the term environmental conservation?'
-  )
-
-```
 :::
 
-### K2
+### K2 - Filter question
 
 ```{r}
 #| label: k2-prep
@@ -1324,15 +1253,7 @@ likert_plot_grouped <- function(df, grouped){
 ```
 
 ::: panel-tabset
-### Charts
-
-::: panel-tabset
-
-#### Overall
-
-::: panel-tabset
-
-#### Filter
+### Chart
 ```{r}
 #| echo: false
 #| warning: false
@@ -1400,7 +1321,15 @@ likert_plot_grouped <- function(df, grouped){
     )
 ```
 
-#### Items
+:::
+
+### K2 - Ratings by Item
+::: panel-tabset
+### Charts
+::: panel-tabset
+
+#### Overall
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1410,8 +1339,6 @@ b2 <- likert_df('strata')
 
 likert_plot(b2)
 ```
-
-:::
 
 
 #### Community Type
@@ -1567,6 +1494,26 @@ ct_k2_avg() |>
 
 ### K3
 
+
+::: panel-tabset
+### Tables
+
+```{r}
+#| echo: false
+#| label: k3
+#| warning: false
+
+df <- ct_single('k3') 
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K3',
+    sub = 'Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?'
+  )
+```
+
+### Charts
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1598,42 +1545,30 @@ households_wexpand |>
     ) + coord_polar("y", start=0)  
 
 ```
-
-::: panel-tabset
-### Weighted
-
-```{r}
-#| echo: false
-#| label: k3
-#| warning: false
-
-df <- ct_single('k3') 
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K3',
-    sub = 'Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?'
-  )
-```
-
-### Unweighted
-
-```{r}
-#| echo: false
-#| label: k3-pct
-#| warning: false
-
-df <- ct_single_pct('k3')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K3',
-    sub = 'Have you ever heard about the Tapir Mountain Nature Reserve, formerly known as Society Hall Nature Reserve?'
-  )
-```
 :::
 
 ### K3_1
+
+
+::: panel-tabset
+### Tables
+
+```{r}
+#| echo: false
+#| label: k3_1_n
+#| warning: false
+
+df <- ct_single('k3_1')
+
+df |> 
+  ct_gt(
+    tit = 'Tabulations for question K3.1',
+    sub = ' Have you heard about a reserve that is located near to this community?'
+  )
+```
+
+### Charts
+
 
 ```{r}
 #| echo: false
@@ -1667,47 +1602,12 @@ households_wexpand |>
     ) + coord_polar("y", start=0)  
 
 ```
-
-
-::: panel-tabset
-### Weighted
-
-```{r}
-#| echo: false
-#| label: k3_1_n
-#| warning: false
-
-df <- ct_single('k3_1')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K3.1',
-    sub = ' Have you heard about a reserve that is located near to this community?'
-  )
-```
-
-### Unweighted
-
-```{r}
-#| echo: false
-#| label: k3_1-pct
-#| warning: false
-
-df <- ct_single_pct('k3')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K3.1',
-    sub = ' Have you heard about a reserve that is located near to this community?'
-  )
-
-```
 :::
 
 ### K4
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| echo: false
@@ -1748,14 +1648,12 @@ df |>
   )
 
 ```
-
-### Unweighted
 :::
 
 ### K5
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k5
@@ -1789,7 +1687,7 @@ df |>
   )
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: k5-pct
@@ -1797,37 +1695,32 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('k5')
-
-df |> 
-  rename(
-    `No Knowledge` = `No knowledge (does not know any boundaries)`,
-    `Some Knowledge` = `Some knowledge (knows where some boundaries lie)`,
-    `Strong Knowledge` = `Strong knowledge (is familiar with most/all boundaries)`
-  ) |> 
-  ct_gt(
-    tit = 'Tabulations for question K5',
-    sub = 'How would you rate your knowledge of the reserve’s boundaries?'
-  )  |>
-  tab_footnote(
-    footnote = "Does not know any boundaries",
-    locations = cells_column_labels(columns = `No Knowledge`)
-  )  |>
-  tab_footnote(
-    footnote = "Knows where some boundaries lie",
-    locations = cells_column_labels(columns = `Some Knowledge`)
-  )  |>
-  tab_footnote(
-    footnote = "Is familiar with most/all boundaries",
-    locations = cells_column_labels(columns = `Strong Knowledge`)
-  )
+households_wexpand |> 
+    filter(!is.na(k5)) |> 
+    ggplot(aes(x = "", fill = k5)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+              size = 5, 
+              color = 'white',
+              stat="count", 
+              position=position_fill(0.5)
+    ) + 
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Knowledge of TMNR Boundaries') +
+    scale_fill_manual(values = c('burlywood3', 'lightgoldenrod3', 'lightseagreen')) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    ) + coord_polar("y", start=0) 
 ```
 :::
 
 ### K6
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k6
@@ -1844,7 +1737,7 @@ df |>
   )  
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: k6-pct
@@ -1852,20 +1745,33 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('k6')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K6',
-    sub = 'To your knowledge, who manages the Tapir Mountain Nature Reserve?'
-  ) 
+households_wexpand |> 
+    filter(!is.na(k6)) |> 
+    ggplot(aes(x = "", fill = k6)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+              size = 4.5, 
+              color = 'white',
+              stat="count", 
+              position=position_fill(0.5),
+              vjust = 1.5
+    ) + 
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Who manages the TMNR?') +
+    scale_fill_manual(values=MetBrewer::met.brewer("Monet", 6)) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    ) + coord_polar("y", start=0) 
 ```
 :::
 
 ### K7
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k7
@@ -1915,13 +1821,12 @@ df |>
   )
 ```
 
-### Unweighted
 :::
 
 ### K8
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k8
@@ -2009,13 +1914,12 @@ df |>
   ) 
 ```
 
-### Unweighted
 :::
 
 ### K9.1
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k9
@@ -2031,30 +1935,12 @@ df |>
     sub = 'The water from local wells or pumps comes from the waterbasin or water table in the Tapir Mountain Nature Reserve.'
   ) 
 ```
-
-### Unweighted
-
-```{r}
-#| label: k9-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k9_1')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K9_1',
-    sub = 'The water from local wells or pumps comes from the waterbasin or water table in the Tapir Mountain Nature Reserve.'
-  ) 
-
-```
 :::
 
 ### K9.2
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k9.2
@@ -2070,32 +1956,12 @@ df |>
     sub = 'People can hunt in the Tapir Mountain Nature Reserve if they have a valid license.'
   ) 
 ```
-
-### Unweighted
-
-```{r}
-#| label: k9.2-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k9_2')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K9_2',
-    sub = 'People can hunt in the Tapir Mountain Nature Reserve if they have a valid license.'
-  ) 
-
-```
 :::
-
-### 
 
 ### K9.3
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k9.3
@@ -2111,32 +1977,13 @@ df |>
     sub = 'The Belize KARST can authorize persons to hunt in the Tapir Mountain Nature Reserve.'
   ) 
 ```
-
-### Unweighted
-
-```{r}
-#| label: k9.3-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k9_3')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K9_3',
-    sub = 'The Belize KARST can authorize persons to hunt in the Tapir Mountain Nature Reserve'
-  ) 
-
-```
 :::
 
-### 
 
 ### K9.4
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k9.4
@@ -2152,24 +1999,6 @@ df |>
     sub = 'The pesticides that people use in their garden/land has a negative impact on water in wells.'
   ) 
 ```
-
-### Unweighted
-
-```{r}
-#| label: k9.4-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k9_4')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K9_4',
-    sub = 'The pesticides that people use in their garden/land has a negative impact on water in wells.'
-  ) 
-
-```
 :::
 
 ### 
@@ -2177,7 +2006,7 @@ df |>
 ### K9.5
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k9.5
@@ -2193,32 +2022,13 @@ df |>
     sub = 'The pesticides that people use in their garden/land has a negative impact on piped water.'
   ) 
 ```
-
-### Unweighted
-
-```{r}
-#| label: k9.5-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k9_5')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K9_5',
-    sub = 'The pesticides that people use in their garden/land has a negative impact on piped water.'
-  ) 
-
-```
 :::
 
-### 
 
 ### K9.6
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k9.6
@@ -2234,30 +2044,12 @@ df |>
     sub = 'Cutting down trees and forests will cause soil to wash away.'
   ) 
 ```
-
-### Unweighted
-
-```{r}
-#| label: k9.6-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k9_6')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K9_6',
-    sub = 'Cutting down trees and forests will cause soil to wash away.'
-  ) 
-
-```
 :::
 
 ### K10
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k10
@@ -2273,32 +2065,12 @@ df |>
     sub = 'Would your household be interested in learning about breeding native stingless bees for the production of honey?'
   ) 
 ```
-
-### Unweighted
-
-```{r}
-#| label: k10-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k10')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K10',
-    sub = 'Would your household be interested in learning about breeding native stingless bees for the production of honey?'
-  ) 
-
-```
 :::
-
-### 
 
 ### K11
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k11
@@ -2340,24 +2112,15 @@ df |>
 
 ```
 
-### Unweighted
+### Charts
 
-```{r}
-#| label: k11-pct
-#| echo: false
-#| warning: false
-
-
-
-```
 :::
 
-### 
 
 ### K12
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k12
@@ -2374,29 +2137,12 @@ df |>
   ) 
 ```
 
-### Unweighted
-
-```{r}
-#| label: k12-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single_pct('k12')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K12',
-    sub = 'Have you ever heard that the Earth’s climate, or its weather patterns are changing?'
-  ) 
-
-```
 :::
 
 ### K13
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: k13
@@ -2413,7 +2159,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: k13-pct
@@ -2421,18 +2167,31 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('k13')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K13',
-    sub = 'Have you ever heard about the term "Climate Change"?'
-  ) 
+households_wexpand |> 
+    filter(!is.na(k13)) |> 
+    ggplot(aes(x = "", fill = k13)) +
+    geom_bar(position = 'fill') +
+    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                  label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+              size = 4.5, 
+              color = 'white',
+              stat="count", 
+              position=position_fill(0.5),
+              vjust = 1.5
+    ) + 
+    gg_blank_x + 
+    labs(y = 'Proportion',
+         title = 'Have you ever heard about the term "Climate Change"?') +
+    scale_fill_manual(values=MetBrewer::met.brewer("Monet", 6)) +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x =  element_blank()
+    ) + coord_polar("y", start=0)  
 
 ```
 :::
 
-## Attitude Area
+## ATTITUDE Area
 
 ### A1.1
 
@@ -2445,7 +2204,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_1')
+df <- ct_single('a1_1')
 
 df |> 
   ct_gt(
@@ -2462,7 +2221,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_1')
+df <- ct_single('a2_1')
 
 df |> 
   ct_gt(
@@ -2480,7 +2239,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_1')
+df <- ct_single('a3_1')
 
 df |> 
   ct_gt(
@@ -2502,7 +2261,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_2')
+df <- ct_single('a1_2')
 
 df |> 
   ct_gt(
@@ -2519,7 +2278,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_2')
+df <- ct_single('a2_2')
 
 df |> 
   ct_gt(
@@ -2537,7 +2296,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_2')
+df <- ct_single('a3_2')
 
 df |> 
   ct_gt(
@@ -2559,7 +2318,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_3')
+df <- ct_single('a1_3')
 
 df |> 
   ct_gt(
@@ -2576,7 +2335,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_3')
+df <- ct_single('a2_3')
 
 df |> 
   ct_gt(
@@ -2594,7 +2353,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_3')
+df <- ct_single('a3_3')
 
 df |> 
   ct_gt(
@@ -2616,7 +2375,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_4')
+df <- ct_single('a1_4')
 
 df |> 
   ct_gt(
@@ -2633,7 +2392,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_4')
+df <- ct_single('a2_4')
 
 df |> 
   ct_gt(
@@ -2651,7 +2410,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_4')
+df <- ct_single('a3_4')
 
 df |> 
   ct_gt(
@@ -2673,7 +2432,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_5')
+df <- ct_single('a1_5')
 
 df |> 
   ct_gt(
@@ -2690,7 +2449,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_5')
+df <- ct_single('a2_5')
 
 df |> 
   ct_gt(
@@ -2708,7 +2467,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_5')
+df <- ct_single('a3_5')
 
 df |> 
   ct_gt(
@@ -2730,7 +2489,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_6')
+df <- ct_single('a1_6')
 
 df |> 
   ct_gt(
@@ -2747,7 +2506,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_6')
+df <- ct_single('a2_6')
 
 df |> 
   ct_gt(
@@ -2765,7 +2524,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_6')
+df <- ct_single('a3_6')
 
 df |> 
   ct_gt(
@@ -2787,7 +2546,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_7')
+df <- ct_single('a1_7')
 
 df |> 
   ct_gt(
@@ -2804,7 +2563,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_7')
+df <- ct_single('a2_7')
 
 df |> 
   ct_gt(
@@ -2822,7 +2581,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_7')
+df <- ct_single('a3_7')
 
 df |> 
   ct_gt(
@@ -2844,7 +2603,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_8')
+df <- ct_single('a1_8')
 
 df |> 
   ct_gt(
@@ -2861,7 +2620,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_8')
+df <- ct_single('a2_8')
 
 df |> 
   ct_gt(
@@ -2879,7 +2638,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_8')
+df <- ct_single('a3_8')
 
 df |> 
   ct_gt(
@@ -2901,7 +2660,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_9')
+df <- ct_single('a1_9')
 
 df |> 
   ct_gt(
@@ -2918,7 +2677,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_9')
+df <- ct_single('a2_9')
 
 df |> 
   ct_gt(
@@ -2936,7 +2695,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_9')
+df <- ct_single('a3_9')
 
 df |> 
   ct_gt(
@@ -2958,7 +2717,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a1_10')
+df <- ct_single('a1_10')
 
 df |> 
   ct_gt(
@@ -2975,7 +2734,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a2_10')
+df <- ct_single('a2_10')
 
 df |> 
   ct_gt(
@@ -2993,7 +2752,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a3_10')
+df <- ct_single('a3_10')
 
 df |> 
   ct_gt(
@@ -3007,7 +2766,7 @@ df |>
 ### A4
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a4
@@ -3024,7 +2783,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a4-pct
@@ -3032,7 +2791,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a4')
+df <- ct_single('a4')
 
 df |> 
   ct_gt(
@@ -3046,7 +2805,7 @@ df |>
 ### A5
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a5
@@ -3063,7 +2822,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a5-pct
@@ -3071,7 +2830,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a5')
+df <- ct_single('a5')
 
 df |> 
   ct_gt(
@@ -3085,7 +2844,7 @@ df |>
 ### A6
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a6
@@ -3102,7 +2861,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a6-pct
@@ -3110,7 +2869,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a6')
+df <- ct_single('a6')
 
 df |> 
   ct_gt(
@@ -3124,7 +2883,7 @@ df |>
 ### A7
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a7
@@ -3141,7 +2900,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a7-pct
@@ -3149,7 +2908,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a7')
+df <- ct_single('a7')
 
 df |> 
   ct_gt(
@@ -3163,7 +2922,7 @@ df |>
 ### A8
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a82
@@ -3193,7 +2952,7 @@ df |>
 ### A9
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a8
@@ -3207,14 +2966,54 @@ df |>
   ct_gt(
     tit = 'Tabulations for question A9',
     sub = 'Do you dislike any of the following animals?'
-  ) 
+  ) |> 
+    tab_footnote(
+    footnote = "Tapir",
+    locations = cells_column_labels(columns = `_1`)
+  )  |>
+  tab_footnote(
+    footnote = "Jaguar",
+    locations = cells_column_labels(columns = `_2`)
+  )  |>
+  tab_footnote(
+    footnote = "Pumas",
+    locations = cells_column_labels(columns = `_3`)
+  )  |>
+  tab_footnote(
+    footnote = "Ocelots/Margay",
+    locations = cells_column_labels(columns = `_4`)
+  )  |>
+  tab_footnote(
+    footnote = "Deer",
+    locations = cells_column_labels(columns = `_5`)
+  )  |>
+  tab_footnote(
+    footnote = "Peccaries",
+    locations = cells_column_labels(columns = `_6`)
+  )  |>
+  tab_footnote(
+    footnote = "Howler and spider monkeys",
+    locations = cells_column_labels(columns = `_7`)
+  )  |>
+  tab_footnote(
+    footnote = "Raptors, such as hawks and vultures",
+    locations = cells_column_labels(columns = `_8`)
+  )  |>
+  tab_footnote(
+    footnote = "Parrots",
+    locations = cells_column_labels(columns = `_9`)
+  )  |>
+  tab_footnote(
+    footnote = "Snakes",
+    locations = cells_column_labels(columns = `_10`)
+  )  
 ```
 :::
 
 ### A10.1
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.1
@@ -3231,7 +3030,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.1-pct
@@ -3239,7 +3038,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_1')
+df <- ct_single('a10_1')
 
 df |> 
   ct_gt(
@@ -3253,7 +3052,7 @@ df |>
 ### A10.2
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.2
@@ -3270,7 +3069,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.2-pct
@@ -3278,7 +3077,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_2')
+df <- ct_single('a10_2')
 
 df |> 
   ct_gt(
@@ -3292,7 +3091,7 @@ df |>
 ### A10.3
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.3
@@ -3309,7 +3108,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.3-pct
@@ -3317,7 +3116,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_3')
+df <- ct_single('a10_3')
 
 df |> 
   ct_gt(
@@ -3331,7 +3130,7 @@ df |>
 ### A10.4
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.4
@@ -3342,13 +3141,22 @@ df |>
 df <- ct_single('a10_4')
 
 df |> 
+    select(
+    Item, 
+    `Strongly disagree`,
+    `Disagree`,
+    `Neutral`,
+    `Agree`,
+    `Strongly Agree`,
+    `Don't Know/Not Stated`
+  ) |> 
   ct_gt(
     tit = 'Tabulations for question A10.4',
     sub = 'Climate change poses a threat to protected areas'
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.4-pct
@@ -3356,7 +3164,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_4')
+df <- ct_single('a10_4')
 
 df |> 
   ct_gt(
@@ -3370,7 +3178,7 @@ df |>
 ### A10.5
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.5
@@ -3381,13 +3189,22 @@ df |>
 df <- ct_single('a10_5')
 
 df |> 
+    select(
+    Item, 
+    `Strongly disagree`,
+    `Disagree`,
+    `Neutral`,
+    `Agree`,
+    `Strongly Agree`,
+    `Don't Know/Not Stated`
+  ) |> 
   ct_gt(
     tit = 'Tabulations for question A10.5',
     sub = 'Slash and burn is a threat to protected areas'
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.5-pct
@@ -3395,7 +3212,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_5')
+df <- ct_single('a10_5')
 
 df |> 
   ct_gt(
@@ -3409,7 +3226,7 @@ df |>
 ### A10.6
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.6
@@ -3426,7 +3243,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.6-pct
@@ -3434,7 +3251,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_6')
+df <- ct_single('a10_6')
 
 df |> 
   ct_gt(
@@ -3448,7 +3265,7 @@ df |>
 ### A10.7
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.7
@@ -3465,7 +3282,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.7-pct
@@ -3473,7 +3290,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_7')
+df <- ct_single('a10_7')
 
 df |> 
   ct_gt(
@@ -3487,7 +3304,7 @@ df |>
 ### A10.8
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.8
@@ -3498,13 +3315,22 @@ df |>
 df <- ct_single('a10_8')
 
 df |> 
+    select(
+    Item, 
+    `Strongly disagree`,
+    `Disagree`,
+    `Neutral`,
+    `Agree`,
+    `Strongly Agree`,
+    `Don't Know/Not Stated`
+  ) |> 
   ct_gt(
     tit = 'Tabulations for question A10.8',
     sub = 'Our community can benefit from a task force that tackles forest fires'
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.8-pct
@@ -3512,7 +3338,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_8')
+df <- ct_single('a10_8')
 
 df |> 
   ct_gt(
@@ -3526,7 +3352,7 @@ df |>
 ### A10.9
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a10.9
@@ -3536,14 +3362,23 @@ df |>
 
 df <- ct_single('a10_9')
 
-df |> 
+df |>
+    select(
+    Item, 
+    `Strongly disagree`,
+    `Disagree`,
+    `Neutral`,
+    `Agree`,
+    `Strongly Agree`,
+    `Don't Know/Not Stated`
+  ) |> 
   ct_gt(
     tit = 'Tabulations for question A10.9',
     sub = 'There are job opportunities in tourism in my community'
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a10.9-pct
@@ -3551,7 +3386,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a10_9')
+df <- ct_single('a10_9')
 
 df |> 
   ct_gt(
@@ -3565,7 +3400,7 @@ df |>
 ### A11
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a11
@@ -3582,7 +3417,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a11-pct
@@ -3590,7 +3425,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a11')
+df <- ct_single('a11')
 
 df |> 
   ct_gt(
@@ -3604,7 +3439,7 @@ df |>
 ### A12
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a12
@@ -3621,7 +3456,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a12-pct
@@ -3629,7 +3464,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a12')
+df <- ct_single('a12')
 
 df |> 
   ct_gt(
@@ -3643,7 +3478,7 @@ df |>
 ### A13
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: a13
@@ -3660,7 +3495,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: a13-pct
@@ -3668,7 +3503,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('a13')
+df <- ct_single('a13')
 
 df |> 
   ct_gt(
@@ -3679,12 +3514,12 @@ df |>
 ```
 :::
 
-## PRACTICE AREA
+## PRACTICE Area
 
 ### P1
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p1
@@ -3701,7 +3536,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p1-pct
@@ -3709,7 +3544,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p1')
+df <- ct_single('p1')
 
 df |> 
   ct_gt(
@@ -3731,7 +3566,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p3_1')
+df <- ct_single('p3_1')
 
 df |> 
   ct_gt(
@@ -3748,7 +3583,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p4_1')
+df <- ct_single('p4_1')
 
 df |> 
   ct_gt(
@@ -3770,7 +3605,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p3_2')
+df <- ct_single('p3_2')
 
 df |> 
   ct_gt(
@@ -3787,7 +3622,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p4_2')
+df <- ct_single('p4_2')
 
 df |> 
   ct_gt(
@@ -3809,7 +3644,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p3_3')
+df <- ct_single('p3_3')
 
 df |> 
   ct_gt(
@@ -3826,7 +3661,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p4_3')
+df <- ct_single('p4_3')
 
 df |> 
   ct_gt(
@@ -3848,7 +3683,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p3_4')
+df <- ct_single('p3_4')
 
 df |> 
   ct_gt(
@@ -3865,7 +3700,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p4_4')
+df <- ct_single('p4_4')
 
 df |> 
   gt() |> 
@@ -3888,7 +3723,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p3_5')
+df <- ct_single('p3_5')
 
 df |> 
   ct_gt(
@@ -3905,7 +3740,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p4_5')
+df <- ct_single('p4_5')
 
 df |> 
   ct_gt(
@@ -3927,7 +3762,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p3_6')
+df <- ct_single('p3_6')
 
 df |> 
   ct_gt(
@@ -3944,7 +3779,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p4_6')
+df <- ct_single('p4_6')
 
 df |> 
   gt() |> 
@@ -3967,7 +3802,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p3_7')
+df <- ct_single('p3_7')
 
 df |> 
   ct_gt(
@@ -3984,7 +3819,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p4_7')
+df <- ct_single('p4_7')
 
 df |> 
   gt() |> 
@@ -4000,7 +3835,7 @@ df |>
 ### P5
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p5
@@ -4017,7 +3852,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p5-pct
@@ -4025,7 +3860,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p5')
+df <- ct_single('p5')
 
 df |> 
   ct_gt(
@@ -4040,7 +3875,7 @@ df |>
 ### P6
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p6
@@ -4057,7 +3892,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p6-pct
@@ -4065,7 +3900,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p6')
+df <- ct_single('p6')
 
 df |> 
   ct_gt(
@@ -4080,7 +3915,7 @@ df |>
 ### P7
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p7
@@ -4097,7 +3932,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p7-pct
@@ -4105,7 +3940,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p7')
+df <- ct_single('p7')
 
 df |> 
   ct_gt(
@@ -4119,7 +3954,7 @@ df |>
 ### P8
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p8
@@ -4141,7 +3976,7 @@ df |>
 ### P9.1
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p9.1
@@ -4158,7 +3993,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p9.1-pct
@@ -4166,7 +4001,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p9_1')
+df <- ct_single('p9_1')
 
 df |> 
   ct_gt(
@@ -4181,7 +4016,7 @@ df |>
 ### P9.2
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p9.2
@@ -4194,11 +4029,11 @@ df <- ct_single('p9_2')
 df |> 
   ct_gt(
     tit = 'Tabulations for question P9.2',
-    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+    sub = 'How likely are you or your household to engage in educational campaigns to learn about the Tapir Mountain Nature Reserve?'
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p9.2-pct
@@ -4206,12 +4041,12 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p9_2')
+df <- ct_single('p9_2')
 
 df |> 
   ct_gt(
     tit = 'Tabulations for question P9.2',
-    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+    sub = 'How likely are you or your household to engage in educational campaigns to learn about the Tapir Mountain Nature Reserve?'
   ) 
 
 ```
@@ -4221,7 +4056,7 @@ df |>
 ### P9.3
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p9.3
@@ -4238,7 +4073,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p9.3-pct
@@ -4246,7 +4081,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p9_3')
+df <- ct_single('p9_3')
 
 df |> 
   ct_gt(
@@ -4261,7 +4096,7 @@ df |>
 ### P9.4
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p9.4
@@ -4278,7 +4113,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p9.4-pct
@@ -4286,7 +4121,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p9_4')
+df <- ct_single('p9_4')
 
 df |> 
   ct_gt(
@@ -4302,7 +4137,7 @@ df |>
 ### P10
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p10
@@ -4319,7 +4154,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p10-pct
@@ -4327,7 +4162,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p10')
+df <- ct_single('p10')
 
 df |> 
   ct_gt(
@@ -4343,7 +4178,7 @@ df |>
 ### P11
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p11
@@ -4360,7 +4195,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p11-pct
@@ -4368,7 +4203,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p11')
+df <- ct_single('p11')
 
 df |> 
   ct_gt(
@@ -4384,7 +4219,7 @@ df |>
 ### P12
 
 ::: panel-tabset
-### Weighted
+### Tables
 
 ```{r}
 #| label: p12
@@ -4401,7 +4236,7 @@ df |>
   ) 
 ```
 
-### Unweighted
+### Charts
 
 ```{r}
 #| label: p12-pct
@@ -4409,7 +4244,7 @@ df |>
 #| warning: false
 
 
-df <- ct_single_pct('p12')
+df <- ct_single('p12')
 
 df |> 
   ct_gt(
