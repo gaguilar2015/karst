@@ -1057,11 +1057,41 @@ ct_multi <- function(row, col, format = 'pct'){
 ct_multi_aggregate <- function(var){
   df_list <- purrr::map(anal_vars, ~ct_multi(.x, var))
   
+  total <-  households |> 
+   pivot_longer(
+     cols = starts_with(var),
+     names_to = 'item',
+     values_to = 'value'
+   ) |> 
+   mutate(
+     Item = 'Total',
+     value = as.numeric(as.character(value)) * ind_weights,
+     ind_weights = ind_weights * !is.na(value)
+   ) |> 
+   group_by(Item, item) |> 
+   summarise(
+     .groups = 'drop',
+     selected = ceiling(sum(value, na.rm = T)),
+     total = ceiling(sum(ind_weights, na.rm = T)),
+     prop = selected/total,
+     pct = paste0(round(prop * 100, 1), '%'),
+     full = paste0(pct, '(', selected,')')
+   ) |>
+   select(Item, item, full) |> 
+   mutate(
+     item = stringr::str_replace(item, paste0(var, '_'), '')
+   ) |> 
+   pivot_wider(
+     names_from = item,
+     values_from = full
+   )
+  
   rbind(df_list[[1]] |> rename(Item = strata),
         df_list[[2]] |> rename(Item = age_group),
         df_list[[3]] |> rename(Item = ethnicity),
         df_list[[4]] |> rename(Item = education),
-        df_list[[5]] |> rename(Item = workertype_group)
+        df_list[[5]] |> rename(Item = workertype_group),
+        total
   )
 }
 
@@ -1080,11 +1110,15 @@ ct_multi_aggregate <- function(var){
 
 df <- ct_single('k1') 
 
-df |> 
+dfgt <- df |> 
   ct_gt(
     tit = 'Tabulations for question K1',
     sub = 'Have you ever heard about the term environmental conservation?'
   )
+
+dfgt #|> gtsave(filename = "tab_1.docx", inline_css = TRUE)
+
+
 
 ```
 :::
