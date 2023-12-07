@@ -820,7 +820,6 @@ head_ind_descriptives2 <- head_descriptives2 |>
 ### Respondents
 
 ::: panel-tabset
-
 ### Unweighted
 
 ```{r}
@@ -840,6 +839,7 @@ downloadthis::download_this(
 )
 
 ```
+
 ### Weighted
 
 ```{r}
@@ -859,10 +859,7 @@ downloadthis::download_this(
 )
 
 ```
-
 :::
-
-
 
 ### All Individuals
 
@@ -1288,6 +1285,7 @@ likert_plot_grouped <- function(df, grouped){
 
 ::: panel-tabset
 ### Chart
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1354,14 +1352,14 @@ likert_plot_grouped <- function(df, grouped){
       axis.text.x =  element_blank()
     )
 ```
-
 :::
 
 ### K2 - Ratings by Item
+
 ::: panel-tabset
 ### Charts
-::: panel-tabset
 
+::: panel-tabset
 #### Overall
 
 ```{r}
@@ -1374,8 +1372,8 @@ b2 <- likert_df('strata')
 likert_plot(b2)
 ```
 
-
 #### Community Type
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1386,6 +1384,7 @@ likert_plot_grouped(df, 'strata')
 ```
 
 #### Age Group
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1406,7 +1405,8 @@ df <- likert_df('ethnicity')
 likert_plot_grouped(df, 'ethnicity')
 ```
 
-#### Education 
+#### Education
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1417,6 +1417,7 @@ likert_plot_grouped(df, 'education')
 ```
 
 #### Worker Type
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1425,12 +1426,10 @@ likert_plot_grouped(df, 'education')
 df <- likert_df('workertype_group')
 likert_plot_grouped(df, 'workertype_group')
 ```
-
 :::
 
-
-
 ### Tables
+
 ::: panel-tabset
 ### K2.1
 
@@ -1521,13 +1520,9 @@ ct_k2_avg() |>
 
 ```
 :::
-
-
 :::
 
-
 ### K3
-
 
 ::: panel-tabset
 ### Tables
@@ -1583,7 +1578,6 @@ households_wexpand |>
 
 ### K3_1
 
-
 ::: panel-tabset
 ### Tables
 
@@ -1602,7 +1596,6 @@ df |>
 ```
 
 ### Charts
-
 
 ```{r}
 #| echo: false
@@ -1853,7 +1846,6 @@ df |>
     locations = cells_column_labels(columns = `_999999`)
   )
 ```
-
 :::
 
 ### K8
@@ -1946,14 +1938,13 @@ df |>
     locations = cells_column_labels(columns = `_999999`)
   ) 
 ```
-
 :::
 
 ### K9
 
 ::: panel-tabset
-
 ### Tables
+
 ::: panel-tabset
 ### K9.1
 
@@ -1989,9 +1980,7 @@ df |>
   ) 
 ```
 
-
 ### K9.3
-
 
 ```{r}
 #| label: k9.3
@@ -2007,8 +1996,8 @@ df |>
     sub = 'The Belize KARST can authorize persons to hunt in the Tapir Mountain Nature Reserve.'
   ) 
 ```
-### K9.4
 
+### K9.4
 
 ```{r}
 #| label: k9.4
@@ -2025,9 +2014,7 @@ df |>
   ) 
 ```
 
-
 ### K9.5
-
 
 ```{r}
 #| label: k9.5
@@ -2043,6 +2030,7 @@ df |>
     sub = 'The pesticides that people use in their garden/land has a negative impact on piped water.'
   ) 
 ```
+
 ### K9.6
 
 ```{r}
@@ -2060,11 +2048,7 @@ df |>
   ) 
 ```
 :::
-
 :::
-
-
-
 
 ### K10
 
@@ -2131,10 +2115,7 @@ df |>
   ) 
 
 ```
-
-
 :::
-
 
 ### K12
 
@@ -2155,7 +2136,6 @@ df |>
     sub = 'Have you ever heard that the Earth’s climate, or its weather patterns are changing?'
   ) 
 ```
-
 :::
 
 ### K13
@@ -2262,10 +2242,11 @@ likert_plot_grouped <- function(df, grouped){
 ### A1
 
 ::: panel-tabset
-
 ### Charts
+
 ::: panel-tabset
 ### Overall
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -2295,6 +2276,7 @@ likert_plot_grouped <- function(df, grouped){
 ```
 
 ### Ethnicity
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -2304,6 +2286,7 @@ likert_plot_grouped <- function(df, grouped){
 ```
 
 ### Education
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -2313,6 +2296,7 @@ likert_plot_grouped <- function(df, grouped){
 ```
 
 ### Workertype
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -2320,10 +2304,10 @@ likert_plot_grouped <- function(df, grouped){
 
  plot(likert::likert(b2[,6:15], grouping = b2[,5]), legend.position = 'top') 
 ```
-
 :::
 
 ### Tables
+
 ::: panel-tabset
 ### A1.1
 
@@ -2381,7 +2365,9 @@ df |>
 
 ```
 :::
+
 ### A1.2
+
 ::: panel-tabset
 ### Concern
 
@@ -2438,6 +2424,7 @@ df |>
 :::
 
 ### A1.3
+
 ::: panel-tabset
 ### Concern
 
@@ -2551,6 +2538,7 @@ df |>
 :::
 
 ### A1.5
+
 ::: panel-tabset
 ### Concern
 
@@ -2607,6 +2595,7 @@ df |>
 :::
 
 ### A1.6
+
 ::: panel-tabset
 ### Concern
 
@@ -2663,6 +2652,7 @@ df |>
 :::
 
 ### A1.7
+
 ::: panel-tabset
 ### Concern
 
@@ -2718,8 +2708,8 @@ df |>
 ```
 :::
 
-
 ### A1.8
+
 ::: panel-tabset
 ### Concern
 
@@ -2888,9 +2878,7 @@ df |>
 
 ```
 :::
-
 :::
-
 :::
 
 ### A4
@@ -2912,7 +2900,6 @@ df |>
     sub = 'Do you own livestock or agricultural land in your community?'
   ) 
 ```
-
 :::
 
 ### A5
@@ -2976,7 +2963,6 @@ df |>
     sub = 'In your opinion, have human-wildlife conflicts increased, decreased, or remain the same?'
   ) 
 ```
-
 :::
 
 ### A8
@@ -3007,7 +2993,9 @@ df |>
     sub = 'What would you do if you experienced a conflict with wildlife in your village?'
   ) 
 ```
+
 ### Charts
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -3115,8 +3103,10 @@ df |>
 
 ::: panel-tabset
 ### Charts
+
 ::: panel-tabset
 ### Overal
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -3160,7 +3150,6 @@ df |>
 
 ```
 
-
 ### Community Type
 
 ```{r}
@@ -3182,6 +3171,7 @@ df |>
 ```
 
 ### Ethnicity
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -3191,6 +3181,7 @@ df |>
 ```
 
 ### Education
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -3200,6 +3191,7 @@ df |>
 ```
 
 ### Workertype
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -3207,9 +3199,10 @@ df |>
 
  plot(likert::likert(b2[,6:14], grouping = b2[,5]), legend.position = 'top') 
 ```
-
 :::
+
 ### Tables
+
 ::: panel-tabset
 ### A10.1
 
@@ -3287,6 +3280,7 @@ df |>
     sub = 'Climate change poses a threat to protected areas'
   ) 
 ```
+
 ### A10.5
 
 ```{r}
@@ -3372,8 +3366,8 @@ df |>
     sub = 'Our community can benefit from a task force that tackles forest fires'
   ) 
 ```
-### A10.9
 
+### A10.9
 
 ```{r}
 #| label: a10.9
@@ -3398,10 +3392,8 @@ df |>
     sub = 'There are job opportunities in tourism in my community'
   ) 
 ```
-
 :::
 :::
-
 
 ### A11
 
@@ -3523,9 +3515,9 @@ households_wexpand |>
 
 ### P3
 
-::: panel-tabaset
-
+::: panel-tabset
 ### P3.1
+
 ::: panel-tabset
 ### Practice
 
@@ -3564,6 +3556,7 @@ df |>
 :::
 
 ### P3.2
+
 ::: panel-tabset
 ### Practice
 
@@ -3602,6 +3595,7 @@ df |>
 :::
 
 ### P3.3
+
 ::: panel-tabset
 ### Practice
 
@@ -3640,6 +3634,7 @@ df |>
 :::
 
 ### P3.4
+
 ::: panel-tabset
 ### Practice
 
@@ -3679,6 +3674,7 @@ df |>
 :::
 
 ### P3.5
+
 ::: panel-tabset
 ### Practice
 
@@ -3717,6 +3713,7 @@ df |>
 :::
 
 ### P3.6
+
 ::: panel-tabset
 ### Practice
 
@@ -3756,6 +3753,7 @@ df |>
 :::
 
 ### P3.7
+
 ::: panel-tabset
 ### Practice
 
@@ -3793,9 +3791,7 @@ df |>
 
 ```
 :::
-
 :::
-
 
 ### P5
 
@@ -3818,7 +3814,6 @@ df |>
 ```
 :::
 
-
 ### P6
 
 ::: panel-tabset
@@ -3839,7 +3834,6 @@ df |>
   ) 
 ```
 :::
-
 
 ### P7
 
@@ -3883,6 +3877,7 @@ df |>
 ```
 
 ### Charts
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -3925,14 +3920,14 @@ df |>
 ```
 :::
 
-
 ### P9
 
 ::: panel-tabset
-
 ### Charts
+
 ::: panel-tabset
 ### Overal
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -3966,7 +3961,6 @@ df |>
 
 ```
 
-
 ### Community Type
 
 ```{r}
@@ -3988,6 +3982,7 @@ df |>
 ```
 
 ### Ethnicity
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -3997,6 +3992,7 @@ df |>
 ```
 
 ### Education
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -4006,6 +4002,7 @@ df |>
 ```
 
 ### Workertype
+
 ```{r}
 #| echo: false
 #| warning: true
@@ -4013,10 +4010,10 @@ df |>
 
  plot(likert::likert(b2[,6:9], grouping = b2[,5]), legend.position = 'top') 
 ```
-
 :::
 
 ### Tables
+
 ::: panel-tabset
 ### P9.1
 
@@ -4035,7 +4032,6 @@ df |>
   ) 
 ```
 
-
 ### P9.2
 
 ```{r}
@@ -4052,7 +4048,6 @@ df |>
     sub = 'How likely are you or your household to engage in educational campaigns to learn about the Tapir Mountain Nature Reserve?'
   ) 
 ```
-
 
 ### P9.3
 
@@ -4071,9 +4066,7 @@ df |>
   ) 
 ```
 
-
 ### P9.4
-
 
 ```{r}
 #| label: p9.4
@@ -4091,8 +4084,6 @@ df |>
 ```
 :::
 :::
-
-
 
 ### P10
 
@@ -4133,8 +4124,6 @@ df |>
 ```
 :::
 
-
-
 ### P11
 
 ::: panel-tabset
@@ -4174,8 +4163,6 @@ df |>
 ```
 :::
 
-
-
 ### P12
 
 ::: panel-tabset
@@ -4214,5 +4201,3 @@ df |>
 
 ```
 :::
-
-
