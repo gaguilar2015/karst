@@ -1561,7 +1561,7 @@ households_wexpand |>
     ) |> 
     ggplot(aes(x = "", fill = k3)) +
     geom_bar(position = 'fill') +
-    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+    ggrepel::geom_label_repel(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
                   label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
               size = 5, 
               color = 'white',
@@ -1618,7 +1618,7 @@ households_wexpand |>
     ) |> 
     ggplot(aes(x = "", fill = k3_1)) +
     geom_bar(position = 'fill') +
-    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+    ggrepel::geom_label_repel(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
                   label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
               size = 5, 
               color = 'white',
@@ -1733,7 +1733,7 @@ households_wexpand |>
     filter(!is.na(k5)) |> 
     ggplot(aes(x = "", fill = k5)) +
     geom_bar(position = 'fill') +
-    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+    ggrepel::geom_label_repel(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
                   label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
               size = 5, 
               color = 'white',
@@ -1783,13 +1783,12 @@ households_wexpand |>
     filter(!is.na(k6)) |> 
     ggplot(aes(x = "", fill = k6)) +
     geom_bar(position = 'fill') +
-    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+    ggrepel::geom_label_repel(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
                   label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
               size = 4.5, 
               color = 'white',
               stat="count", 
-              position=position_fill(0.5),
-              vjust = 1.5
+              position=position_fill(0.5)
     ) + 
     gg_blank_x + 
     labs(y = 'Proportion',
@@ -1950,10 +1949,13 @@ df |>
 
 :::
 
-### K9.1
+### K9
 
 ::: panel-tabset
+
 ### Tables
+::: panel-tabset
+### K9.1
 
 ```{r}
 #| label: k9
@@ -1969,12 +1971,8 @@ df |>
     sub = 'The water from local wells or pumps comes from the waterbasin or water table in the Tapir Mountain Nature Reserve.'
   ) 
 ```
-:::
 
 ### K9.2
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: k9.2
@@ -1990,12 +1988,10 @@ df |>
     sub = 'People can hunt in the Tapir Mountain Nature Reserve if they have a valid license.'
   ) 
 ```
-:::
+
 
 ### K9.3
 
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: k9.3
@@ -2011,13 +2007,8 @@ df |>
     sub = 'The Belize KARST can authorize persons to hunt in the Tapir Mountain Nature Reserve.'
   ) 
 ```
-:::
-
-
 ### K9.4
 
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: k9.4
@@ -2033,14 +2024,10 @@ df |>
     sub = 'The pesticides that people use in their garden/land has a negative impact on water in wells.'
   ) 
 ```
-:::
 
-### 
 
 ### K9.5
 
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: k9.5
@@ -2056,13 +2043,7 @@ df |>
     sub = 'The pesticides that people use in their garden/land has a negative impact on piped water.'
   ) 
 ```
-:::
-
-
 ### K9.6
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: k9.6
@@ -2079,6 +2060,11 @@ df |>
   ) 
 ```
 :::
+
+:::
+
+
+
 
 ### K10
 
@@ -2146,7 +2132,6 @@ df |>
 
 ```
 
-### Charts
 
 :::
 
@@ -2205,13 +2190,12 @@ households_wexpand |>
     filter(!is.na(k13)) |> 
     ggplot(aes(x = "", fill = k13)) +
     geom_bar(position = 'fill') +
-    geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+    ggrepel::geom_label_repel(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
                   label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
               size = 4.5, 
               color = 'white',
               stat="count", 
-              position=position_fill(0.5),
-              vjust = 1.5
+              position=position_fill(0.5)
     ) + 
     gg_blank_x + 
     labs(y = 'Proportion',
@@ -2227,6 +2211,120 @@ households_wexpand |>
 
 ## ATTITUDE Area
 
+```{r}
+#| label: charts-prep
+#| echo: false
+#| warning: false
+
+ 
+b2 <- households_wexpand |> 
+  filter(
+    a1_1 != 'Not stated',
+    a1_2 != 'Not stated',
+    a1_3 != 'Not stated',
+    a1_4 != 'Not stated',
+    a1_5 != 'Not stated',
+    a1_6 != 'Not stated',
+    a1_7 != 'Not stated',
+    a1_8 != 'Not stated',
+    a1_9 != 'Not stated',
+    a1_10 != 'Not stated',
+         ) |> 
+   select(
+     all_of(anal_vars),
+     `Waste disposal` = a1_1,
+     `Water contamination ` = a1_2,
+     `Forest fires` = a1_3,
+     `Deforestation` = a1_4,
+     `Soil erosion` = a1_5,
+     `Flooding` = a1_6,
+     `Use of chemical pesticides` = a1_7,
+     `Drought` = a1_8,
+     `Logging` = a1_9,
+     `Hunting of wildlife` = a1_10
+   ) |> as.data.frame()
+
+
+ b2 <- purrr::modify_if(b2, is.factor, ~ forcats::fct_drop(.x))
+ 
+ b2$strata <- forcats::fct_rev(b2$strata)
+ b2$age_group <- forcats::fct_rev(b2$age_group)
+ b2$ethnicity <- forcats::fct_rev(b2$ethnicity)
+ b2$education <- forcats::fct_rev(b2$education)
+ b2$workertype_group <- forcats::fct_rev(b2$workertype_group)
+
+likert_plot_grouped <- function(df, grouped){
+  df[[grouped]] <- forcats::fct_rev(df[[grouped]])
+  plot(likert::likert(df[,3:9], grouping = df[,2]), legend.position = 'top')
+}
+```
+
+### A1
+
+::: panel-tabset
+
+### Charts
+::: panel-tabset
+### Overall
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 6
+
+ plot(likert::likert(b2[,6:15]), legend.position = 'top') 
+```
+
+### Community Type
+
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:15], grouping = b2[,1]), legend.position = 'top') 
+```
+
+### Age Group
+
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:15], grouping = b2[,2]), legend.position = 'top') 
+```
+
+### Ethnicity
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:15], grouping = b2[,3]), legend.position = 'top') 
+```
+
+### Education
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:15], grouping = b2[,4]), legend.position = 'top') 
+```
+
+### Workertype
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:15], grouping = b2[,5]), legend.position = 'top') 
+```
+
+:::
+
+### Tables
+::: panel-tabset
 ### A1.1
 
 ::: panel-tabset
@@ -2283,9 +2381,7 @@ df |>
 
 ```
 :::
-
 ### A1.2
-
 ::: panel-tabset
 ### Concern
 
@@ -2342,7 +2438,6 @@ df |>
 :::
 
 ### A1.3
-
 ::: panel-tabset
 ### Concern
 
@@ -2456,7 +2551,6 @@ df |>
 :::
 
 ### A1.5
-
 ::: panel-tabset
 ### Concern
 
@@ -2513,7 +2607,6 @@ df |>
 :::
 
 ### A1.6
-
 ::: panel-tabset
 ### Concern
 
@@ -2570,7 +2663,6 @@ df |>
 :::
 
 ### A1.7
-
 ::: panel-tabset
 ### Concern
 
@@ -2626,8 +2718,8 @@ df |>
 ```
 :::
 
-### A1.8
 
+### A1.8
 ::: panel-tabset
 ### Concern
 
@@ -2797,6 +2889,10 @@ df |>
 ```
 :::
 
+:::
+
+:::
+
 ### A4
 
 ::: panel-tabset
@@ -2817,23 +2913,6 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a4-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a4')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question K13',
-    sub = 'Do you own livestock or agricultural land in your community?'
-  ) 
-
-```
 :::
 
 ### A5
@@ -2855,24 +2934,6 @@ df |>
     sub = 'Do you feel that your livestock or agricultural land is threatened by predators like jaguars, pumas, from nearby bushes?'
   ) 
 ```
-
-### Charts
-
-```{r}
-#| label: a5-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a5')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question a5',
-    sub = 'Do you feel that your livestock or agricultural land is threatened by predators like jaguars, pumas, from nearby bushes?'
-  ) 
-
-```
 :::
 
 ### A6
@@ -2893,24 +2954,6 @@ df |>
     tit = 'Tabulations for question A6',
     sub = 'Do you think that jaguars and pumas are currently a threat to your community?'
   ) 
-```
-
-### Charts
-
-```{r}
-#| label: a6-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a6')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A6',
-    sub = 'Do you think that jaguars and pumas are currently a threat to your community?'
-  ) 
-
 ```
 :::
 
@@ -2934,23 +2977,6 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a7-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a7')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A7',
-    sub = 'In your opinion, have human-wildlife conflicts increased, decreased, or remain the same?'
-  ) 
-
-```
 :::
 
 ### A8
@@ -2980,6 +3006,47 @@ df |>
     tit = 'Tabulations for question A8',
     sub = 'What would you do if you experienced a conflict with wildlife in your village?'
   ) 
+```
+### Charts
+```{r}
+#| echo: false
+#| warning: false
+
+ households_wexpand |> 
+   select(starts_with('a8__')) |> 
+   dplyr::rename(
+     Report = a8__1,        
+     Scare = a8__2,  
+     `Poison or hunt` = a8__3,          
+     `No action` = a8__4,          
+     Other = a8__888888,     
+     `Not Stated` = a8__999999  
+   ) |> 
+   pivot_longer(
+     cols = dplyr::everything(),
+     names_to = 'Item',
+     values_to = 'Value'
+   ) |> 
+   filter(
+     Value == 1
+   ) |> 
+   ggplot(aes(x = "", fill = Item)) +
+   geom_bar(position = 'fill') +
+   ggrepel::geom_label_repel(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                 label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+             size = 4.5, 
+             color = 'white',
+             stat="count", 
+             position=position_fill(0.5)
+   ) + 
+   gg_blank_x + 
+   labs(y = 'Proportional share of each option',
+        title = 'Actions taken in case of wildlife conflict') +
+   scale_fill_manual(values=MetBrewer::met.brewer("Monet", 5)) +
+   theme(
+     axis.ticks.x = element_blank(),
+     axis.text.x =  element_blank()
+   ) + coord_polar("y", start=0)  
 ```
 :::
 
@@ -3044,10 +3111,107 @@ df |>
 ```
 :::
 
-### A10.1
+### A10
 
 ::: panel-tabset
+### Charts
+::: panel-tabset
+### Overal
+```{r}
+#| echo: false
+#| warning: false
+
+ b2 <- households_wexpand |> 
+   filter(
+     a10_1 != "Don't Know/Not Stated",
+     a10_2 != "Don't Know/Not Stated",
+     a10_3 != "Don't Know/Not Stated",
+     a10_4 != "Don't Know/Not Stated",
+     a10_5 != "Don't Know/Not Stated",
+     a10_6 != "Don't Know/Not Stated",
+     a10_7 != "Don't Know/Not Stated",
+     a10_8 != "Don't Know/Not Stated",
+     a10_9 != "Don't Know/Not Stated"
+   ) |> 
+   select(
+     all_of(anal_vars),
+     `Climate change poses a threat for people around the world` = a10_1,
+     `Climate change poses a threat to my livelihood` = a10_2,
+     `Human activity is greatly responsible for climate change` = a10_3,
+     `Climate change poses a threat to protected areas` = a10_4,
+     `Slash and burn is a threat to protected areas` = a10_5,
+     `Establishing protected areas is bad for the community` = a10_6,
+     `Community can benefit from clean water initiative` = a10_7,
+     `Community can benefit from forest fire taskforce` = a10_8,
+     `There are job opportunities in tourism in my community` = a10_9
+   ) |> as.data.frame()
+ 
+ 
+ b2 <- purrr::modify_if(b2, is.factor, ~ forcats::fct_drop(.x))
+ 
+  b2$strata <- forcats::fct_rev(b2$strata)
+ b2$age_group <- forcats::fct_rev(b2$age_group)
+ b2$ethnicity <- forcats::fct_rev(b2$ethnicity)
+ b2$education <- forcats::fct_rev(b2$education)
+ b2$workertype_group <- forcats::fct_rev(b2$workertype_group)
+ 
+ 
+ plot(likert::likert(b2[,6:14]), legend.position = 'top') 
+
+```
+
+
+### Community Type
+
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:14], grouping = b2[,1]), legend.position = 'top') 
+```
+
+### Age Group
+
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:14], grouping = b2[,2]), legend.position = 'top') 
+```
+
+### Ethnicity
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:14], grouping = b2[,3]), legend.position = 'top') 
+```
+
+### Education
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:14], grouping = b2[,4]), legend.position = 'top') 
+```
+
+### Workertype
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 9
+
+ plot(likert::likert(b2[,6:14], grouping = b2[,5]), legend.position = 'top') 
+```
+
+:::
 ### Tables
+::: panel-tabset
+### A10.1
 
 ```{r}
 #| label: a10.1
@@ -3064,29 +3228,7 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a10.1-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_1')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.1',
-    sub = 'Climate change poses a serious threat for people around the world'
-  ) 
-
-```
-:::
-
 ### A10.2
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: a10.2
@@ -3103,29 +3245,7 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a10.2-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_2')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.2',
-    sub = 'Climate change poses a threat to my livelihood'
-  ) 
-
-```
-:::
-
 ### A10.3
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: a10.3
@@ -3142,29 +3262,7 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a10.3-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_3')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.3',
-    sub = 'Human activity is greatly responsible for climate change'
-  ) 
-
-```
-:::
-
-### A10.4
-
-::: panel-tabset
-### Tables
+### 10.4
 
 ```{r}
 #| label: a10.4
@@ -3189,30 +3287,7 @@ df |>
     sub = 'Climate change poses a threat to protected areas'
   ) 
 ```
-
-### Charts
-
-```{r}
-#| label: a10.4-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_4')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.4',
-    sub = 'Climate change poses a threat to protected areas'
-  ) 
-
-```
-:::
-
 ### A10.5
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: a10.5
@@ -3238,29 +3313,7 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a10.5-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_5')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.1',
-    sub = 'Slash and burn is a threat to protected areas'
-  ) 
-
-```
-:::
-
 ### A10.6
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: a10.6
@@ -3277,29 +3330,7 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a10.6-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_6')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.6',
-    sub = 'Establishing protected areas is bad for the community because the land can be used by villagers to provide for their families'
-  ) 
-
-```
-:::
-
 ### A10.7
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: a10.7
@@ -3316,29 +3347,7 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a10.7-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_7')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.7',
-    sub = 'Our community can benefit from a clean water initiative'
-  ) 
-
-```
-:::
-
 ### A10.8
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: a10.8
@@ -3363,30 +3372,8 @@ df |>
     sub = 'Our community can benefit from a task force that tackles forest fires'
   ) 
 ```
-
-### Charts
-
-```{r}
-#| label: a10.8-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_8')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.8',
-    sub = 'Our community can benefit from a task force that tackles forest fires'
-  ) 
-
-```
-:::
-
 ### A10.9
 
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: a10.9
@@ -3412,24 +3399,9 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: a10.9-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a10_9')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A10.9',
-    sub = 'There are job opportunities in tourism in my community'
-  ) 
-
-```
 :::
+:::
+
 
 ### A11
 
@@ -3449,24 +3421,6 @@ df |>
     tit = 'Tabulations for question A11',
     sub = 'Do you think that your community could benefit from a neighbourhood watch that reports forest fires, or wildlife hunting in the reserve and the surrounding communities?'
   ) 
-```
-
-### Charts
-
-```{r}
-#| label: a11-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a11')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A11',
-    sub = 'Do you think that your community could benefit from a neighbourhood watch that reports forest fires, or wildlife hunting in the reserve and the surrounding communities?'
-  ) 
-
 ```
 :::
 
@@ -3489,24 +3443,6 @@ df |>
     sub = 'Would your household be interested in joining a neighbourhood watch?'
   ) 
 ```
-
-### Charts
-
-```{r}
-#| label: a12-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a12')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A12',
-    sub = 'Would your household be interested in joining a neighbourhood watch?'
-  ) 
-
-```
 :::
 
 ### A13
@@ -3527,24 +3463,6 @@ df |>
     tit = 'Tabulations for question A13',
     sub = 'Would anyone in your household be interested in receiving training to join a fire task force?'
   ) 
-```
-
-### Charts
-
-```{r}
-#| label: a13-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('a13')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question A13',
-    sub = 'Would anyone in your household be interested in receiving training to join a fire task force?'
-  ) 
-
 ```
 :::
 
@@ -3578,19 +3496,36 @@ df |>
 #| warning: false
 
 
-df <- ct_single('p1')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P1',
-    sub = 'What is the MAIN way your household disposes of garbage?'
-  ) 
+households_wexpand |> 
+   filter(
+     !is.na(p1)
+   ) |> 
+   ggplot(aes(x = "", fill = p1)) +
+   geom_bar(position = 'fill') +
+   ggrepel::geom_label_repel(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                 label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')),
+             size = 4.5, 
+             color = 'white',
+             stat="count", 
+             position=position_fill(0.5)
+   ) + 
+   gg_blank_x + 
+   labs(y = '',
+        title = 'Main garbabe disposal method') +
+   scale_fill_manual(values=MetBrewer::met.brewer("Monet", 10)) +
+   theme(
+     axis.ticks.x = element_blank(),
+     axis.text.x =  element_blank()
+   ) + coord_polar("y", start=0)  
 
 ```
 :::
 
-### P3.1
+### P3
 
+::: panel-tabaset
+
+### P3.1
 ::: panel-tabset
 ### Practice
 
@@ -3629,7 +3564,6 @@ df |>
 :::
 
 ### P3.2
-
 ::: panel-tabset
 ### Practice
 
@@ -3668,7 +3602,6 @@ df |>
 :::
 
 ### P3.3
-
 ::: panel-tabset
 ### Practice
 
@@ -3707,7 +3640,6 @@ df |>
 :::
 
 ### P3.4
-
 ::: panel-tabset
 ### Practice
 
@@ -3747,7 +3679,6 @@ df |>
 :::
 
 ### P3.5
-
 ::: panel-tabset
 ### Practice
 
@@ -3786,7 +3717,6 @@ df |>
 :::
 
 ### P3.6
-
 ::: panel-tabset
 ### Practice
 
@@ -3826,7 +3756,6 @@ df |>
 :::
 
 ### P3.7
-
 ::: panel-tabset
 ### Practice
 
@@ -3865,6 +3794,8 @@ df |>
 ```
 :::
 
+:::
+
 
 ### P5
 
@@ -3884,24 +3815,6 @@ df |>
     tit = 'Tabulations for question P5',
     sub = 'Does your household engage in subsistence farming or agricultural production?'
   ) 
-```
-
-### Charts
-
-```{r}
-#| label: p5-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('p5')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P5',
-    sub = 'Does your household engage in subsistence farming or agricultural production?'
-  ) 
-
 ```
 :::
 
@@ -3925,24 +3838,6 @@ df |>
     sub = 'Would your household be interested in learning environmentally improved crop production crop production methods?'
   ) 
 ```
-
-### Charts
-
-```{r}
-#| label: p6-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('p6')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P6',
-    sub = 'Would your household be interested in learning environmentally improved crop production crop production methods?'
-  ) 
-
-```
 :::
 
 
@@ -3965,24 +3860,6 @@ df |>
     sub = 'Would your household be interested in learning about biological pesticides?'
   ) 
 ```
-
-### Charts
-
-```{r}
-#| label: p7-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('p7')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P7',
-    sub = 'Would your household be interested in learning about biological pesticides?'
-  ) 
-
-```
 :::
 
 ### P8
@@ -4004,13 +3881,144 @@ df |>
     sub = 'How do you access news and information on a daily basis?'
   ) 
 ```
+
+### Charts
+```{r}
+#| echo: false
+#| warning: false
+
+ households_wexpand |> 
+   select(starts_with('p8__')) |> 
+   dplyr::rename(
+     Television = p8__1,        
+     Radio = p8__2,  
+     `Social Media` = p8__3,          
+     `Newspaper` = p8__4,          
+     `Internet` = p8__5,          
+     `Mobile Apps` = p8__6,          
+     `Word of mouth/community leader` = p8__7,          
+     Other = p8__888888
+   ) |> 
+   pivot_longer(
+     cols = dplyr::everything(),
+     names_to = 'Item',
+     values_to = 'Value'
+   ) |> 
+   filter(
+     Value == 1
+   ) |> 
+   ggplot(aes(x = Item)) +
+   geom_bar(fill = 'lightseagreen') +
+   geom_text(aes(y=..count.., 
+                                 label=..count..),
+                             size = 4.5, 
+                             color = 'white',
+                             stat="count", 
+                             position=position_stack(0.5),
+             vjust = 0.5
+   ) + 
+   gg_blank_x + 
+   labs(y = 'Proportional share of each option',
+        title = 'News and Information sources') +
+   coord_flip()
+
+```
 :::
 
 
-### P9.1
+### P9
 
 ::: panel-tabset
+
+### Charts
+::: panel-tabset
+### Overal
+```{r}
+#| echo: false
+#| warning: false
+
+ b2 <- households_wexpand |> 
+   filter(
+     p9_1 != "Not Stated",
+     p9_2 != "Not Stated",
+     p9_3 != "Not Stated",
+     p9_4 != "Not Stated"
+   ) |> 
+   select(
+     all_of(anal_vars),
+     `Engange with Promotional advertisement about TMNR` = p9_1,
+     `Engage with Educational campaigns about TMNR` = p9_2,
+     `Follow social media of BKHC` = p9_3,
+     `Join training workshops from BKHC` = p9_4
+   ) |> as.data.frame()
+ 
+ 
+ b2 <- purrr::modify_if(b2, is.factor, ~ forcats::fct_drop(.x))
+ 
+  b2$strata <- forcats::fct_rev(b2$strata)
+ b2$age_group <- forcats::fct_rev(b2$age_group)
+ b2$ethnicity <- forcats::fct_rev(b2$ethnicity)
+ b2$education <- forcats::fct_rev(b2$education)
+ b2$workertype_group <- forcats::fct_rev(b2$workertype_group)
+ 
+ 
+ plot(likert::likert(b2[,6:9]), legend.position = 'top') 
+
+```
+
+
+### Community Type
+
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 7
+
+ plot(likert::likert(b2[,6:9], grouping = b2[,1]), legend.position = 'top') 
+```
+
+### Age Group
+
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 7
+
+ plot(likert::likert(b2[,6:9], grouping = b2[,2]), legend.position = 'top') 
+```
+
+### Ethnicity
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 7
+
+ plot(likert::likert(b2[,6:9], grouping = b2[,3]), legend.position = 'top') 
+```
+
+### Education
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 7
+
+ plot(likert::likert(b2[,6:9], grouping = b2[,4]), legend.position = 'top') 
+```
+
+### Workertype
+```{r}
+#| echo: false
+#| warning: true
+#| fig-height: 7
+
+ plot(likert::likert(b2[,6:9], grouping = b2[,5]), legend.position = 'top') 
+```
+
+:::
+
 ### Tables
+::: panel-tabset
+### P9.1
 
 ```{r}
 #| label: p9.1
@@ -4027,30 +4035,8 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: p9.1-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('p9_1')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P9.1',
-    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
-  ) 
-
-```
-:::
-
 
 ### P9.2
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: p9.2
@@ -4067,30 +4053,8 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: p9.2-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('p9_2')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P9.2',
-    sub = 'How likely are you or your household to engage in educational campaigns to learn about the Tapir Mountain Nature Reserve?'
-  ) 
-
-```
-:::
-
 
 ### P9.3
-
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: p9.3
@@ -4107,30 +4071,9 @@ df |>
   ) 
 ```
 
-### Charts
-
-```{r}
-#| label: p9.3-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('p9_3')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P9.3',
-    sub = 'How likely are you or our household to follow the social media page of the Belize Karst Habitat Conservation'
-  ) 
-
-```
-:::
-
 
 ### P9.4
 
-::: panel-tabset
-### Tables
 
 ```{r}
 #| label: p9.4
@@ -4146,24 +4089,7 @@ df |>
     sub = 'How likely are or your household to join training workshops that the Belize Karst Habitat Conservation organize'
   ) 
 ```
-
-### Charts
-
-```{r}
-#| label: p9.4-pct
-#| echo: false
-#| warning: false
-
-
-df <- ct_single('p9_4')
-
-df |> 
-  ct_gt(
-    tit = 'Tabulations for question P9.4',
-    sub = 'How likely are or your household to join training workshops that the Belize Karst Habitat Conservation organize'
-  ) 
-
-```
+:::
 :::
 
 
