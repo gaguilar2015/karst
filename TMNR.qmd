@@ -4103,7 +4103,7 @@ df <- ct_single('p9_3')
 df |> 
   ct_gt(
     tit = 'Tabulations for question P9.3',
-    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+    sub = 'How likely are you or our household to follow the social media page of the Belize Karst Habitat Conservation'
   ) 
 ```
 
@@ -4120,7 +4120,7 @@ df <- ct_single('p9_3')
 df |> 
   ct_gt(
     tit = 'Tabulations for question P9.3',
-    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+    sub = 'How likely are you or our household to follow the social media page of the Belize Karst Habitat Conservation'
   ) 
 
 ```
@@ -4143,7 +4143,7 @@ df <- ct_single('p9_4')
 df |> 
   ct_gt(
     tit = 'Tabulations for question P9.4',
-    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+    sub = 'How likely are or your household to join training workshops that the Belize Karst Habitat Conservation organize'
   ) 
 ```
 
@@ -4160,7 +4160,7 @@ df <- ct_single('p9_4')
 df |> 
   ct_gt(
     tit = 'Tabulations for question P9.4',
-    sub = 'How likely are you or your household to engage with promotional advertisement about the Tapir Mountain Nature Reserve on Social Media'
+    sub = 'How likely are or your household to join training workshops that the Belize Karst Habitat Conservation organize'
   ) 
 
 ```
