@@ -357,7 +357,7 @@ k2 <- k2 |>
 
 ### 1.1 Overview
 
-The Belize Karst Habitat Conservation (BKHC) is in charge of co-managing the Tapir Mountain National Reserve (TMNR), which is currently perceived as a \"paper park\" due to a historical absence of proper management. To enact change and convert TMNR into a proper reserve, one that is protected for its ecological value and other benefits, BKHC is seeking to conduct a KAP survey in the buffer communities of the TMNR in order to assess the knowledge, attitudes and practices of the people of these communities. This will allow for the effective planning, implementation and evaluation of future interventions. The end goal is to improve community awareness and practices in order to achieve a more sustainable management of the TMNR to increase its overall function, protection and coverage, while providing value to the surrounding communities.
+The Belize Karst Habitat Conservation (BKHC) is in charge of co-managing the Tapir Mountain National Reserve (TMNR), which is currently perceived as a "paper park" due to a historical absence of proper management. To enact change and convert TMNR into a proper reserve, one that is protected for its ecological value and other benefits, BKHC is seeking to conduct a KAP survey in the buffer communities of the TMNR in order to assess the knowledge, attitudes and practices of the people of these communities. This will allow for the effective planning, implementation and evaluation of future interventions. The end goal is to improve community awareness and practices in order to achieve a more sustainable management of the TMNR to increase its overall function, protection and coverage, while providing value to the surrounding communities.
 
 The Tapir Mountain Nature Reserve (TMNR) is a vital ecosystem located in Belize, co-managed by the Belize Karst Habitat Conservation (BKHC) and the Government of Belize. The BKHC, funded by the Protected Areas Conservation Trust (PACT), aims to enhance TMNR's ecological value while promoting sustainable development through improved management, community engagement, and financial sustainability. The reserve spans a reasonable area, but the buffer zone expands across several communities. This reserve provides a sanctuary for a variety of plant and animal species. Notably, the name "Tapir Mountain" reflects the presence of tapirs, a key species in Belizean ecosystems. 
 
@@ -499,13 +499,13 @@ Regarding the ***wildlife*** inhabiting TMNR, **tapirs** (76.5%), **jaguars** (6
 
 #### 3.4.1 Attitude towards conservation efforts, climate change, and sustainable development
 
-As it relates to attitudes towards the environment, people generally report positive attitudes and a healthy concern for environmental issues, as the rest of this section will show. However, when it comes to matters that personally affect residents, attitudes veer in the direction of self-interest. For example, about 47% of persons believe that \"*establishing protected areas is bad*\", if it is done in land that might be of economic use by the residents of the community. This sentiment was shared amongst all different groups of people, though there were some small differences worth noting. For example, persons with education \"Secondary or higher\" were more likely to disagree with the statement that establishing protecting areas is bad. Persons from \"Other\" ethnicities, which includes Mennonite persons, were also less likely to agree with the statement. Persons who agreed with the statement at a higher frequency than others include persons with \"Primary\" education level and persons of \"Mestizo/Hispanic/Latino\" ethnicity.  
+As it relates to attitudes towards the environment, people generally report positive attitudes and a healthy concern for environmental issues, as the rest of this section will show. However, when it comes to matters that personally affect residents, attitudes veer in the direction of self-interest. For example, about 47% of persons believe that "*establishing protected areas is bad*", if it is done in land that might be of economic use by the residents of the community. This sentiment was shared amongst all different groups of people, though there were some small differences worth noting. For example, persons with education "Secondary or higher" were more likely to disagree with the statement that establishing protecting areas is bad. Persons from "Other" ethnicities, which includes Mennonite persons, were also less likely to agree with the statement. Persons who agreed with the statement at a higher frequency than others include persons with "Primary" education level and persons of "Mestizo/Hispanic/Latino" ethnicity.  
 
-However, residents as a whole display a positive attitude towards conservation efforts. For instance, three quarters (76%) of persons agree that their community could benefit from \"*a neighbourhood watch that reports forest fires, or wildlife hunting in the reserve and the surrounding communities*\". Persons of \"Other\" ethnicities (which includes Mennonite persons) were less likely to agree, however, as were persons from Mennonite communities as a whole. Self-employed persons were also less likely to agree with the statement. This same pattern of responses was observed when respondents were asked if anyone in their household would be interested in joining the neighbourhood watch. Moreover, only 58% of persons believe that someone in their household would be interested in joining a fire task force.  
+However, residents as a whole display a positive attitude towards conservation efforts. For instance, three quarters (76%) of persons agree that their community could benefit from "*a neighbourhood watch that reports forest fires, or wildlife hunting in the reserve and the surrounding communities*". Persons of "Other" ethnicities (which includes Mennonite persons) were less likely to agree, however, as were persons from Mennonite communities as a whole. Self-employed persons were also less likely to agree with the statement. This same pattern of responses was observed when respondents were asked if anyone in their household would be interested in joining the neighbourhood watch. Moreover, only 58% of persons believe that someone in their household would be interested in joining a fire task force.  
 
 It can be observed that groups of people who lean towards being farmers, such as the self-employed and those in Mennonite communities, tend to *disagree* more frequently with the usefulness of neighbourhood watches and fire task forces. It is possible that these persons believe themselves to be self-sufficient enough to take care of the areas surrounding the reserve. At the same time, they might fear that other persons report them for their activities. People in communities where farming is less common tend to have a more positive attitude towards these task forces. 
 
-As it relates to **Climate Change**, the survey revealed interesting results. Although almost 3 in 4 persons (74%) believe that climate change is an issue that threatens the livelihood of people worldwide, only around 50% of people believe that it affects them personally. What is perhaps more interesting, is that only 51% of persons believe that **human activity** is the principal cause of climate change. Persons from Mennonite communities, persons with \"Primary\" level education, and persons of \"Creole\" ethnicity were more likely to be skeptical of climate change and its effects.  
+As it relates to **Climate Change**, the survey revealed interesting results. Although almost 3 in 4 persons (74%) believe that climate change is an issue that threatens the livelihood of people worldwide, only around 50% of people believe that it affects them personally. What is perhaps more interesting, is that only 51% of persons believe that **human activity** is the principal cause of climate change. Persons from Mennonite communities, persons with "Primary" level education, and persons of "Creole" ethnicity were more likely to be skeptical of climate change and its effects.  
 
 Pertaining to **sustainable development practices**,  most persons (74%) agree that slash and burn farming is a threat to TMNR and other protected areas. This again shows the generally positive attitude persons have towards conservation efforts topics. However, the majority of people (53%) disagree or strongly disagree that there are tourism opportunities in their communities. About one third (33%) *agree* and only 3% *strongly agree*.  
 
@@ -551,7 +551,7 @@ Persons were probed about domestic and agricultural activities that their househ
 
 -   selling lumber
 
-Out of these activities, the ones of most interest were \'*raising livestock*\', \'*hunting*\', \'*growing crops*\' and \'*selling lumber*\'. The other items were included to soften the impact of the questions so as to not raise suspicion on the part of respondents when being asked about potentially illegal activities such as hunting and extracting lumber from and within the TMNR.  
+Out of these activities, the ones of most interest were '*raising livestock*', '*hunting*', '*growing crops*' and '*selling lumber*'. The other items were included to soften the impact of the questions so as to not raise suspicion on the part of respondents when being asked about potentially illegal activities such as hunting and extracting lumber from and within the TMNR.  
 
 Of the activities of interest, 45% of all persons reported that their household engaged in **raising livestock**, with households in Mennonite communities displaying a higher rate (60%) when compared to households in Non-Mennonite communities (40%). Persons of Mestizo/Hispanic/Latino ethnicity reported participation at lower rates (36%) than persons of other ethnicities. As it relates to **growing crops**, 40% of the population reported that their household engaged in this activity. The same differences between groups as with raising livestock are present, with households in Mennonite communities and of Other ethnicities participating in growing crops at a higher rate. Altogether, about 56% of households participate in either raising livestock or growing crops. Since this is over half of the target population, it is certainly a topic that should be of high interest.\
 \
@@ -563,13 +563,13 @@ However caution must be exercised, this 18% does not represent the proportion of
 
 #### 3.5.2 Waste Disposal Practices
 
-The most common form of waste disposal was **Open burning**, reported by over 46% of the population. Persons from Mennonite communities reported Open burning as their main waste disposal method at a rate of 63%, while for Non-Mennonite communities the rate stood at 42%. The second most common method of waste disposal was **Paid service transport to landfill**, at 35%. Notably, almost all persons who reported this as their primary waste disposal were from Non-Mennonite communities. In all, 44.5% of persons in Non-Mennonite communities reported Paid service as their household\'s main waste disposal method, while less than 4% of persons in Mennonite communities did the same. Between ethnicities, people of Creole descent were more likely to report Paid service as their waste disposal method relative to others, as were persons with higher levels of education. 
+The most common form of waste disposal was **Open burning**, reported by over 46% of the population. Persons from Mennonite communities reported Open burning as their main waste disposal method at a rate of 63%, while for Non-Mennonite communities the rate stood at 42%. The second most common method of waste disposal was **Paid service transport to landfill**, at 35%. Notably, almost all persons who reported this as their primary waste disposal were from Non-Mennonite communities. In all, 44.5% of persons in Non-Mennonite communities reported Paid service as their household's main waste disposal method, while less than 4% of persons in Mennonite communities did the same. Between ethnicities, people of Creole descent were more likely to report Paid service as their waste disposal method relative to others, as were persons with higher levels of education. 
 
 Although **open burning** is not optimal for the environment, the population who most often reported this waste disposal method belonged to the communities that are relatively remote and rural in comparison with the other communities. It is likely that municipal waste disposal services are not available to Mennonite and surrounding communities such as Upper and Lower Barton Creek, Eastland, Progresso, 7 Miles, etc. As it relates to the population in Non-Mennonite communities, it was observed that persons with higher education levels and persons who were employees were more likely to have paid waste disposal. Given that education and employment are positively correlated with income, it is likely that income is also a factor that influences the reliance on paid waste disposal services. Persons with lower income might not be able to afford such services, or might prefer to deal with such tasks themselves.
 
 #### 3.5.3 Sustainable Agriculture
 
-Persons were directly asked (question P5)  if their household participates in **subsistence farming or agricultural production**, and 23% responded affirmatively. Persons in Mennonite communities were significantly more likely to engage in these activities, as 43% responded positively, compared to only 17% of persons in Non-Mennonite communities. It is worth noting, however, that at question P3, 40% of all persons reported that their households grow crops, and 42% reported that their household participates in gardening. Therefore, the persons participating in farming activities is likely larger than the 23% who responded affirmatively to question P5. The discrepancy was possibly caused by persons interpreting \"agricultural production\" and \"farming\" as more formal, full-time activities. However, sustainable agriculture should be of interest to any person or household engaging in small-scale or large-scale agriculture. 
+Persons were directly asked (question P5)  if their household participates in **subsistence farming or agricultural production**, and 23% responded affirmatively. Persons in Mennonite communities were significantly more likely to engage in these activities, as 43% responded positively, compared to only 17% of persons in Non-Mennonite communities. It is worth noting, however, that at question P3, 40% of all persons reported that their households grow crops, and 42% reported that their household participates in gardening. Therefore, the persons participating in farming activities is likely larger than the 23% who responded affirmatively to question P5. The discrepancy was possibly caused by persons interpreting "agricultural production" and "farming" as more formal, full-time activities. However, sustainable agriculture should be of interest to any person or household engaging in small-scale or large-scale agriculture. 
 
 The persons who responded positively to question P5 were subsequently asked if they would be interested in learning about different sustainable agriculture practices. 81% of all persons who participate in agriculture reported their willingness to learn about **improved crop production methods**. Persons in Non-Mennonite communities were more likely to do so, at 90%, compared to 68% of within Mennonite communities. Persons of Creole descent who participate in agriculture all (100%) reported being willing to learn these improved methods, while 71% of persons of Other/Mennonite ethnicity did the same. Persons who were employees and who have higher levels of education also responded affirmatively at higher rates. This may indicate that it is likely that persons who do not engage in agriculture full-time are more willing to acquire new knowledge compared to persons who are full-time farmers. However, most persons across all backgrounds responded affirmatively to this item. 
 
@@ -601,17 +601,77 @@ Aha
 
 Ahaa
 
-## Recommendations
+## 4. Recommendations
 
-recs
+### 4.1 Enhance Environmental Conservation Awareness:
 
-## Conclusion
+To address the lower rate of awareness in communities, it is important to implement targeted awareness campaigns. These initiatives should be carefully designed and should incorporate community workshops, involvement of local leaders to deliver informative sessions, and the distribution of educational materials in accessible formats. A key aspect of this strategy involves collaboration with local educational institutions to integrate environmental conservation topics into school curricula, ensuring that future generations are equipped with a strong understanding of the importance of conservation. Furthermore, adapting communication methods to the ones most commonly used by persons of the target populations. As per the survey results, Non-Mennonite communities should be targeted through **Social Media**, the **Internet** and **Television**. Mennonite communities should be targeted primarily via **radio** and the **Internet**, which may include social media.
+
+### 4.2 Community Involvement in TMNR Management
+
+Establishing community forums or village meetings presents an opportunity to actively involve residents in discussions about the benefits and opportunities related to the management of the Tapir Mountain Nature Reserve (TMNR). These forums can serve as platforms to address concerns, gather insights, and build a collaborative approach. Educational programs, workshops, and training sessions are essential for empowering community members with the knowledge and skills necessary for meaningful participation in TMNR management. Over 58% of all persons reported willingness of engaging in educational campagins by BKHC. Furthermore, persons in Mennonite communities showed a high willingness towards participating in workshops and trainings organized by the BKHC, which indicates enthusiasm towards practical, hands-on approaches and management.
+
+In addition, implementing community-based monitoring systems will encourage residents to actively report activities such as forest fires or wildlife hunting, fostering a sense of shared responsibility and contributing to the overall success of conservation efforts. Almost three-quarters of all persons reported willingness to join commuinty neighbourhood watches, and over half expressed willingness for their household to join a fire taskforce.
+
+### 4.3 Promote Positive Behavioral Changes
+
+Designing behavior change communication and educational campaigns is crucial to emphasize the positive impact of sustainable practices on both the community's well-being and the ecological health of TMNR. Collaborating with local influencers, leaders, and community organizations can amplify the reach and effectiveness of these campaigns. Implementation of incentive programs, such as recognition or small rewards, creates a positive feedback loop, encouraging individuals and households to adopt and maintain sustainable behaviors. These initiatives collectively contribute to building a culture of environmental stewardship within the community. 
+
+### 4.4 Improve Climate Change Education
+
+Addressing knowledge gaps identified in the survey requires the development of targeted educational campaigns. These campaigns should focus on specific climate-related environmental impacts, ensuring that the information is accessible and relevant to diverse community members. For example, the proportion of persons who are familiar with climate change and its effects can be improved still. More importantly, many people are skeptical about the role of humans in climate change, even if they recognize climate change as a pressing issue. This sentiment should be addressed before it grows roots, as it has done in many areas of the world, fueled by political polarization and economic interests.
+
+Once again, BKHC sould consider collaboration with local schools and community centers to organize workshops and seminars on climate change and its implications. Engaging community leaders and influencers to promote accurate information through various channels, including social media and community events, enhances the overall understanding and awareness of climate change within the community. 
+
+### 4.5 Strengthen Knowledge about TMNR
+
+Implementing targeted awareness campaigns will go far in increasing knowledge about the Tapir Mountain Nature Reserve's boundaries, management entities, and responsibilities. Developing informative materials, brochures, and signage within and around TMNR provides clear information about its significance and management. Areas where persons are particularly lacking in knowledge include the boundaries of the park, the wildlife that inhabit it, the activities allowed within the reserve, and the benefits obtained from the reserve.
+
+Establishing partnerships with local media outlets ensures consistent and widespread coverage, reinforcing the importance of TMNR in the community's collective consciousness. These efforts contribute to creating a well-informed community that actively participates in the preservation of this vital natural resource. 
+
+Signage should be considered at strategic places within buffer communities, which highlight and illustrate the boundaries of the park, outlines prohibited activities, and lists wildlife species endmeic to the reserve.
+
+### 4.6 Mitigate Wildlife Conflict
+
+Establishing a community-based wildlife conflict resolution program can prove pivotal in providing resources and support to individuals encountering conflicts with wildlife. Conducting workshops and training sessions on non-lethal methods for mitigating human-wildlife conflicts educates residents on effective and humane strategies. Collaborating with local authorities to enforce regulations against harmful practices like poisoning or hunting wildlife in response to conflicts ensures a holistic approach to wildlife management. These initiatives aim to strike a balance between human activities and wildlife conservation within the community. 
+
+In particular, a hotline for reporting conflicts should be established, so that rangers or other personnel can be available to provide guidance in resolving the conflicts. It is possible that neighbourhood watch initiatives and this wildlife conflict iniative can be coalesced into a single channel, if BKHC deems this practical.
+
+### 4.7 Promote Sustainable Agriculture
+
+Developing and disseminating educational materials on sustainable agricultural practices is essential for promoting environmentally friendly farming techniques. Facilitating workshops and training sessions on sustainable farming, with an emphasis on improved crop production methods and biological pest control, will empower farmers to adopt more sustainable practices. The majoirty of persons who are involved in agriculture already expressed their willigness towards learning these new, sustainable practices.
+
+Collaborating with agricultural extension services, such as the University of Belize and other related organizations, as well as local experts, may provide ongoing support and guidance, fostering a community of farmers dedicated to sustainable agriculture. These initiatives will contribute to the long-term ecological health of the community and the surrounding areas. 
+
+### 4.8 Optimize Waste Disposal Practices
+
+BKHC may consider implementing or at least promoting community-specific waste disposal initiatives. Considering the availability of municipal services and the unique characteristics of Mennonite and non-Mennonite communities, is crucial. Conducting awareness campaigns on the environmental impact of open burning and promoting alternative, eco-friendly waste disposal methods encourages responsible waste management practices. Exploring partnerships with local businesses or organizations to provide affordable waste disposal services, particularly in areas with limited access to municipal services, will help ensure that waste is managed in an environmentally conscious manner.
+
+These efforts contribute to minimizing the ecological footprint of the community and will reduce the negative impacts of pollution and contamination on the TMNR.
+
+### 4.9 Utilize Diverse Media for Outreach
+
+Tailoring communication strategies based on the preferred media consumption habits of different communities, including social media, radio, television, and the internet, is essential. Collaborating with local influencers and media personalities to deliver key messages will resonate with community members and will enhace the levels of cultural relevance and resonance.A
+
+After designing an effective outreach and communication strategy, regularly updating and maintaining a dynamic online presence is important. The BKHC website is an excellent platform for information access about TMNR, conservation efforts, and community engagement initiatives. To maximize exposure, awareness and ensure that the communities stay informed, it will also be useful to expand and double down on social media presence and efforts. In addition to just establishing social media pages on Facebook, Instagram, TikTok and Youtube, it is important to promote these pages through advertisements and campaigns. As it relates to digital ads, graphics and even videos can be developed and ads might be purchased on Facebook or Google to maximize outreach. Raffles, giveaways, community drives and "Influencer" help will also greatly enhance exposure of the organization and its media.
+
+These efforts collectively contribute to effective outreach and engagement across diverse media platforms and to better inform and engage the community.
+
+### 4.10 Monitor, Evaluate and Adapt Engagement Initiatives
+
+Monitoring and assessing the effectiveness of engagement initiatives through surveys, feedback sessions, and ongoing community dialogues is crucial. Utilizing data analytics to measure the reach and impact of social media campaigns enables the organization to adapt strategies based on audience engagement. Fostering an open feedback loop, encouraging community members to express their opinions, suggestions, and concerns about conservation efforts and engagement programs, ensures a continuous improvement cycle.
+
+Practically, these might be implemented through satisfaction surveys developed on Google Forms and disseminated via the BKHC website and social media pages. Purchasing Facebook and especially Google ads will also provide access to analytics relating to outreach. Google Analtyics is aplatform that may be implemented into the BKHC website and social media pages in order to better understand the reach and characteristics of those engaging with TMNR media. Community forums or town halls should be useful in providing direct feedback from those in the target communities.
+
+These evaluation and adaptation mechanisms contribute to the ongoing success and relevance of community engagement initiatives. 
+
+## 5. Conclusion
 
 Con
 
-## Appendices
+## 6. Tables and Figures
 
-Survey results.
+### 6.1 Basic Descriptives
 
 ```{r}
 #| echo: false
@@ -706,7 +766,7 @@ df_all <- df_ctv |>
 ```
 
 ::: panel-tabset
-### Community
+#### Community
 
 ```{r}
 #| echo: false
@@ -729,7 +789,7 @@ downloadthis::download_this(
 
 ```
 
-### ED
+#### ED
 
 ```{r}
 #| echo: false
@@ -1073,38 +1133,16 @@ head_ind_descriptives2 <- head_descriptives2 |>
 ```
 
 ::: panel-tabset
-### Respondents
+### Population
 
 ::: panel-tabset
-### Unweighted
-
-```{r}
-#| echo: false
-#| label: descriptives-all
-
-head_ind_descriptives |> 
-  tab_header(
-    title = "Characterstics of Household Heads"
-  )
-
-downloadthis::download_this(
-  head_descriptives,
-  output_name = 'head_descriptives',
-  output_extension = '.xlsx',
-  button_label = 'Download'
-)
-
-```
-
-### Weighted
-
 ```{r}
 #| echo: false
 #| label: descriptives-allw
 
 head_ind_descriptives2 |> 
   tab_header(
-    title = "Characterstics of Weighted Individuals"
+    title = "Characterstics of Estimated Population"
   )
 
 downloadthis::download_this(
@@ -1116,30 +1154,9 @@ downloadthis::download_this(
 
 ```
 :::
-
-### All Individuals
-
-```{r}
-#| echo: false
-#| label: descriptives-head
-
-
-all_ind_descriptives |> 
-  tab_header(
-    title = "Characterstics of Individuals"
-  )
-
-downloadthis::download_this(
-  ind_descriptives,
-  output_name = 'ind_descriptives',
-  output_extension = '.xlsx',
-  button_label = 'Download'
-)
-
-```
 :::
 
-## KNOWLEDGE Area
+### 6.2 Knowledge Area
 
 ```{r}
 #| include: false
@@ -1351,7 +1368,7 @@ ct_multi_aggregate <- function(var){
 
 ```
 
-### K1
+#### K1
 
 ::: panel-tabset
 ### Tables
@@ -1376,7 +1393,7 @@ dfgt #|> gtsave(filename = "tab_1.docx", inline_css = TRUE)
 ```
 :::
 
-### K2 - Filter question
+#### K2 - Filter question
 
 ```{r}
 #| label: k2-prep
@@ -1610,7 +1627,7 @@ likert_plot_grouped <- function(df, grouped){
 ```
 :::
 
-### K2 - Ratings by Item
+#### K2 - Ratings by Item
 
 ::: panel-tabset
 ### Charts
@@ -1687,7 +1704,7 @@ likert_plot_grouped(df, 'workertype_group')
 ### Tables
 
 ::: panel-tabset
-### K2.1
+#### K2.1
 
 ```{r}
 #| echo: false
@@ -1698,7 +1715,7 @@ ct_k2(1) |>
   )
 ```
 
-### K2.2
+#### K2.2
 
 ```{r}
 #| echo: false
@@ -1709,7 +1726,7 @@ ct_k2(2) |>
   )
 ```
 
-### K2.3
+#### K2.3
 
 ```{r}
 #| echo: false
@@ -1720,7 +1737,7 @@ ct_k2(3) |>
   )
 ```
 
-### K2.4
+#### K2.4
 
 ```{r}
 #| echo: false
@@ -1731,7 +1748,7 @@ ct_k2(4) |>
   )
 ```
 
-### K2.5
+#### K2.5
 
 ```{r}
 #| echo: false
@@ -1742,7 +1759,7 @@ ct_k2(5) |>
   )
 ```
 
-### K2.6
+#### K2.6
 
 ```{r}
 #| echo: false
@@ -1753,7 +1770,7 @@ ct_k2(6) |>
   )
 ```
 
-### K2.7
+#### K2.7
 
 ```{r}
 #| echo: false
@@ -1778,7 +1795,7 @@ ct_k2_avg() |>
 :::
 :::
 
-### K3
+#### K3
 
 ::: panel-tabset
 ### Tables
@@ -1832,7 +1849,7 @@ households_wexpand |>
 ```
 :::
 
-### K3_1
+#### K3_1
 
 ::: panel-tabset
 ### Tables
@@ -1887,7 +1904,7 @@ households_wexpand |>
 ```
 :::
 
-### K4
+#### K4
 
 ::: panel-tabset
 ### Tables
@@ -1933,7 +1950,7 @@ df |>
 ```
 :::
 
-### K5
+#### K5
 
 ::: panel-tabset
 ### Tables
@@ -2000,7 +2017,7 @@ households_wexpand |>
 ```
 :::
 
-### K6
+#### K6
 
 ::: panel-tabset
 ### Tables
@@ -2050,7 +2067,7 @@ households_wexpand |>
 ```
 :::
 
-### K7
+#### K7
 
 ::: panel-tabset
 ### Tables
@@ -2104,7 +2121,7 @@ df |>
 ```
 :::
 
-### K8
+#### K8
 
 ::: panel-tabset
 ### Tables
@@ -2196,13 +2213,13 @@ df |>
 ```
 :::
 
-### K9
+#### K9
 
 ::: panel-tabset
 ### Tables
 
 ::: panel-tabset
-### K9.1
+#### K9.1
 
 ```{r}
 #| label: k9
@@ -2219,7 +2236,7 @@ df |>
   ) 
 ```
 
-### K9.2
+#### K9.2
 
 ```{r}
 #| label: k9.2
@@ -2236,7 +2253,7 @@ df |>
   ) 
 ```
 
-### K9.3
+#### K9.3
 
 ```{r}
 #| label: k9.3
@@ -2253,7 +2270,7 @@ df |>
   ) 
 ```
 
-### K9.4
+#### K9.4
 
 ```{r}
 #| label: k9.4
@@ -2270,7 +2287,7 @@ df |>
   ) 
 ```
 
-### K9.5
+#### K9.5
 
 ```{r}
 #| label: k9.5
@@ -2287,7 +2304,7 @@ df |>
   ) 
 ```
 
-### K9.6
+#### K9.6
 
 ```{r}
 #| label: k9.6
@@ -2306,7 +2323,7 @@ df |>
 :::
 :::
 
-### K10
+#### K10
 
 ::: panel-tabset
 ### Tables
@@ -2327,7 +2344,7 @@ df |>
 ```
 :::
 
-### K11
+#### K11
 
 ::: panel-tabset
 ### Tables
@@ -2373,7 +2390,7 @@ df |>
 ```
 :::
 
-### K12
+#### K12
 
 ::: panel-tabset
 ### Tables
@@ -2394,7 +2411,7 @@ df |>
 ```
 :::
 
-### K13
+#### K13
 
 ::: panel-tabset
 ### Tables
@@ -2445,7 +2462,7 @@ households_wexpand |>
 ```
 :::
 
-## ATTITUDE Area
+### 6.3 Attitude Area
 
 ```{r}
 #| label: charts-prep
@@ -2495,7 +2512,7 @@ likert_plot_grouped <- function(df, grouped){
 }
 ```
 
-### A1
+#### A1
 
 ::: panel-tabset
 ### Charts
@@ -2521,7 +2538,7 @@ likert_plot_grouped <- function(df, grouped){
  plot(likert::likert(b2[,6:15], grouping = b2[,1]), legend.position = 'top') 
 ```
 
-### Age Group
+#### Age Group
 
 ```{r}
 #| echo: false
@@ -2565,7 +2582,7 @@ likert_plot_grouped <- function(df, grouped){
 ### Tables
 
 ::: panel-tabset
-### A1.1
+#### A1.1
 
 ::: panel-tabset
 ### Concern
@@ -2585,7 +2602,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.1
@@ -2603,7 +2620,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.1
@@ -2622,7 +2639,7 @@ df |>
 ```
 :::
 
-### A1.2
+#### A1.2
 
 ::: panel-tabset
 ### Concern
@@ -2642,7 +2659,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.2
@@ -2660,7 +2677,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.2
@@ -2679,7 +2696,7 @@ df |>
 ```
 :::
 
-### A1.3
+#### A1.3
 
 ::: panel-tabset
 ### Concern
@@ -2699,7 +2716,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.3
@@ -2717,7 +2734,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.3
@@ -2736,7 +2753,7 @@ df |>
 ```
 :::
 
-### A1.4
+#### A1.4
 
 ::: panel-tabset
 ### Concern
@@ -2756,7 +2773,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.4
@@ -2774,7 +2791,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.4
@@ -2793,7 +2810,7 @@ df |>
 ```
 :::
 
-### A1.5
+#### A1.5
 
 ::: panel-tabset
 ### Concern
@@ -2813,7 +2830,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.5
@@ -2831,7 +2848,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.5
@@ -2850,7 +2867,7 @@ df |>
 ```
 :::
 
-### A1.6
+#### A1.6
 
 ::: panel-tabset
 ### Concern
@@ -2870,7 +2887,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.6
@@ -2888,7 +2905,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.6
@@ -2907,7 +2924,7 @@ df |>
 ```
 :::
 
-### A1.7
+#### A1.7
 
 ::: panel-tabset
 ### Concern
@@ -2927,7 +2944,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.7
@@ -2945,7 +2962,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.7
@@ -2964,7 +2981,7 @@ df |>
 ```
 :::
 
-### A1.8
+#### A1.8
 
 ::: panel-tabset
 ### Concern
@@ -2984,7 +3001,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.8
@@ -3002,7 +3019,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.8
@@ -3021,7 +3038,7 @@ df |>
 ```
 :::
 
-### A1.9
+#### A1.9
 
 ::: panel-tabset
 ### Concern
@@ -3041,7 +3058,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.9
@@ -3059,7 +3076,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.9
@@ -3078,7 +3095,7 @@ df |>
 ```
 :::
 
-### A1.10
+#### A1.10
 
 ::: panel-tabset
 ### Concern
@@ -3098,7 +3115,7 @@ df |>
   ) 
 ```
 
-### Affect Personally
+#### Affect Personally
 
 ```{r}
 #| label: a2.10
@@ -3116,7 +3133,7 @@ df |>
 
 ```
 
-### Affect TMNR
+#### Affect TMNR
 
 ```{r}
 #| label: a3.10
@@ -3137,7 +3154,7 @@ df |>
 :::
 :::
 
-### A4
+#### A4
 
 ::: panel-tabset
 ### Tables
@@ -3158,7 +3175,7 @@ df |>
 ```
 :::
 
-### A5
+#### A5
 
 ::: panel-tabset
 ### Tables
@@ -3179,7 +3196,7 @@ df |>
 ```
 :::
 
-### A6
+#### A6
 
 ::: panel-tabset
 ### Tables
@@ -3200,7 +3217,7 @@ df |>
 ```
 :::
 
-### A7
+#### A7
 
 ::: panel-tabset
 ### Tables
@@ -3221,7 +3238,7 @@ df |>
 ```
 :::
 
-### A8
+#### A8
 
 ::: panel-tabset
 ### Tables
@@ -3294,7 +3311,7 @@ df |>
 ```
 :::
 
-### A9
+#### A9
 
 ::: panel-tabset
 ### Tables
@@ -3355,7 +3372,7 @@ df |>
 ```
 :::
 
-### A10
+#### A10
 
 ::: panel-tabset
 ### Charts
@@ -3416,7 +3433,7 @@ df |>
  plot(likert::likert(b2[,6:14], grouping = b2[,1]), legend.position = 'top') 
 ```
 
-### Age Group
+#### Age Group
 
 ```{r}
 #| echo: false
@@ -3460,7 +3477,7 @@ df |>
 ### Tables
 
 ::: panel-tabset
-### A10.1
+#### A10.1
 
 ```{r}
 #| label: a10.1
@@ -3477,7 +3494,7 @@ df |>
   ) 
 ```
 
-### A10.2
+#### A10.2
 
 ```{r}
 #| label: a10.2
@@ -3494,7 +3511,7 @@ df |>
   ) 
 ```
 
-### A10.3
+#### A10.3
 
 ```{r}
 #| label: a10.3
@@ -3537,7 +3554,7 @@ df |>
   ) 
 ```
 
-### A10.5
+#### A10.5
 
 ```{r}
 #| label: a10.5
@@ -3563,7 +3580,7 @@ df |>
   ) 
 ```
 
-### A10.6
+#### A10.6
 
 ```{r}
 #| label: a10.6
@@ -3580,7 +3597,7 @@ df |>
   ) 
 ```
 
-### A10.7
+#### A10.7
 
 ```{r}
 #| label: a10.7
@@ -3597,7 +3614,7 @@ df |>
   ) 
 ```
 
-### A10.8
+#### A10.8
 
 ```{r}
 #| label: a10.8
@@ -3623,7 +3640,7 @@ df |>
   ) 
 ```
 
-### A10.9
+#### A10.9
 
 ```{r}
 #| label: a10.9
@@ -3651,7 +3668,7 @@ df |>
 :::
 :::
 
-### A11
+#### A11
 
 ::: panel-tabset
 ### Tables
@@ -3672,7 +3689,7 @@ df |>
 ```
 :::
 
-### A12
+#### A12
 
 ::: panel-tabset
 ### Tables
@@ -3693,7 +3710,7 @@ df |>
 ```
 :::
 
-### A13
+#### A13
 
 ::: panel-tabset
 ### Tables
@@ -3714,9 +3731,9 @@ df |>
 ```
 :::
 
-## PRACTICE Area
+### 6.4 Practice Area
 
-### P1
+#### P1
 
 ::: panel-tabset
 ### Tables
@@ -3769,13 +3786,13 @@ households_wexpand |>
 ```
 :::
 
-### P3
+#### P3
 
 ::: panel-tabset
-### P3.1
+#### P3.1
 
 ::: panel-tabset
-### Practice
+#### Practice
 
 ```{r}
 #| label: p3.1
@@ -3811,10 +3828,10 @@ df |>
 ```
 :::
 
-### P3.2
+#### P3.2
 
 ::: panel-tabset
-### Practice
+#### Practice
 
 ```{r}
 #| label: p3.2
@@ -3850,10 +3867,10 @@ df |>
 ```
 :::
 
-### P3.3
+#### P3.3
 
 ::: panel-tabset
-### Practice
+#### Practice
 
 ```{r}
 #| label: p3.3
@@ -3889,10 +3906,10 @@ df |>
 ```
 :::
 
-### P3.4
+#### P3.4
 
 ::: panel-tabset
-### Practice
+#### Practice
 
 ```{r}
 #| label: p3.4
@@ -3929,10 +3946,10 @@ df |>
 ```
 :::
 
-### P3.5
+#### P3.5
 
 ::: panel-tabset
-### Practice
+#### Practice
 
 ```{r}
 #| label: p3.5
@@ -3968,10 +3985,10 @@ df |>
 ```
 :::
 
-### P3.6
+#### P3.6
 
 ::: panel-tabset
-### Practice
+#### Practice
 
 ```{r}
 #| label: p3.6
@@ -4008,10 +4025,10 @@ df |>
 ```
 :::
 
-### P3.7
+#### P3.7
 
 ::: panel-tabset
-### Practice
+#### Practice
 
 ```{r}
 #| label: p3.7
@@ -4049,7 +4066,7 @@ df |>
 :::
 :::
 
-### P5
+#### P5
 
 ::: panel-tabset
 ### Tables
@@ -4070,7 +4087,7 @@ df |>
 ```
 :::
 
-### P6
+#### P6
 
 ::: panel-tabset
 ### Tables
@@ -4091,7 +4108,7 @@ df |>
 ```
 :::
 
-### P7
+#### P7
 
 ::: panel-tabset
 ### Tables
@@ -4112,7 +4129,7 @@ df |>
 ```
 :::
 
-### P8
+#### P8
 
 ::: panel-tabset
 ### Tables
@@ -4208,7 +4225,7 @@ df |>
 ```
 :::
 
-### P9
+#### P9
 
 ::: panel-tabset
 ### Charts
@@ -4303,7 +4320,7 @@ df |>
 ### Tables
 
 ::: panel-tabset
-### P9.1
+#### P9.1
 
 ```{r}
 #| label: p9.1
@@ -4320,7 +4337,7 @@ df |>
   ) 
 ```
 
-### P9.2
+#### P9.2
 
 ```{r}
 #| label: p9.2
@@ -4337,7 +4354,7 @@ df |>
   ) 
 ```
 
-### P9.3
+#### P9.3
 
 ```{r}
 #| label: p9.3
@@ -4354,7 +4371,7 @@ df |>
   ) 
 ```
 
-### P9.4
+#### P9.4
 
 ```{r}
 #| label: p9.4
@@ -4373,7 +4390,7 @@ df |>
 :::
 :::
 
-### P10
+#### P10
 
 ::: panel-tabset
 ### Tables
@@ -4412,7 +4429,7 @@ df |>
 ```
 :::
 
-### P11
+#### P11
 
 ::: panel-tabset
 ### Tables
@@ -4451,7 +4468,7 @@ df |>
 ```
 :::
 
-### P12
+#### P12
 
 ::: panel-tabset
 ### Tables
