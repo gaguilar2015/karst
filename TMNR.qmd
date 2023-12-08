@@ -1,5 +1,5 @@
 ---
-title: "TMNR"
+title: "TMNR KAP Digital Report"
 author: "Belize Analytics"
 format: 
   html:
@@ -11,7 +11,7 @@ format:
 editor: visual
 ---
 
-# TMNR Digital Report
+# KAP survey for the Strategic Development of the Managerial Capacity of the Belize Karst Habitat Conservation
 
 ```{r}
 #| include: false
@@ -451,11 +451,56 @@ Computer-Assisted Personal Interviewing (CAPI) was utilized for data collection.
 
 The benefits of using CAPI in the survey include increased efficiency and accuracy in data collection due to standardized question presentation, reduced data entry errors, real-time monitoring of data collection progress through dashboards, and the ability to easily incorporate skip patterns and complex survey logic, enhancing the overall quality and reliability of the survey data. 
 
+The survey team also benefited from a live, real-time dashboard developed for monitoring the data collection and early indicator analysis. This dashboard was tailored towards the timely supervision of field activities, in order to detect anomalies and obstacles, and to be able to get an early insight into the information being gathered by the interviewers.
+
+:::{.column-page}
+
+![KAP Survey Dashboard - Homepage](images/dash1.png){fig-align="center"}
+
+![KAP Survey Dashboard - Map Visualization](images/dash2.png){fig-align="center"}
+:::
+
 ### 2.6 Limitations and Recommendations
 
-recs
+In research, having a well-designed survey plan is the foundation for reliable results. The survey design for this survey strived to optimize the design and the available resources, but it must also be recognized that there's always room for enhancements. This section of the report acknowledges some limitations and improvements for the survey design. 
 
-## 3. Analysis
+### **2.6.1 Limitations of the Survey Design:** 
+
+**Sampling Bias** 
+
+All surveys must consider the possibility of sampling bias due to the utilization of probability sampling at the household level. Some households may be inadvertently excluded in the sample selection, leading to a potential underrepresentation of certain demographics or viewpoints within the buffer communities. The statistician minimized this as much as possible in the design of the survey, and for future surveys, improvements can be made to reduce bias in the continuous monitoring and evaluation process. This can include building and regularly updating a sample frame of the buffer communities that allow for multiple modes of data collection: paper, electronic, telephone.   
+
+**Generalization Challenges** 
+
+It is important to caution against overgeneralizing survey findings to the entire buffer community population. While efforts have been made to achieve a representative sample, variations in knowledge, attitudes, and practices may exist within different subgroups and lower levels of disaggregation, requiring careful interpretation of results. To enhance generalizations, **a greater sample size and budget is recommended.**  
+
+**Dynamic Nature of Knowledge** 
+
+Understand that knowledge, attitudes, and practices are dynamic and may change over time. The survey captures a snapshot of the community's status at a specific point, and findings should be interpreted considering potential fluctuations, social events or evolving trends. 
+
+### **2.6.1 Recommendations for Survey Design**
+
+**Consider Local Sensitivities and Diversify Data Collection Methods** 
+
+To improve survey item response rates and accuracy, it would be useful carefully consider the local perceptions. nuances and sensitivities associated with personal and potentially sensitive practices such as agricultural practices, hunting, and logging in the buffer communities. As expected, survey participants were more inclined to disclose information about sensitive activities undertaken by others in their community rather than admitting to such activities themselves. Therefore, future interventions can be tailored with this in mind, asking certain questions by proxy so that more realistic results can be obtained.  
+
+Supplement Computer-Assisted Personal Interviewing (CAPI) with **key informant** **interviews**. This multi-method approach can provide richer insights in agricultural, social media, hunting and logging practices. Identifying and obtaining the participation of key informants presents its own set of limitations, however, it can be beneficial to capture nuanced community perspectives that may not be fully identified through standardized KAP surveys alone. This approach is vital for comprehending the knowledge, attitudes, and practices prevalent within the population. 
+
+**Continuous Community Engagement**  
+
+Continue engaging with ongoing communication channels with community leaders and residents throughout the lifespan of monitoring and evaluation. Regular updates, feedback sessions, and community engagement events can help build or maintain trust, address concerns, and sustain interest in survey participation. Some communities appeared to have some disconnect between members and leaders. In such communities, it is important to find alternative ways to engage with its members. 
+
+**Data Collection Considerations** 
+
+The success of the data collection depends on various factors. In the context of this survey, where weather conditions significantly impacted field work, it's essential to plan data collection during favourable weather periods, avoiding the rainy season to prevent disruptions. Additionally, anticipating and addressing recruitment challenges upfront is important for project success. It is recommended that the BKHC no longer utilize the community leaders to recommend interviewers but employ a recruitment process that has some rigour.  
+
+Awareness of concurrent activities in the community, such as other surveys held by government agencies, campaigns, or elections, is vital to avoid refusals by participants.  
+
+**Increase Sample Size**
+
+Future iterations of the survey should be designed with a larger sample size. This will allow for the disaggregation and analysis of results at a lower level, perhaps even at the community level. The associated margins of error will also be reduced for survey results. Of course, this will come at a higher cost, but the increase in accuracy, precision and quality justifies the investment.
+
+## 3. Results, Analysis and Discussion
 
 ### 3.1 Unit of Analysis
 
@@ -1563,6 +1608,7 @@ likert_plot_grouped <- function(df, grouped){
 #| echo: false
 #| warning: false
 #| fig-height: 5
+#| fig-width: 7
 
   k2_hh <- households |> filter(!is.na(k2__1), !is.na(ind_weights))
   
@@ -1639,6 +1685,7 @@ likert_plot_grouped <- function(df, grouped){
 #| echo: false
 #| warning: false
 #| fig-height: 5
+#| fig-width: 7
 
 b2 <- likert_df('strata')
 
@@ -2524,6 +2571,7 @@ likert_plot_grouped <- function(df, grouped){
 #| echo: false
 #| warning: true
 #| fig-height: 6
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:15]), legend.position = 'top') 
 ```
@@ -2533,7 +2581,8 @@ likert_plot_grouped <- function(df, grouped){
 ```{r}
 #| echo: false
 #| warning: true
-#| fig-height: 9
+#| fig-height: 8
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:15], grouping = b2[,1]), legend.position = 'top') 
 ```
@@ -2544,6 +2593,7 @@ likert_plot_grouped <- function(df, grouped){
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:15], grouping = b2[,2]), legend.position = 'top') 
 ```
@@ -2554,6 +2604,7 @@ likert_plot_grouped <- function(df, grouped){
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:15], grouping = b2[,3]), legend.position = 'top') 
 ```
@@ -2564,6 +2615,7 @@ likert_plot_grouped <- function(df, grouped){
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:15], grouping = b2[,4]), legend.position = 'top') 
 ```
@@ -2574,6 +2626,7 @@ likert_plot_grouped <- function(df, grouped){
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:15], grouping = b2[,5]), legend.position = 'top') 
 ```
@@ -3383,6 +3436,7 @@ df |>
 ```{r}
 #| echo: false
 #| warning: false
+#| fig-width: 7
 
  b2 <- households_wexpand |> 
    filter(
@@ -3429,6 +3483,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:14], grouping = b2[,1]), legend.position = 'top') 
 ```
@@ -3439,6 +3494,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:14], grouping = b2[,2]), legend.position = 'top') 
 ```
@@ -3449,6 +3505,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:14], grouping = b2[,3]), legend.position = 'top') 
 ```
@@ -3459,6 +3516,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:14], grouping = b2[,4]), legend.position = 'top') 
 ```
@@ -3469,6 +3527,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 9
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:14], grouping = b2[,5]), legend.position = 'top') 
 ```
@@ -4236,6 +4295,7 @@ df |>
 ```{r}
 #| echo: false
 #| warning: false
+#| fig-width: 7
 
  b2 <- households_wexpand |> 
    filter(
@@ -4272,6 +4332,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 7
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:9], grouping = b2[,1]), legend.position = 'top') 
 ```
@@ -4282,6 +4343,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 7
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:9], grouping = b2[,2]), legend.position = 'top') 
 ```
@@ -4292,6 +4354,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 7
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:9], grouping = b2[,3]), legend.position = 'top') 
 ```
@@ -4302,6 +4365,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 7
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:9], grouping = b2[,4]), legend.position = 'top') 
 ```
@@ -4312,6 +4376,7 @@ df |>
 #| echo: false
 #| warning: true
 #| fig-height: 7
+#| fig-width: 7
 
  plot(likert::likert(b2[,6:9], grouping = b2[,5]), legend.position = 'top') 
 ```
@@ -4506,3 +4571,4 @@ df |>
 
 ```
 :::
+
