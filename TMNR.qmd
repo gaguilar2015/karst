@@ -11,7 +11,7 @@ format:
 editor: visual
 ---
 
-## TMNR Base Analysis
+# TMNR Digital Report
 
 ```{r}
 #| include: false
@@ -353,7 +353,143 @@ k2 <- k2 |>
 
 ```
 
-## Basic Descriptives
+## 1. Introduction and Background
+
+Intro
+
+### 1.1 Overview
+
+overview
+
+### 1.2 Kap Survey Objectives
+
+Objectives
+
+## 2. Survey Design
+
+Design
+
+### 2.1 Target Population
+
+The survey targeted the adult population (18 years and older) of the buffer communities of the Tapir Mountain Nature Reserve. This includes the villages of Teakettle, Unitedville, Ontario, Blackman Eddy, Arizona, El Progresso -- 7 Miles, Upper Barton Creek, Lower Barton Creek, New Holland Village, and East Land Village.
+
+The adult population, however, resides in households. Thus, the sampling unit was at the household level and a representative sample of households was selected using probability sampling. Within each sampling unit, one knowledgeable adult household member was selected to respond to the questionnaire.  This was because knowledge, views, and practices are not independent and there will be a lot of correlation within the household. The adult member who responded on behalf of the household provided reasonably accurate information about others within the household. E.g. parents about children, and spouses about each other. 
+
+### 2.2 Sample Design
+
+The sample design of the KAP survey utilized the inherent administrative structures of the buffer communities. The target population was stratified by administrative area (village) and systematic sampling occurred within these strata. The sample size determination was optimized considering the available resources and obtaining a high degree of statistical accuracy.
+
+The recommended sample size for the TMNR KAP Survey depended on several factors, including the desired level of confidence, margin of error, and variability within the buffer community population. As depicted in table 1, below, a 95% confidence level and a margin of error of around 8% was used for this specific survey.
+
+The formula for calculating the recommended sample size was:
+
+$$
+n = \frac{Z^2 \times p(1-p)nrr}{E^2 + (Z^2 \times p(1-p))/N}
+$$
+
+Where: 
+
+$n$ is the sample size. 
+
+$N$ is the population size (1698 households in this case). 
+
+$Z$ is the Z-score corresponding to the desired confidence level (for 95%, Z≈1.96). 
+
+$p$ is the estimated proportion of the population that possesses the characteristic being measured. 
+
+$E$ is the margin of error 
+
+$nrr$ is the non-response adjustment 
+
+### 2.3 Questionnaire Design
+
+design
+
+### 2.4 Data Collection using CAPI and Geographic Information Systems (GIS)
+
+capi
+
+### 2.5 Sample Weights
+
+weights
+
+### 2.6 Limitations and Recommendations
+
+recs
+
+## Analysis
+
+### Unit of Analysis
+
+unit
+
+### Demographic Characteristics
+
+Demog
+
+### Knowledge Area
+
+#### Understanding Of Environmental Conservation
+
+one
+
+#### Knowledge of Climate Change
+
+two
+
+#### Knowledge of TMNR and its Wildlife
+
+three
+
+### Attitude Area
+
+#### Attitude towards conservation efforts, climate change, and sustainable development
+
+One
+
+#### Environmental Concerns
+
+Two
+
+#### Attitudes Towards Wildlife
+
+Three
+
+### Practice Area
+
+#### Household Activities In Buffer Communities
+
+One
+
+#### Waste Disposal Practices
+
+Two
+
+#### Sustainable Agriculture
+
+Three
+
+#### Engagement with News, Media and Karst
+
+Four
+
+### Future Actions Desired By Household To Be Facilitated By KARST
+
+Aha
+
+### Community Engagement By The Household
+
+Ahaa
+
+## Recommendations
+
+recs
+
+## Conclusion
+
+Con
+
+## Appendices
 
 Survey results.
 
@@ -3873,7 +4009,39 @@ df |>
   ct_gt(
     tit = 'Tabulations for question P8',
     sub = 'How do you access news and information on a daily basis?'
-  ) 
+  ) |>
+  tab_footnote(
+    footnote = "Television",
+    locations = cells_column_labels(columns = `_1`)
+  ) |>
+  tab_footnote(
+    footnote = "Radio",
+    locations = cells_column_labels(columns = `_2`)
+  )  |>
+  tab_footnote(
+    footnote = "Social Media",
+    locations = cells_column_labels(columns = `_3`)
+  ) |>
+  tab_footnote(
+    footnote = "Newspaper",
+    locations = cells_column_labels(columns = `_4`)
+  )  |>
+  tab_footnote(
+    footnote = "Internet",
+    locations = cells_column_labels(columns = `_5`)
+  )  |>
+  tab_footnote(
+    footnote = "Mobile Apps",
+    locations = cells_column_labels(columns = `_6`)
+  )  |>
+  tab_footnote(
+    footnote = "Word of mouth/community leader",
+    locations = cells_column_labels(columns = `_7`)
+  )  |>
+  tab_footnote(
+    footnote = "Other",
+    locations = cells_column_labels(columns = `_888888`)
+  )   
 ```
 
 ### Charts
