@@ -355,19 +355,31 @@ k2 <- k2 |>
 
 ## 1. Introduction and Background
 
-Intro
-
 ### 1.1 Overview
 
-overview
+The Belize Karst Habitat Conservation (BKHC) is in charge of co-managing the Tapir Mountain National Reserve (TMNR), which is currently perceived as a \"paper park\" due to a historical absence of proper management. To enact change and convert TMNR into a proper reserve, one that is protected for its ecological value and other benefits, BKHC is seeking to conduct a KAP survey in the buffer communities of the TMNR in order to assess the knowledge, attitudes and practices of the people of these communities. This will allow for the effective planning, implementation and evaluation of future interventions. The end goal is to improve community awareness and practices in order to achieve a more sustainable management of the TMNR to increase its overall function, protection and coverage, while providing value to the surrounding communities.
+
+The Tapir Mountain Nature Reserve (TMNR) is a vital ecosystem located in Belize, co-managed by the Belize Karst Habitat Conservation (BKHC) and the Government of Belize. The BKHC, funded by the Protected Areas Conservation Trust (PACT), aims to enhance TMNR's ecological value while promoting sustainable development through improved management, community engagement, and financial sustainability. The reserve spans a reasonable area, but the buffer zone expands across several communities. This reserve provides a sanctuary for a variety of plant and animal species. Notably, the name "Tapir Mountain" reflects the presence of tapirs, a key species in Belizean ecosystems. 
+
+BKHC's role in managing the Tapir Mountain Nature Reserve extends beyond traditional conservation measures. The organization actively engages in scientific research, employing a multidisciplinary approach to understand the complex dynamics of Karst environments. Through studies on flora, fauna, and geological formations, BKHC contributes valuable insights that inform conservation strategies and enhance the scientific understanding of these unique ecosystems. 
+
+Additionally, BKHC places a strong emphasis on community involvement and education. Recognizing the importance of local communities in the success of conservation initiatives, the organization collaborates with residents in the vicinity of TMNR. By fostering community partnerships, BKHC strives to build a shared sense of responsibility and awareness, aiming to create a harmonious coexistence between human activities and environmental preservation. 
+
+Through scientific research, community engagement, and sustainable management practices, BKHC seeks not only to safeguard the beauty of karst landscapes but also fosters a model of conservation that resonates with the broader principles of ecological sustainability and harmonious coexistence between nature and human society. At the same time, BKHC hopes that the relationship between the TMNR and its buffer communities is symbiotic, and that awareness and positive engagement leads to sustainable development within the reserve's surrounding communities.
 
 ### 1.2 Kap Survey Objectives
 
-Objectives
+To achieve these goals, a Knowledge, Attitude, and Practices (KAP) survey is proposed in the buffer communities surrounding TMNR. (b) KAP Survey Objectives Belize Analytics will assess the knowledge, attitudes, and practices of community members regarding the management of TMNR. The specific objectives are to: 
+
+1.  Understand community perceptions and awareness of TMNR's ecological importance.
+
+2.  Identify barriers and opportunities for community involvement in TMNR management.
+
+3.  To provide recommendations on actions and strategies that the BKHC can undertake in order to promote sustainable management of the TMNR and increase community awareness, engagement, attitudes and practices.
+
+4.  To establish a baseline through which future interventions and strategies can be measured against.
 
 ## 2. Survey Design
-
-Design
 
 ### 2.1 Target Population
 
@@ -401,77 +413,185 @@ $E$ is the margin of error 
 
 $nrr$ is the non-response adjustment 
 
-### 2.3 Questionnaire Design
+![](images/samplecalc.png)
 
-design
+The sample size of 150 households was determined to achieve a 95% confidence level with an 8% margin of error, assuming a predicted proportion of 50% in the population. The upper and lower confidence limits provide a range within which the true proportion of the population is likely to fall. The sample fraction (9%) indicates that the survey targeted approximately 9% of the total population.
 
-### 2.4 Data Collection using CAPI and Geographic Information Systems (GIS)
+### 2.3 Sample Weights
 
-capi
+Design weights reflect and adjust for the different probabilities of selection in the sample. The sample selection was done in two stages. The selection criteria along with the selection probabilities for each stage are described below: 
 
-### 2.5 Sample Weights
+**Stage 1.  Selection of clusters in each community** - The sample was stratified using the 7 strata (Community). Simple systematic random sampling without replacement method was used in selecting the households. 
 
-weights
+**Stage 2.  Selection of individual** -- An adult was randomly selected from each household. The base weight for individual i, in household h, in community k,  is given by the multiplication of the inverse probabilities at each stage of selection as follows: 
+
+### 2.4 Questionnaire Design
+
+A questionnaire that entailed mainly closed-ended questions was developed to assess the main knowledge, attitude, and practices (KAP) of adult community members. The questionnaire consisted of 4 general sections: 
+
+**Demographics**: 
+
+This section captured the characteristics of all members within the household, including age, sex, ethnicity, employment, and education. These variables are important for the disaggregation of the data.  
+
+**Knowledge Area:** 
+
+Aimed to gauge community understanding of conservation principles and TMNR specifics, including biodiversity, species, and ecological significance, while also assessing awareness of environmental initiatives and climate change impacts, including the presence of wildlife like jaguars and pumas in TMNR. 
+
+**Attitudes Area:** 
+
+This section tried to understand community attitudes towards environmental protection, measure support for TMNR conservation efforts, and explore concerns and willingness to engage in conservation activities, addressing issues such as alternative crop production, climate change impact, and perceptions of wildlife as a threat. 
+
+**Practices Area:** 
+
+The section delved into current practices concerning TMNR, including potentially harmful or beneficial activities, waste disposal methods, and the perceived benefits of environmental initiatives. It also aimed at assessing the community's willingness to collaborate on environmentally friendly crop production and solicits specific actions desired from BKHC for future community-based projects. 
+
+### 2.5 Data Collection using CAPI and Geographic Information Systems (GIS)
+
+Computer-Assisted Personal Interviewing (CAPI) was utilized for data collection. Trained data collectors utilized tablet devices preloaded with the survey questionnaire and adhered to standardized data collection protocols. This method ensured efficient and accurate data collection without the immediate need for internet access during interviews, with online connectivity only necessary for downloading or uploading work to the servers. 
+
+The benefits of using CAPI in the survey include increased efficiency and accuracy in data collection due to standardized question presentation, reduced data entry errors, real-time monitoring of data collection progress through dashboards, and the ability to easily incorporate skip patterns and complex survey logic, enhancing the overall quality and reliability of the survey data. 
 
 ### 2.6 Limitations and Recommendations
 
 recs
 
-## Analysis
+## 3. Analysis
 
-### Unit of Analysis
+### 3.1 Unit of Analysis
 
-unit
+In the context of this statistical report, it is crucial to clarify that references to "population," "persons," or "individuals" specifically represent the adult population aged 18 years and older within the buffer communities of the Tapir Mountain Nature Reserve. This distinction is intended to guide readers in their interpretation of the report's findings and promote a comprehensive understanding of the statistical data presented.
 
-### Demographic Characteristics
+### 3.2 Demographic Characteristics
 
-Demog
+### 3.3 Knowledge Area
 
-### Knowledge Area
+#### 3.3.1 Understanding Of Environmental Conservation
 
-#### Understanding Of Environmental Conservation
+Approximately 45.1 percent of the adult population from the buffer communities of the TMNR is familiar with the term **environmental conservation.** Notably, individuals from Mennonite communities exhibited a lower rate of awareness at 38.9 percent when compared to other communities (46.9 percent). Similarly, those with a primary education background reported exposure at a rate of 31 percent, which was lower compared to individuals with higher education levels (77.6 percent). Additionally, awareness was lower among 18--34-year-olds compared to other age groups. These findings highlight variation in awareness of environmental conservation based on factors such as community affiliation, educational background, and age. 
 
-one
+Individuals who indicated awareness of environmental conservation were subsequently asked about the specific terms they were familiar with. A higher number of persons expressed that they encountered information on **'protecting wildlife and nature'** and **'reducing pollution,'** while concepts such as **'clean and renewable power'** and **'habitat restoration'** were less commonly reported. However, the differences are not stark. 
 
-#### Knowledge of Climate Change
+When participants were asked to assess their knowledge levels regarding environmental conservation topics they had previously heard about, they generally rated themselves as having a *good* to *strong* awareness. The environmental issues on which the population felt most knowledgeable were '**reducing pollution**' and '**using resources wisely**.' Conversely, '**clean and renewable power**,' '**habitat restoration**,' and '**protecting wildlife and nature**' were identified as topics about which the population claimed to have lesser knowledge. 
 
-two
+A noticeable difference in knowledge ratings was evident among the Mennonite population compared to non-Mennonites and those with no formal education. These groups tended to self-report lower levels of knowledge, possibly attributable to their involvement in agriculture. Their awareness of the complexity and depth of these topics, combined with their acknowledgment of possessing only surface-level knowledge, may contribute to the observed differences in self-assessment. 
 
-#### Knowledge of TMNR and its Wildlife
+#### 3.3.2 Knowledge of Climate Change
 
-three
+A significant 80.9 percent of the population reported having prior awareness of the term **'climate change.'** Higher self-reporting rates were observed among young adults, individuals of Creole decent, and those with a secondary education or higher. However, the observed differences in reporting were not particularly pronounced. 
 
-### Attitude Area
+Despite the fact that 8 out of 10 individuals are familiar with **'climate change',** their knowledge concerning climate-related environmental impacts reveals some gaps in accuracy. Notably, nearly 20 percent of the population either do not believe or are *unaware* that the act of cutting down trees can lead to **soil erosion**. Additionally, 45 percent of individuals do not recognize the connection between **pesticide** use and its potential impact on piped water. There seems to be a lack of awareness among individuals that **piped water sources** originate from nearby water basins susceptible to contamination through pesticide use.
 
-#### Attitude towards conservation efforts, climate change, and sustainable development
+#### 3.3.3 Knowledge of TMNR and its Wildlife
 
-One
+A considerable portion of the population, totalling 44.7 percent, is aware of the existence of the **Tapir Mountain Nature Reserve (TMNR)**, formerly known as the Society Hall Nature Reserve. Notably, knowledge of TMNR is more prevalent among Mennonite communities compared to non-Mennonite communities. The primary association with the Tapir Mountain Nature Reserve is as a protected area, with 76.4 percent of those familiar with TMNR categorizing it as such. Additionally, 12.4 percent and 5.6 percent identified TMNR as a tourism attraction and hunting area, respectively. 
 
-#### Environmental Concerns
+Regarding employment status, a smaller percentage of employed individuals recognized TMNR as a **protected area** (62.5%) compared to the self-employed (83.3%) and those not employed (80.4%). Among employed individuals aware of the reserve, one in four reported knowledge of it being a hunting ground. 
 
-Two
+As it related to knowledge about the reserve's ***boundaries***, majority (63.8%) reported having *no awareness*, while less than 1 percent claimed familiarity with most or all of the reserve's boundaries. 
 
-#### Attitudes Towards Wildlife
+The ***management*** of TMNR is not widely known among the population, with 58 percent indicating a lack of knowledge. The most frequently mentioned entity was the Forestry Department (14.8%), followed by the Government of Belize (9.6%). Notably, Mennonite communities and the 18-34 age group exhibited a higher proportion of awareness about KARST, with reporting rates at 17.5 percent and 30.4 percent, respectively. 
 
-Three
+When asked about the main ***responsibilities*** associated with TMNR, the majority cited '*Protecting the wildlife in the reserve*' (57.5%) and '*Protecting the natural habitat'* (29.4%). However, it is noteworthy that one in four individuals reported not knowing the responsibilities involved in managing TMNR. 
 
-### Practice Area
+Regarding the ***wildlife*** inhabiting TMNR, **tapirs** (76.5%), **jaguars** (68.8%), and **deer** (58.7%) were the most commonly reported species. The prevalence of these responses could be linked to the reserve's name and the animals known to be hunted in the area. **Pumas** (29.8%) and **Ocelots** (24.3%) were the least frequently mentioned animals. Additionally, 10 percent of individuals indicated a lack of knowledge about the species residing in the reserve.
 
-#### Household Activities In Buffer Communities
+### 3.4 Attitude Area
 
-One
+#### 3.4.1 Attitude towards conservation efforts, climate change, and sustainable development
 
-#### Waste Disposal Practices
+As it relates to attitudes towards the environment, people generally report positive attitudes and a healthy concern for environmental issues, as the rest of this section will show. However, when it comes to matters that personally affect residents, attitudes veer in the direction of self-interest. For example, about 47% of persons believe that \"*establishing protected areas is bad*\", if it is done in land that might be of economic use by the residents of the community. This sentiment was shared amongst all different groups of people, though there were some small differences worth noting. For example, persons with education \"Secondary or higher\" were more likely to disagree with the statement that establishing protecting areas is bad. Persons from \"Other\" ethnicities, which includes Mennonite persons, were also less likely to agree with the statement. Persons who agreed with the statement at a higher frequency than others include persons with \"Primary\" education level and persons of \"Mestizo/Hispanic/Latino\" ethnicity.  
 
-Two
+However, residents as a whole display a positive attitude towards conservation efforts. For instance, three quarters (76%) of persons agree that their community could benefit from \"*a neighbourhood watch that reports forest fires, or wildlife hunting in the reserve and the surrounding communities*\". Persons of \"Other\" ethnicities (which includes Mennonite persons) were less likely to agree, however, as were persons from Mennonite communities as a whole. Self-employed persons were also less likely to agree with the statement. This same pattern of responses was observed when respondents were asked if anyone in their household would be interested in joining the neighbourhood watch. Moreover, only 58% of persons believe that someone in their household would be interested in joining a fire task force.  
 
-#### Sustainable Agriculture
+It can be observed that groups of people who lean towards being farmers, such as the self-employed and those in Mennonite communities, tend to *disagree* more frequently with the usefulness of neighbourhood watches and fire task forces. It is possible that these persons believe themselves to be self-sufficient enough to take care of the areas surrounding the reserve. At the same time, they might fear that other persons report them for their activities. People in communities where farming is less common tend to have a more positive attitude towards these task forces. 
 
-Three
+As it relates to **Climate Change**, the survey revealed interesting results. Although almost 3 in 4 persons (74%) believe that climate change is an issue that threatens the livelihood of people worldwide, only around 50% of people believe that it affects them personally. What is perhaps more interesting, is that only 51% of persons believe that **human activity** is the principal cause of climate change. Persons from Mennonite communities, persons with \"Primary\" level education, and persons of \"Creole\" ethnicity were more likely to be skeptical of climate change and its effects.  
 
-#### Engagement with News, Media and Karst
+Pertaining to **sustainable development practices**,  most persons (74%) agree that slash and burn farming is a threat to TMNR and other protected areas. This again shows the generally positive attitude persons have towards conservation efforts topics. However, the majority of people (53%) disagree or strongly disagree that there are tourism opportunities in their communities. About one third (33%) *agree* and only 3% *strongly agree*.  
 
-Four
+#### 3.4.2 Environmental Concerns
+
+The survey placed a heavy emphasis on the different environmental concerns held by persons in the TMNR buffer communities. A series of topics were mentioned and persons were to report the level of their concern towards the topic (from *Not at all concerned* to *Extremely concerned*). Additionally, they were asked to report if they believed the topic affected them personally, and if they believed that it affected the TMNR.  
+
+The first three concern items have to do with **waste disposal**, **water contamination** and **forest fires**. Of the first two, a​￼​bout half of respondents over 75% of persons reported being at least somewhat concerned, though there were relatively few cases of extremely concerned. In both cases, people also tend to perceive that this issue affects the TMNR more than it affects them personally. The levels of concern ramp up towards forest fires, however.  77% of persons report being at least somewhat concerned about first fires, and a significant 42% of all persons report being extremely concerned. This is notable because although less than half of persons (46%) believe that first forest affects them personally, over 4 in 5 people (83%) do believe it is an issue affecting the TMNR. The attitudes are consistent between groups, although persons from Mennonite communities tend to be concerned about waste disposal and water contamination at a higher frequency than those in Non-Mennonite communities. Conversely, those in Non-Mennonite communities are relatively more concerned about forest fires than those in Mennonite communities.  
+
+The next three concern items are **deforestation**, **soil erosion**, and **flooding**. Responses patterns were similar for deforestation and soil erosion. People tend to have lower levels of concern for these two items than for other items. However, once more, the majority of persons (\>75%) think that these issues affect the TMNR. On the other hand, flooding is an item that was of major significant concern for persons, to the extend that over 43% reported being extremely concerned. However, only 42% reported that floodings affect them personally. Among the different groups of people, persons in Non-ennonite communities were more likely to show concern about the three items, and particularly flooding. Creole persons also reported concern at a higher intensity than other ethnicities, particularly towards flooding.  
+
+The final four concern items were chemical **pesticides**, **drought**, **logging** and **hunting**. Of these items, chemical pesticides elicited the lowest levels of concern. Moreover, only 38% of respondents believe the issue affects them personally, and 68% believe it affects TMNR.  Conversely, drought was an issue that elicited high and intense levels of concern. 72% of all persons reported being at least somewhat concerned about droughts, and 45% reported being extremely concerned. A bit over half of respondents (55%) believe that droughts affect them personally, and 78% believe it affects the TMNR. Logging and hunting were interesting issues of concern. People report concern for these items at relatively low levels, and these two items are the two least likely to affect respondents personally. At the same time, these two issues were the ones reported to affect TMNR the most. Around 88% of all persons believe that logging and hunting of wildlife are issues that affect TMNR.  
+
+Overall, persons reported higher levels of concern towards **flooding**, forest fires, and drought. They reported lower levels of concern towards **pesticides, soil erosion, logging** and **hunting**. The issues that affect persons personally at higher levels are **water contamination, drought and flooding**. Although persons believed that all items, across the board, affect the TMNR more than it affects them personally, **logging, hunting, forest fires and deforestation** stand out. Interestingly, these are all issues that are perceived to be threats towards protected areas and the forest environments. Logging and hunting of wildlife particularly stand out because people report low levels of personal concern for these issues and yet they believe that the TMNR is affected by these issues. It is possible that persons are aware of these activities happening in the areas within or surrounding the TMNR.  
+
+#### 3.4.3 Attitudes Towards Wildlife
+
+There were several questions aimed at gauging attitudes and perceptions towards the wildlife and species that inhabit the TMNR. Almost one third of the persons in the buffer communities (33%) reported *owning livestock* or *agricultural land* within their communities. Of this subset of people. 35% believe that their livestock are threatened by nearby predators such as **jaguars** and **pumas**. Additionally, almost a quarter (24%) of all persons (not just who own livestock) believe that jaguars and pumas are threats to the communities they live in. Subsequently, persons were asked what would be their course of action should they encounter wildlife conflict in their communities. 63% of persons said they would *report* the encounter, while 20% said that they would *scare* the animal away. Worryingly, about 5% of all persons mentioned that they would ***poison or hunt*** the animal.  
+
+Persons were likewise asked about their dislike towards 10 specific animal types or species that are common to Belize and most of which also make the TMNR their habitat. Unsurprisingly, **snakes** were the most disliked animal, with 61% of all persons expressing their negative feelings towards them. All other animal species experienced low levels of dislike, with no other animal exceeding 10%. However, it is worth noting that around 8% of people reported disliking **jaguars**.  
+
+As it relates to response patterns between the different groups of persons, there are a few notable items. For example, people who are more likely to own livestock or agricultural land include persons living in Mennonite communities, persons of Mennonite/Other ethnicities, and persons with lower levels of educational attainment. However, of the people who own livestock or agricultural land, those from Non-Mennonite communities are more likely to believe that predators are a threat to their livestock. Employees are also more likely to believe it as well, as opposed to self employed people (who tend to be farmers). Another item of note is that persons of hispanic origin reported disliking snakes at a higher rate than persons of other ethnicities.  
+
+### 3.5 Practice Area
+
+The Practice section of the KAP focused on the current practices, activities and habits of persons in the target population. The formulated questions targeted household domestic activities, agricultural activities, waste disposal practices, and environmentally impactful activities such as interaction with wildlife and with the TMNR. 
+
+#### 3.5.1 Household Activities In Buffer Communities
+
+Persons were probed about domestic and agricultural activities that their households participatedin, as well as the frequency of engagement. The specific activities included
+
+-   gardening
+
+-   fishing
+
+-   raising livestock
+
+-   hunting
+
+-   growing crops
+
+-   carpentry
+
+-   selling lumber
+
+Out of these activities, the ones of most interest were \'*raising livestock*\', \'*hunting*\', \'*growing crops*\' and \'*selling lumber*\'. The other items were included to soften the impact of the questions so as to not raise suspicion on the part of respondents when being asked about potentially illegal activities such as hunting and extracting lumber from and within the TMNR.  
+
+Of the activities of interest, 45% of all persons reported that their household engaged in **raising livestock**, with households in Mennonite communities displaying a higher rate (60%) when compared to households in Non-Mennonite communities (40%). Persons of Mestizo/Hispanic/Latino ethnicity reported participation at lower rates (36%) than persons of other ethnicities. As it relates to **growing crops**, 40% of the population reported that their household engaged in this activity. The same differences between groups as with raising livestock are present, with households in Mennonite communities and of Other ethnicities participating in growing crops at a higher rate. Altogether, about 56% of households participate in either raising livestock or growing crops. Since this is over half of the target population, it is certainly a topic that should be of high interest.\
+\
+The two activities that are perhaps the most sensitive but of the highest interest were **hunting** and **logging**. Out of all persons, only 7% reported that anyone in their household participates in hunting, and none reported participation in logging. Engagement in hunting and logging was again asked at P10 and P11, but specifically about hunting and logging inside the TMNR. Similarly, only 4% of persons admitted that a household member had hunted in the TMNR, and none reported logging.
+
+These are very small figures and would certainly be a welcome indicator for BKHC. However, it might be too early to celebrate. Persons tend to be hesitant to self-report when it comes to issues that are perceived to be sensitive. This is a response bias known as social desirability bias. In accordance, question P12 was designed to counter this bias. Here, persons were asked about their knowledge of other persons in the community who had participated in hunting or logging in the TMNR within the past 12 months. To this question, almost 18% of the population answered positively - they knew someone who participated in these activities! This figure should be taken as more reliable and closer to the truth.
+
+However caution must be exercised, this 18% does not represent the proportion of people who hunt or log in the TMNR, but rather, that 18% of persons are aware of at least one person who does engage in the activities. Nevertheless, because persons from various communities reported a positive answer for P12, it is still likely that logging and hunting is happening at a higher rate than what is being self-reported by the community.
+
+#### 3.5.2 Waste Disposal Practices
+
+The most common form of waste disposal was **Open burning**, reported by over 46% of the population. Persons from Mennonite communities reported Open burning as their main waste disposal method at a rate of 63%, while for Non-Mennonite communities the rate stood at 42%. The second most common method of waste disposal was **Paid service transport to landfill**, at 35%. Notably, almost all persons who reported this as their primary waste disposal were from Non-Mennonite communities. In all, 44.5% of persons in Non-Mennonite communities reported Paid service as their household\'s main waste disposal method, while less than 4% of persons in Mennonite communities did the same. Between ethnicities, people of Creole descent were more likely to report Paid service as their waste disposal method relative to others, as were persons with higher levels of education. 
+
+Although **open burning** is not optimal for the environment, the population who most often reported this waste disposal method belonged to the communities that are relatively remote and rural in comparison with the other communities. It is likely that municipal waste disposal services are not available to Mennonite and surrounding communities such as Upper and Lower Barton Creek, Eastland, Progresso, 7 Miles, etc. As it relates to the population in Non-Mennonite communities, it was observed that persons with higher education levels and persons who were employees were more likely to have paid waste disposal. Given that education and employment are positively correlated with income, it is likely that income is also a factor that influences the reliance on paid waste disposal services. Persons with lower income might not be able to afford such services, or might prefer to deal with such tasks themselves.
+
+#### 3.5.3 Sustainable Agriculture
+
+Persons were directly asked (question P5)  if their household participates in **subsistence farming or agricultural production**, and 23% responded affirmatively. Persons in Mennonite communities were significantly more likely to engage in these activities, as 43% responded positively, compared to only 17% of persons in Non-Mennonite communities. It is worth noting, however, that at question P3, 40% of all persons reported that their households grow crops, and 42% reported that their household participates in gardening. Therefore, the persons participating in farming activities is likely larger than the 23% who responded affirmatively to question P5. The discrepancy was possibly caused by persons interpreting \"agricultural production\" and \"farming\" as more formal, full-time activities. However, sustainable agriculture should be of interest to any person or household engaging in small-scale or large-scale agriculture. 
+
+The persons who responded positively to question P5 were subsequently asked if they would be interested in learning about different sustainable agriculture practices. 81% of all persons who participate in agriculture reported their willingness to learn about **improved crop production methods**. Persons in Non-Mennonite communities were more likely to do so, at 90%, compared to 68% of within Mennonite communities. Persons of Creole descent who participate in agriculture all (100%) reported being willing to learn these improved methods, while 71% of persons of Other/Mennonite ethnicity did the same. Persons who were employees and who have higher levels of education also responded affirmatively at higher rates. This may indicate that it is likely that persons who do not engage in agriculture full-time are more willing to acquire new knowledge compared to persons who are full-time farmers. However, most persons across all backgrounds responded affirmatively to this item. 
+
+Similarly, 84% of persons in agriculture were willing to learn about the use of **biological pesticides**. The response variation between person groups and backgrounds was very similar to that of improved crop production. However, more people, across all backgrounds, are willing to learn about biological pesticides. This seems to be a more novel sustainable practice that is not very well known and is of high interest for all. Overall, there is a high willingness for persons who participate in agriculture towards learning more about sustainable agriculture.
+
+#### 3.5.4 Engagement with News, Media and Karst
+
+Keeping up with modern themes, **Social Media** was the most common way in which persons consumed news and media, reported by 58% of all persons. **Television** and **Internet** are second and third, with 34% and 29% of persons reporting their informational usage, respectively. One notable difference is that within Mennonite communities, **radio** and **Internet** were selected as the most common media for news and information. Newspaper (4%) and word-of-mouth (5%) were the least commonly reported options. These results are in-line with the modern consumption of information, dominated by the internet, mobile phones and social media. However, persons in Mennonite communities, perhaps due to their remoteness and possibly bad mobile reception, were equally inclined to consume news via radio. 
+
+Persons were asked about their willingness towards engaging in specific, targeted information and educational initiatives. Specifically, they were asked about their likeliness towards participating in 
+
+i.  promotional advertisement about the Tapir Mountain Nature Reserve on Social Media
+
+ii. educational campaigns to learn about the Tapir Mountain Nature Reserve
+
+iii. following the social media page of the Belize Karst Habitat Conservation
+
+iv. training workshops that the Belize Karst Habitat Conservation organizes
+
+Overall, the item that the higher number of persons responded positively to was item (ii), education campaigns, with 61% of persons stating they were likely or very likely to participate in them. The least popular option was item (iii), following the BKHC social media page, although 52% of respondents did express positively likeliness towards the item. 
+
+Between the different groups of people, persons from Mennonite communities expressed overall lower levels of enthusiasm towards the engagement items. However, there was one item (item iv, training workshops), where their likeliness (57%) surpassed those of Non-Mennonite communities (53%). This indicates that persons in Mennonite communities, who predominantly engage in farming, are more interested in practical, hands-on approaches, as opposed to other types of media-centric engagement.
 
 ### Future Actions Desired By Household To Be Facilitated By KARST
 
