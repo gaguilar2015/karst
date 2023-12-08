@@ -507,6 +507,157 @@ Future iterations of the survey should be designed with a larger sample size. Th
 In the context of this statistical report, it is crucial to clarify that references to "population," "persons," or "individuals" specifically represent the adult population aged 18 years and older within the buffer communities of the Tapir Mountain Nature Reserve. This distinction is intended to guide readers in their interpretation of the report's findings and promote a comprehensive understanding of the statistical data presented.
 
 ### 3.2 Demographic Characteristics
+The survey targeted only one knowledgeable member of the household as the respondent; most often this was the head of the household or their spouse. This was appropriate because household members are likely to reflect similar views, attitudes and perceptions as the head figure in the home. More importantly, household practices only need to be reported once, and the head of the household is the most knowledgeable to do so. 
+
+The results in the table below represent the estimated adult population of the buffer communities. However, note that these figures are slightly biased towards characteristics that are common in household heads, such as older ages. Nevertheless, it is a reasonable approximation of the target population of the Survey.
+
+As seen in the table below, the 35-49 age group was the largest, followed by the 50+ age group and the the "young adult" age group of 18-34 years. As it relates to ethnicity, the Mestizo/Hispanic/Latino group is the largest, estimated at 42.8% of the population. At second place, with 40.2% of the estimated population, are persons of Creole descent. Finally, persons of "Other" ethnicity, which include Mennonite as the main group, account for 9.2% of the estimated population. 
+
+As it related to the highest level of education **completed**, the largest group is Primary education. Up to 46% of all persons in the population successfully completed Standard 6 and their primary education. Interestingly, an estimated 27% only has some primary education (did not complete), or no education at all. In contrast, around 22 percent of the population did complete their secondary studies or higher.
+
+As it relates to employment, 65% of the target population is employed, while 35% is not in employment. When looking at the type of worker, 36.1% of persons are employees, working from others, while almost 29 percent are self-employed. 
+
+The differences in demographic backgrounds provide possible explanations for the variations in response patterns observed in the survey.
+
+```{r}
+#| echo: false
+#| warning: false
+
+# derive WEIGHTED tabulations for basic demographic variables
+# for HH HEAD ONLY
+
+ind_ages <- listing_head_vars |> 
+  count(age_group, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = age_group, Count, Percent
+  )
+
+ind_sex <- listing_head_vars |> 
+  mutate(sex = as_factor(sex)) |> 
+  count(sex, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = sex, Count, Percent
+  )
+
+ind_community <- listing_head_vars |> 
+  count(ctv, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = ctv, Count, Percent
+  )
+
+ind_ethnicity <- listing_head_vars |> 
+  count(ethnicity_group, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = ethnicity_group, Count, Percent
+  )
+
+ind_education <- listing_head_vars |> 
+  count(ed_attainment, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = ed_attainment, Count, Percent
+  )
+
+ind_employment <- listing_head_vars |> 
+  mutate(employed = as_factor(employed)) |> 
+  count(employed, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = employed, Count, Percent
+  )
+
+ind_worker <- listing_head_vars |> 
+  count(workertype_group, wt = ind_weights) |> 
+  mutate(
+    Count = round(n),
+    total = sum(n, na.rm = T),
+    Percent = paste0(round(n/total,3) * 100, '%')
+  ) |> 
+  select(
+    Item = workertype_group, Count, Percent
+  )
+
+head_descriptives2 <- 
+  rbind(
+        ind_ages, 
+        ind_ethnicity, 
+        ind_education,
+        ind_employment,
+        ind_worker,
+        ind_community
+        ) 
+
+
+head_ind_descriptives2 <- head_descriptives2 |> 
+  gt(rowname_col = "Item") |>
+  tab_row_group(
+    label = md("**Community**"),
+    rows = 20:26
+  ) |> 
+  tab_row_group(
+    label = md("**Worker Type**"),
+    rows = 17:19
+  )  |> 
+  tab_row_group(
+    label = md("**Employed**"),
+    rows = 15:16
+  ) |> 
+  tab_row_group(
+    label = md("**Highest Education Completed**"),
+    rows = 8:14
+  ) |> 
+  tab_row_group(
+    label = md("**Ethnicity**"),
+    rows = 4:7
+  ) |> 
+  tab_row_group(
+    label = md("**Age Group**"),
+    rows = 1:3
+  ) |> 
+  cols_align(
+  align = 'left',
+  columns = c('Item')
+) |> 
+      tab_style(
+        style = cell_text(align = "left", indent = px(20)),
+        locations = cells_stub()
+    ) |> 
+  tab_options(
+    table.font.size = '85%'
+  )
+
+head_ind_descriptives2
+
+```
+
 
 ### 3.3 Knowledge Area
 
@@ -640,11 +791,8 @@ Between the different groups of people, persons from Mennonite communities expre
 
 ### Future Actions Desired By Household To Be Facilitated By KARST
 
-Aha
+Soon...
 
-### Community Engagement By The Household
-
-Ahaa
 
 ## 4. Recommendations
 
@@ -712,7 +860,7 @@ These evaluation and adaptation mechanisms contribute to the ongoing success and
 
 ## 5. Conclusion
 
-Con
+Coming soon...
 
 ## 6. Tables and Figures
 
@@ -1123,7 +1271,7 @@ ind_worker <- listing_head_vars |>
   )
 
 head_descriptives2 <- 
-  rbind(ind_sex, 
+  rbind(
         ind_ages, 
         ind_ethnicity, 
         ind_education,
@@ -1137,31 +1285,27 @@ head_ind_descriptives2 <- head_descriptives2 |>
   gt(rowname_col = "Item") |>
   tab_row_group(
     label = md("**Community**"),
-    rows = 22:28
+    rows = 20:26
   ) |> 
   tab_row_group(
     label = md("**Worker Type**"),
-    rows = 19:21
+    rows = 17:19
   )  |> 
   tab_row_group(
     label = md("**Employed**"),
-    rows = 17:18
+    rows = 15:16
   ) |> 
   tab_row_group(
     label = md("**Highest Education Completed**"),
-    rows = 10:16
+    rows = 8:14
   ) |> 
   tab_row_group(
     label = md("**Ethnicity**"),
-    rows = 6:9
+    rows = 4:7
   ) |> 
   tab_row_group(
     label = md("**Age Group**"),
-    rows = 3:5
-  ) |> 
-  tab_row_group(
-    label = md("**Sex**"),
-    rows = 1:2
+    rows = 1:3
   ) |> 
   cols_align(
   align = 'left',
@@ -1180,14 +1324,13 @@ head_ind_descriptives2 <- head_descriptives2 |>
 ::: panel-tabset
 ### Population
 
-::: panel-tabset
 ```{r}
 #| echo: false
 #| label: descriptives-allw
 
 head_ind_descriptives2 |> 
   tab_header(
-    title = "Characterstics of Estimated Population"
+    title = "Characterstics of Respondent Population"
   )
 
 downloadthis::download_this(
@@ -1198,7 +1341,6 @@ downloadthis::download_this(
 )
 
 ```
-:::
 :::
 
 ### 6.2 Knowledge Area
