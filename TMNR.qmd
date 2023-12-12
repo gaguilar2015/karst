@@ -453,8 +453,7 @@ The benefits of using CAPI in the survey include increased efficiency and accura
 
 The survey team also benefited from a live, real-time dashboard developed for monitoring the data collection and early indicator analysis. This dashboard was tailored towards the timely supervision of field activities, in order to detect anomalies and obstacles, and to be able to get an early insight into the information being gathered by the interviewers.
 
-:::{.column-page}
-
+::: column-page
 ![KAP Survey Dashboard - Homepage](images/dash1.png){fig-align="center"}
 
 ![KAP Survey Dashboard - Map Visualization](images/dash2.png){fig-align="center"}
@@ -507,15 +506,16 @@ Future iterations of the survey should be designed with a larger sample size. Th
 In the context of this statistical report, it is crucial to clarify that references to "population," "persons," or "individuals" specifically represent the adult population aged 18 years and older within the buffer communities of the Tapir Mountain Nature Reserve. This distinction is intended to guide readers in their interpretation of the report's findings and promote a comprehensive understanding of the statistical data presented.
 
 ### 3.2 Demographic Characteristics
-The survey targeted only one knowledgeable member of the household as the respondent; most often this was the head of the household or their spouse. This was appropriate because household members are likely to reflect similar views, attitudes and perceptions as the head figure in the home. More importantly, household practices only need to be reported once, and the head of the household is the most knowledgeable to do so. 
+
+The survey targeted only one knowledgeable member of the household as the respondent; most often this was the head of the household or their spouse. This was appropriate because household members are likely to reflect similar views, attitudes and perceptions as the head figure in the home. More importantly, household practices only need to be reported once, and the head of the household is the most knowledgeable to do so.
 
 The results in the table below represent the estimated adult population of the buffer communities. However, note that these figures are slightly biased towards characteristics that are common in household heads, such as older ages. Nevertheless, it is a reasonable approximation of the target population of the Survey.
 
-As seen in the table below, the 35-49 age group was the largest, followed by the 50+ age group and the the "young adult" age group of 18-34 years. As it relates to ethnicity, the Mestizo/Hispanic/Latino group is the largest, estimated at 42.8% of the population. At second place, with 40.2% of the estimated population, are persons of Creole descent. Finally, persons of "Other" ethnicity, which include Mennonite as the main group, account for 9.2% of the estimated population. 
+As seen in the table below, the 35-49 age group was the largest, followed by the 50+ age group and the the "young adult" age group of 18-34 years. As it relates to ethnicity, the Mestizo/Hispanic/Latino group is the largest, estimated at 42.8% of the population. At second place, with 40.2% of the estimated population, are persons of Creole descent. Finally, persons of "Other" ethnicity, which include Mennonite as the main group, account for 9.2% of the estimated population.
 
 As it related to the highest level of education **completed**, the largest group is Primary education. Up to 46% of all persons in the population successfully completed Standard 6 and their primary education. Interestingly, an estimated 27% only has some primary education (did not complete), or no education at all. In contrast, around 22 percent of the population did complete their secondary studies or higher.
 
-As it relates to employment, 65% of the target population is employed, while 35% is not in employment. When looking at the type of worker, 36.1% of persons are employees, working from others, while almost 29 percent are self-employed. 
+As it relates to employment, 65% of the target population is employed, while 35% is not in employment. When looking at the type of worker, 36.1% of persons are employees, working from others, while almost 29 percent are self-employed.
 
 The differences in demographic backgrounds provide possible explanations for the variations in response patterns observed in the survey.
 
@@ -658,7 +658,6 @@ head_ind_descriptives2
 
 ```
 
-
 ### 3.3 Knowledge Area
 
 #### 3.3.1 Understanding Of Environmental Conservation
@@ -792,7 +791,6 @@ Between the different groups of people, persons from Mennonite communities expre
 ### Future Actions Desired By Household To Be Facilitated By KARST
 
 Soon...
-
 
 ## 4. Recommendations
 
@@ -4713,4 +4711,3 @@ df |>
 
 ```
 :::
-

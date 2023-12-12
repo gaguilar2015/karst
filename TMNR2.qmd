@@ -316,14 +316,16 @@ listing <- listing |>
   left_join(
     kweights,
     by = c('interview__key')
-  )
+  ) |> 
+  filter(!is.na(ind_weights))
 
 
 households <- households |> 
   left_join(
     kweights,
     by = c('interview__key')
-  )
+  ) |> 
+  filter(!is.na(ind_weights))
 
 
 
@@ -331,12 +333,57 @@ k2 <- k2 |>
   left_join(
     kweights,
     by = c('interview__key')
-  )
+  ) |> 
+  filter(!is.na(ind_weights))
 ```
 
 ```{r}
 #| include: false
-#| label: export-datasets
+#| label: anonymize-export-datasets
+
+names(households)
+
+households_a <- households |> 
+  select(
+    -c('interview__id', 'building_number', 'dwelling_number',
+       'household_number', 'description', 'head_name', 
+       'language', 'ed', 'team', 'respondent',
+       starts_with('hh_gps'),
+       starts_with('name'),
+       starts_with('visits'),
+       'result', 'sssys_irnd', 'has__errors',
+       'interview__status', 'assignment__id', 'hh_final_weight',
+       'ctv.y'
+       )
+  ) |> 
+  rename(
+    ctv = ctv.x,
+    weight = ind_weights
+  ) |> 
+  relocate(
+    strata, sex, age_group, ethnicity_group, ed_attainment, employed,
+    workertype_group, education, ethnicity,
+    .after = 'ctv'
+  )
+
+names(households_a)
+
+k2_a <- k2 |> 
+  select(
+    k2_roster__id, 
+    k2_rate,
+    interview__key,
+    ctv = ctv.x,
+    strata, 
+    sex, 
+    age_group,
+    ethnicity, ethnicity_group,
+    education, ed_attainment,
+    employed, workertype_group,
+    weight = ind_weights
+  )
+
+names(listing)
 
 # write_sav(households, './respondent/households.sav')
 # write_sav(listing, './respondent/members.sav')
