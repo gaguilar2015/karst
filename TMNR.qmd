@@ -28,6 +28,8 @@ library(DBI)
 library(gt)
 library(HH)
 library(forcats)
+library(tidytext)
+library(wordcloud)
 
 select <- dplyr::select
 
