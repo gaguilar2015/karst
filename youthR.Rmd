@@ -1,0 +1,1964 @@
+---
+title: "Youth Assessment Summary"
+author: "Gian Aguilar"
+date: "12/21/2021"
+output:
+  html_document: default
+  pdf_document:
+    latex_engine: xelatex
+  word_document: default
+mainfont: Helvetica
+sansfont: Helvetica
+fontsize: 12pt
+geometry: margin=0.5in
+header-includes:
+-  \usepackage{pdflscape}
+-  \newcommand{\blandscape}{\begin{landscape}}
+-  \newcommand{\elandscape}{\end{landscape}}
+---
+
+\newpage
+\tableofcontents
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE, dev="cairo_pdf")
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+
+library(tidyverse)
+library(haven)
+library(xlsx)
+library(scales)
+library(plotly)
+library(dplyr)
+library(stringr)
+library(readxl)
+library(lubridate)
+library(janitor)
+library(ggthemes)
+library(kableExtra)
+library(RColorBrewer)
+library(patchwork)
+library(tidytext)
+library(wordcloud)
+library(writexl)
+
+
+###
+#-----------------------
+# COLORS AND THEMING
+#-----------------------
+ygreen <- '#238722'
+primaryColor <- 'aquamarine4'
+secondaryColor <- 'tan'
+errorColor <- 'salmon2'
+
+fiveColor <- c('darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+sixColor <- c( 'tan3', 'darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+fourColors <- c('aquamarine4', 'aquamarine3', 'tan', 'tan4')
+
+#Customized Ggplot theme objects
+theme_youth <- theme_bw()  + theme(panel.border = element_blank(), 
+                                   panel.grid.minor = element_blank(), 
+                                   panel.grid.major = element_blank(),
+                                   axis.line = element_line(colour = "grey30"),
+                                   text = element_text(size = 18),
+                                   legend.position = 'bottom', 
+                                   legend.direction = 'horizontal'
+)  
+
+theme_youthx <- theme_youth + theme(
+  axis.line.x = element_blank(),
+  axis.ticks.x = element_blank(),
+  axis.text.x = element_blank()
+)
+
+theme_youthy <- theme_youth + theme(
+  axis.line.y = element_blank(),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_blank()
+)
+
+
+#4. Read files into R objects -- Foreign
+
+#construct file names
+base_path <- './youthfiles/Youths.sav'
+diagnostics_path <- './youthfiles/interview__diagnostics.sav'
+actions_path <- './youthfiles/interview__actions.sav'
+
+##base questionnaire file
+fbase <- read_sav(base_path, user_na = TRUE) %>% as_factor() 
+#diagnostics metadata file
+fdiagnostics <- read_sav(diagnostics_path) %>% as_factor()
+#interviewer actions metadata file
+#fiactions <- read_sav(actions_path, user_na = T) %>% as_factor()
+
+
+#merge all files
+foreignSet <- fbase %>%
+  left_join(fdiagnostics %>% dplyr::select(interview__key, responsible),
+            by = c("interview__key" = "interview__key"))
+
+dummy <- c("23-78-76-59", "06-99-98-78", "70-76-51-88", "85-69-04-33", "75-34-54-61", "58-44-38-20", 
+           "17-01-94-42", "19-51-99-25", "83-16-78-79", "11-84-23-09", "78-87-97-44", "15-41-99-32", 
+           "14-19-84-62", "36-55-77-94", "52-76-68-21", "96-07-95-65", "51-49-25-52", "65-44-43-34", 
+           "50-18-22-70")
+
+foreignSet <- foreignSet %>% filter(!(interview__key %in% dummy))
+
+foreignSet$age <- as.integer(as.character(foreignSet$age))
+
+foreignSet <- foreignSet %>% 
+  filter(HH_FINALRESULT == "Complete" | !is.na(disability))
+
+foreignSet <- foreignSet %>% 
+  filter(!is.na(district) & district != 'missing' & constituency != 'missing' & gender != 'missing'
+                        & age >= 14)
+
+foreignSet <- foreignSet %>% 
+  mutate(area = case_when(
+    constituency %in% c('Fort George', 'Freetown', 'Caribbean Shores', 'Pickstock') ~ "NorthSide",
+    constituency %in% c('Lake Independence', 'Port Loyola', 'Collet', 'Albert', "Queen's Square", 'Mesopotamia') ~
+      "SouthSide",
+    TRUE ~ "Other"
+  ))
+
+foreignSet$age <- as.integer(as.character(foreignSet$age))
+
+foreignSet <- foreignSet %>% 
+  mutate(age_group = case_when(
+    age >= 26 ~ '26-29',
+    age >= 22 ~ '22-25',
+    age >= 18 ~ '18-21',
+    age >= 14 ~ '14-17',
+    TRUE ~ "Missing"
+  ))
+
+id_vars <- c('district', 'constituency', 'locality', 'gender', 'age', 'ethnicity', 'marital_status')
+
+basics <- names(foreignSet)[1:43]
+basic_info <- foreignSet %>% select(basics, HH_FINALRESULT)
+
+basic_info <- modify_if(basic_info, is.factor, forcats::fct_drop)
+
+basic_info[basic_info$age==33, 'age'] <- 29
+basic_info <- basic_info %>% 
+  mutate(age_group = case_when(
+    age >= 26 ~ '26-29',
+    age >= 22 ~ '22-25',
+    age >= 18 ~ '18-21',
+    age >= 14 ~ '14-17',
+    TRUE ~ "Missing"
+  ))
+
+basic_info$ethnicity <- fct_collapse(basic_info$ethnicity, Other = c('Other', 'Not Stated', 'Mennonite', 'missing'))
+basic_info$level_of_education <- fct_collapse(basic_info$level_of_education, 
+                                              Other = c('missing', 'Primary School + Vocational Studies', 
+                                                        'High School + Vocational Studies', 
+                                                        'None'))
+
+basic_info$level_of_education <- fct_collapse(basic_info$level_of_education, College = c("Bachelor's or higher", 
+                                                                                         "Sixth Form/Associate's"))
+basic_info$level_of_education <- fct_recode(basic_info$level_of_education,
+  `Incomplete Primary` = 'Did not complete Primary School'
+)
+
+basic_info$internet_access <- fct_recode(basic_info$internet_access,
+           `Strongly Agree` = '1',
+           Agree = '2',
+           Disagree = '3',
+           `Strongly Disagree` = '4'
+           )
+
+
+################################
+##### Question DEMOGRAPHIC frequencies
+################################
+
+sexf <- basic_info |> 
+  tabyl(
+    gender
+  ) |> select(Item = gender, Count = n, Percent = percent)
+
+age_groupf <- basic_info |> 
+  tabyl(
+    age_group
+  ) |> select(Item = age_group, Count = n, Percent = percent)
+
+districtf <- basic_info |> 
+  tabyl(
+    district
+  ) |> select(Item = district, Count = n, Percent = percent)
+
+constituencyf <- basic_info |> 
+  tabyl(
+    constituency
+  ) |> select(Item = constituency, Count = n, Percent = percent) |> 
+  mutate(Item = as.character(Item))
+
+educationf <- basic_info |> 
+  tabyl(
+    level_of_education
+  ) |> select(Item = level_of_education, Count = n, Percent = percent)
+
+ethnicityf <- basic_info |> 
+  tabyl(
+    ethnicity
+  ) |> select(Item = ethnicity, Count = n, Percent = percent)
+
+maritalf <- basic_info |> 
+  tabyl(
+    marital_status
+  ) |> select(Item = marital_status, Count = n, Percent = percent)
+
+
+#Merge descriptives together
+descriptives <- rbind(sexf, age_groupf, districtf, 
+                     # constituencyf, 
+                      educationf,
+                      ethnicityf, maritalf
+                      )
+
+#Format percentages
+descriptives <- descriptives |> 
+  mutate(Percent = paste0(round(Percent, 3) * 100, '%'))
+
+
+```
+
+```{r setup2, include=FALSE}
+
+cons <- basic_info %>% distinct(district, constituency)
+
+
+
+
+con_tabyls <- function(item, limit, title="Table X. Table"){
+  tab <- basic_info %>% filter(!!as.name(item) != 'missing') %>% 
+    tabyl(constituency, !!as.name(item) , show_missing_levels = FALSE) |> adorn_totals(c('row', 'col')) |> 
+    adorn_percentages("row") |>
+    adorn_pct_formatting(digits = 1) |>
+    adorn_ns() %>% 
+    left_join(
+      cons,
+      by = 'constituency'
+    ) %>% 
+    select(
+      District = district, Constituency = constituency,
+      2:all_of(limit)
+    ) %>% 
+    arrange(District) %>% 
+    select(-District) %>% as.data.frame()
+  
+  #xlsx::write.xlsx2(tab, paste0('./YOUTH.xlsx'), sheetName = item, append = T, row.names = F)
+  
+  tab <- tab %>% 
+    kbl(caption = title) |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position") %>% 
+    pack_rows("Corozal", 1, 4) |>
+    pack_rows("Orange Walk", 5, 8) |>
+    pack_rows("Belize", 9, 21) |>
+    pack_rows("Cayo", 22, 27) |>
+    pack_rows("Stann Creek", 28, 29) %>% 
+    pack_rows("Toledo", 30, 31)
+  
+  tab
+}
+
+general_tabyls <- function(df, item, start, end, title="Table X. Table"){
+    suf <- ifelse(start <= 2, '', '2')
+  tab <- df %>% filter(!!as.name(item) != 'missing') %>% 
+     tabyl(constituency, !!as.name(item) , show_missing_levels = FALSE) |> adorn_totals(c('row', 'col')) |> 
+    adorn_percentages("row") |>
+    adorn_pct_formatting(digits = 1) |>
+    adorn_ns() %>% 
+    left_join(
+      cons,
+      by = 'constituency'
+    ) %>% 
+    select(
+      District = district, Constituency = constituency,
+      all_of(start):all_of(end),
+      Total
+    ) %>% 
+    arrange(District) %>% 
+    select(-District) %>% as.data.frame()
+  
+  #xlsx::write.xlsx2(tab, paste0('./YOUTH.xlsx'), sheetName = paste0(item, suf), append = T, row.names = F)
+  
+  tab <- tab %>% 
+    kbl(caption = title) |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position") %>% 
+    pack_rows("Corozal", 1, 4) |>
+    pack_rows("Orange Walk", 5, 8) |>
+    pack_rows("Belize", 9, 21) |>
+    pack_rows("Cayo", 22, 27) |>
+    pack_rows("Stann Creek", 28, 29) %>% 
+    pack_rows("Toledo", 30, 31)
+  
+  tab
+}
+
+general_tabylsn <- function(df, item, start, end, title="Table X. Table"){
+  tab <- df %>% filter(!!as.name(item) != 'missing') %>% 
+    tabyl(district, !!as.name(item) , show_missing_levels = FALSE) |> adorn_totals(c('row', 'col')) |> 
+    adorn_percentages("row") |>
+    adorn_pct_formatting(digits = 1) |>
+    adorn_ns() %>% 
+    select(
+      District = district,
+      all_of(start):all_of(end),
+      Total
+    )  %>% as.data.frame()
+  
+  #xlsx::write.xlsx2(tab, paste0('./YOUTH.xlsx'), sheetName = paste0(item, '_national'), append = T, row.names = F)
+  
+  tab <- tab %>% 
+    kbl(caption = title) |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position")
+  
+  tab
+}
+
+national_tabyl <- function(df, item, start, end, title="Table X. Table"){
+    suf <- ifelse(start <= 2, '', '2')
+  #--dis/nat
+  dis <- df %>% 
+    group_by(
+      district, !!as.name(item)
+    ) %>% 
+    summarise(
+      percent = paste0(round(sum(tval, na.rm = TRUE)/n(), 3) * 100, '%'),
+      count = sum(tval, na.rm = TRUE),
+      prop = paste0(percent, ' (', count, ')')
+    ) %>% 
+    select(-c(percent, count)) %>% 
+    pivot_wider(
+      names_from = !!as.name(item),
+      values_from = prop
+    )
+  
+  nat <- df %>% 
+    mutate(
+      district = 'National'
+    ) %>% 
+    group_by(
+      district, !!as.name(item)
+    )  %>% 
+    summarise(
+      percent = paste0(round(sum(tval, na.rm = TRUE)/n(), 3) * 100, '%'),
+      count = sum(tval, na.rm = TRUE),
+      prop = paste0(percent, ' (', count, ')')
+    ) %>% 
+    select(-c(percent, count)) %>% 
+    pivot_wider(
+      names_from = !!as.name(item),
+      values_from = prop
+    ) 
+  
+  ndf <- rbind(dis, nat) %>% 
+    select(
+      District = district,
+      all_of(start):all_of(end),
+    ) %>% as.data.frame()
+  
+  #xlsx::write.xlsx2(ndf, paste0('./YOUTH.xlsx'), sheetName = paste0(item, '_national', suf), append = T, row.names = F)
+  
+  ndf <- ndf %>% 
+    kbl(caption = title) |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position")
+  
+  ndf
+}
+
+constituency_tabyl <- function(df, item, start, end, title="Table X. Table"){
+  suf <- ifelse(start <= 2, '', '2')
+  tab <- df %>% 
+    group_by(
+      district, constituency, !!as.name(item)
+    ) %>% 
+    summarise(
+      percent = paste0(round(sum(tval, na.rm = TRUE)/n(), 3) * 100, '%'),
+      count = sum(tval, na.rm = TRUE),
+      prop = paste0(percent, ' (', count, ')')
+    ) %>% 
+    select(-c(percent, count, district)) %>% 
+    pivot_wider(
+      names_from = !!as.name(item),
+      values_from = prop
+    ) %>% 
+    as.data.frame() %>% 
+    select(-district) %>% 
+    select(
+      Constituency = constituency,
+      all_of(start):all_of(end),
+    ) %>% as.data.frame()
+  
+    #xlsx::write.xlsx2(tab, paste0('./YOUTH.xlsx'), sheetName = paste0(item, '_constit', suf), append = T, row.names = F)
+  
+    tab %>% kbl(caption = title) |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position") %>% 
+    pack_rows("Corozal", 1, 4) |>
+    pack_rows("Orange Walk", 5, 8) |>
+    pack_rows("Belize", 9, 21) |>
+    pack_rows("Cayo", 22, 27) |>
+    pack_rows("Stann Creek", 28, 29) %>% 
+    pack_rows("Toledo", 30, 31)
+}
+
+```
+
+# Introduction
+
+Belize is developing a comprehensive strategic plan, through its Ministry of Youth, Sports and
+Governance, to improve the situation of Young People (ages 14-29). Similarly, the Ministry is
+assessing the needs of the community as it relates to the COVID-19 pandemic and its effects on the youth population. 
+
+For this reason, the Department of Youth Services (DYS) enganged in a Youth and Welness Assessment Survey (YAWAS  to help determine what services are needed to meet the needs of young
+people and to better aid individuals and families in the community.
+
+Countrywide, 5891 youth between the ages of 14 and 29 were approached to be inteviewed. Of these, a total of 5770 complete responses were obtained, for a total of response rate of 98%. However, it is worth noting that no sample design or specific survey design was followed in the administration of this survey. Therefore, the results mainly reflect the outcomes, views and characteristics of the sampled youth, and caution must be taken when applying this to the larger population. However, due to the large sample size, the results obtained are still useful as they do reflect the views and characterstics or a large section of the youth population. 
+
+\newpage
+
+aa
+
+\newpage
+# Characteristics of Respondents
+The table below presentes the overall, nationwide characterstics of the respondets in the major demographic categories. As seen in the table, distribution of respondents by district closely followed the national population distribution by district, but with the Belize district being slighly under-represented (~30% of the national population vs ~27% of the sample population).
+```{r freq, echo=FALSE}
+descriptives %>%
+  kbl(caption = "Descriptive Statistics") |> 
+  kable_minimal(full_width = F) %>% 
+  kable_styling(font_size = 11, position = "center", latex_options = "HOLD_position") %>% 
+  pack_rows("Sex", 1, 3) |>
+  pack_rows("Age", 4, 7) |>
+  pack_rows("District", 8, 13) |>
+  pack_rows("Education", 14, 18) |>
+  pack_rows("Ethnicity", 19, 25) %>% 
+  pack_rows("Marital Status", 26, 27)
+```
+\newpage
+
+## Key Characterstics at the National and District levels
+A visual of the distribution of respondents by district can be seen in the figure below. 
+
+```{r byDis, out.width="60%", out.height="60%", fig.align='center', echo=FALSE}
+#---District plot
+#print(fbase)
+basic_info %>% ggplot(aes(x=district)) +
+  geom_bar(fill = 'aquamarine4') +
+  geom_text(aes( y=..count.., label=..count..), size = 6, color = 'white',
+            stat="count", position=position_stack(0.5), vjust=0.5) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )
+```
+
+Respondents were almost evenly divided by gender, with 51.1% being female, 48.5% male and 0.4% identifying as 'Other'. The distribution of respondent gender by district is seen in the figure below. It can be seen that there were more female respondents in all districts except for Stann Creek and Toledo, where males answered at a slighly higher rate.
+
+```{r genderByDis, out.width="75%", out.height="65%", fig.align='center', echo=FALSE}
+#---Gender Group Plot
+basic_info$gender <- fct_relevel(basic_info$gender, 
+                                 c('Female',
+                                 'Male',
+                                 'Other')
+                                 )
+
+basic_info %>% 
+  ggplot(aes(x=gender, fill=gender)) + 
+  geom_bar(position = 'dodge', show.legend = TRUE) + 
+  geom_text(aes( y=..count.., 
+                 label=..count..), 
+            size = 5, 
+            color = 'white',
+            stat="count", position=position_stack(0.5)) +
+  theme_youthy +
+  facet_wrap(~district) +
+  scale_fill_manual(values = c(secondaryColor, primaryColor, 'grey')) +
+  labs(
+    x = '',
+    y = ''
+  ) + 
+  guides(
+    fill = guide_legend(
+      
+      reverse = F,
+      title = 'Gender'
+    )
+  )
+```
+
+As it relates to age distribution, about 63% of respondents were between the ages of 14-21 years, with 31% being 14-17 years and 32% (the largest age group) being between 18-21 years. A histogram of age distribution by sex is show in the figure below.
+
+```{r, ageHist, out.width="80%", out.height="80%", fig.align='center', echo=FALSE}
+basic_info %>% ggplot(aes(x=age, fill=gender)) +
+  geom_bar() +
+  geom_text(aes( y=..count.., label=..count..), size = 4, color = 'white',
+            stat="count", position=position_stack(0.5), vjust=-0.2) +
+  scale_fill_manual(values = c(primaryColor, secondaryColor, 'grey')) +
+  theme_youth +
+  scale_x_continuous(breaks = c(14,16,18,20,22,24,26,28)) +
+  labs(
+    x = 'Age',
+    y = ''
+  ) + theme(
+    axis.line.y = element_blank()
+  ) +
+  guides(
+    fill = guide_legend(
+      title = 'Gender',
+      reverse = T
+    )
+  )
+
+```
+
+The distribution of ethnicities by district is shown in the figure below as proportions. It can be seen that although Mestizo/Hispanic is the most common ethnicity overall, the respondent composition vaires by district. For example, in the Belize district, Creole was the most common ethnicity, while Garifuna is the most common in the Stann Creek district and Maya is the most common in the Toledo district. 
+```{r, ethnicity, out.width="65%", out.height="65%", fig.align='center', echo=FALSE}
+fiveColor <- c('darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+sixColor <- c( 'tan3', 'darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+basic_info %>% ggplot(aes(x=district, fill=ethnicity)) + 
+  geom_bar(position = 'fill') + 
+ scale_fill_manual(values = c( 'tan3', 'aquamarine3', 'aquamarine4', 'tan4', 'tan', 'bisque1')) +
+  theme_youth +
+  labs(
+    x = 'District',
+    y = 'Proportion'
+  ) +
+  guides(
+    fill = guide_legend(
+      title = "Ethnicity"
+    )
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=ifelse(
+                  x == 1 & fill %in% c('Mestizo/Hispanic', 'Creole') |
+                  x == 2 & fill %in% c('Mestizo/Hispanic', 'Creole') |
+                  x == 3 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Garifuna') |
+                  x == 4 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Maya') |
+                  x == 5 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Maya', 'Garifuna') |
+                  x == 6 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Maya', 'Garifuna')
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme_youthy
+
+```
+
+As seen in Table 1, the most common "highest level of education" reported were High School and Primary School. This pattern is observed across the districts with some slight variation, such as Corozal having a higher proportion of respondents with College education and Toledo having the highest number of incomplete Primary education. This can be observed in the Figure below. 
+
+```{r, education, out.width="65%", out.height="65%", fig.align='center', echo=FALSE}
+basic_info %>% ggplot(aes(x=district, fill=level_of_education)) + 
+  geom_bar(position = 'fill') + 
+  scale_fill_manual(values = c('bisque2', 'tan4', 'tan',  'aquamarine4', 'aquamarine3')) +
+  theme_youth +
+  labs(
+    x = 'District',
+    y = 'Proportion'
+  ) +
+  guides(
+    fill = guide_legend(
+      title = "Ethnicity",
+      reverse = TRUE
+    )
+  )   + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=ifelse(
+                  fill %in% c('Did not complete Primary School', 'Other'),
+                  '',
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')
+                  )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme_youthy
+```
+
+As it relates to marital status, 86% of the respondents were single and 14% were married. However and as observed in the figure below, the proportion of married youth increased by age group. 
+
+```{r, marital, out.width="65%", out.height="65%", fig.align='center', echo=FALSE}
+
+#---Marital plot
+basic_info %>% ggplot(aes(x=age_group, fill=marital_status)) + 
+  geom_bar(position = 'fill')  + 
+  scale_fill_manual(values = c('grey', primaryColor, secondaryColor)) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5), vjust=-0.5, hjust = 0.4)+
+  guides(
+    fill = guide_legend(
+      title = 'Marital Status'
+    )
+  )
+```
+
+## Key Characteristics at the Constituency Level
+```{r,gencon, echo=FALSE}
+con_tabyls('gender', 5, 'Gender by Constituency')
+```
+```{r,agecon, echo=FALSE}
+con_tabyls('age_group', 7, 'Age Groups by Constituency')
+```
+\newpage
+\blandscape
+```{r,edconp, echo=FALSE}
+con_tabyls('level_of_education', 7, 'Level of Education by Constituency')
+```
+
+```{r,ethnicitycon, echo=FALSE}
+con_tabyls('ethnicity', 8, 'Ethnicity by Constituency')
+```
+\elandscape
+\newpage
+
+```{r,marcon, echo=FALSE}
+con_tabyls('marital_status', 4, 'Marital Status by Constituency')
+```
+
+\newpage
+
+# Results and Tables
+
+## Question 6. Internet Access
+
+The first opinion question asked to the youth in the survey was related to adequare access to the internet. Youth were read the following statement:
+
+> "Young people have adequate internet access to engage in any online jobs and services"
+
+and were asked to rate the level to which they agreed with that statement on a four-point scale, ranging from "Strongly Agree" to "Strongly Disagree". 
+
+The results show that over two-thirds of the interviewed youth have a positive opinion of the access to the internet, with 17% stating that they **Strongly Agree** with the statement and 51% stating that they **Agree**. Conversely, the other one-third of youth fall on the other end of the scale. 26% **Disagree** with the statement and  6% **Strongrly Disagree**. There are some small differences when analyzing the responses by district. Notably, youth respondents in Cayo and Toledo tend to have a slightly more negative opition on adequate internet access, having higher proportions of youth who **Disagree** with the original statement. The highest proportion of youth who **Strongly Disagree** with the statement were found in the Belize District.
+
+```{r,  internetDistrict, out.width="60%", out.height="65%", fig.align='center', echo=FALSE}
+internet_district <- basic_info %>% 
+  filter(internet_access != 'missing') %>% 
+ggplot(aes(x=district, fill=internet_access)) + 
+  geom_bar(position = 'fill') + 
+#  scale_fill_brewer(palette = 'RdYlGn') +
+  scale_fill_manual(values = fourColors) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=ifelse(
+                  fill != 'missing'
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  guides(
+    fill = guide_legend(
+      title = 'Agreement'
+      
+    )
+  ) +
+  theme(
+    text = element_text(size = 16)
+  )
+
+internet_district
+```
+
+When analyzing responses by *age-group*, no pattern or difference is observed, and the distribution of responses is similar across all age groups. As seen in Figure X.
+
+```{r,  internetAge, out.width="60%", out.height="65%", fig.align='center', echo=FALSE}
+internet_age <- basic_info %>% 
+  filter(internet_access != 'missing') %>% 
+ggplot(aes(x=age_group, fill=internet_access)) + 
+  geom_bar(position = 'fill') + 
+#  scale_fill_brewer(palette = 'RdYlGn') +
+  scale_fill_manual(values = fourColors) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..],
+                label=ifelse(
+                  fill != 'missing'
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme(
+    legend.spacing.x = unit(0.2, 'cm')
+  ) +
+  guides(
+    fill = guide_legend(
+      title = 'Agreement'
+      
+    )
+  ) +
+  theme(
+    text = element_text(size = 16)
+  )
+
+internet_age
+```
+
+However, when analyzing the results by level of education, there are some patterns observed. On average, persons with a lower level of education have a more negative opinion about the adequacy of internet access. Particularly, persons who did not complete Primary School have the highest proportion of answers of **Strongly Disagree** and **Disagree**. This might point to a divide where, those who had the opportunity for a complete education feel as if the resources (including the Internet) are adequate, but those less fortunate face a different reality.
+
+```{r,  internet, out.width="60%", out.height="65%", fig.align='center', echo=FALSE}
+internet_ed <- basic_info %>% 
+  filter(internet_access != 'missing') %>% 
+ggplot(aes(x=level_of_education, fill=internet_access)) + 
+  geom_bar(position = 'fill') + 
+#  scale_fill_brewer(palette = 'RdYlGn') +
+  scale_fill_manual(values = fourColors) +
+  theme_youthx +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..],
+                label=ifelse(
+                  fill != 'missing' & fill != 'Strongly Disagree'
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme(
+    legend.spacing.x = unit(0.2, 'cm')
+  ) + coord_flip()  +
+  theme(
+    text = element_text(size = 16),
+    legend.justification = 'right'
+  ) +
+  guides(
+    fill = guide_legend(
+      title = 'Agreement'
+      
+    )
+  )
+
+internet_ed
+
+```
+
+For more fine-tuned information, the results at the constituency level are presented below.
+
+```{r,  internetCon, fig.align='center', echo=FALSE}
+con_tabyls('internet_access', 6, 'Young people have adequate internet access to engage in any online jobs and services?')
+```
+
+
+\newpage
+## Question 7. Truths
+
+The following question, question #7, sought to discover characteristics of respondents as it relates to their living situations and socio-economic status. They were read the following statement.
+
+> "Which of the following are true about you?"
+
+With the options being
+
+* I have a child
+* I am homeless
+* I have been arrested
+* I have a savings account on my name
+* I live with my parents
+* I have been in foster care, or lived in a residential facility
+* English is my first language
+* I have attended more than one highschool
+* I have been diagnose with a mental illness
+* I have low income and/or receive benefits like welfare, food
+* None of these apply to me
+
+Respondents were allowed to select all statements that applied. 
+
+At the national level, it can be seen that the most common characterstics of respondents were that they 
+
+* Lived with their parents (71%)
+* Had English as their first language (53%)
+* Had a savings account (46.3%), and
+* Had a child (28%)
+
+The least common characteristics among the respondents were that they
+
+* Had been diagnosed with a mental ilness (2%)
+* Had been in foster care (2.6%)
+* Were currently homeless (2.7%)
+
+A statistic worth noting is that at the national level, 14.5% of the youth respondents claimed to be of "Low Income" or on Welfare.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\newpage
+\blandscape
+```{r, truths, echo=F}
+#---Truth
+
+truth_set <- basic_info %>% pivot_longer(starts_with('truths'), names_to = 'truths', values_to = 'tval') %>% 
+  select(all_of(id_vars), truths, tval) 
+
+
+truth_set$truths <- fct_recode(truth_set$truths,
+                               `Have a Child`  = 'truths__1',
+                               `Is Homeless` = 'truths__2',
+                               `Been Arrested` = 'truths__3',
+                               `Have Savings` = 'truths__4',
+                               `Live with Parents` = 'truths__5',
+                               `Been in Foster Care` = 'truths__6',
+                               `English 1st Lang` = 'truths__7',
+                               `Multiple High Schools` = 'truths__8',
+                               `Diagnosed Mental Illness` = 'truths__9',
+                               `Low Income/ Wellfare`  = 'truths__10',
+                               None = 'truths__11'
+)
+
+truth_set$tval <- as.numeric(as.character(truth_set$tval))
+
+truth_set$truths <- fct_relevel(truth_set$truths,
+                               'Have a Child',
+                               'Is Homeless',
+                               'Been Arrested',
+                               'Have Savings',
+                               'Live with Parents',
+                               'Been in Foster Care',
+                               'English 1st Lang',
+                               'Multiple High Schools',
+                               'Diagnosed Mental Illness',
+                               'Low Income/ Wellfare',
+                               'None'
+                               )
+
+# #---Truth Plot
+# truth_set %>% ggplot(aes(x = district, fill = truths)) +
+#   geom_bar(position = 'dodge') 
+
+national_tabyl(truth_set, 'truths', 1, 6, '(NATIONAL) Which of the following are true about you.')
+ constituency_tabyl(truth_set, 'truths', 1, 6, '(CONSTITUENCY) Which of the following are true about you.')
+
+# 
+# constituency_tabyl(truth_set, 'truths', 1, 6, 'Which of the following are true about you.')
+# constituency_tabyl(truth_set, 'truths', 7, 12, 'Which of the following are true about you.')
+```
+
+```{r, truths2, echo=F}
+#---Truth
+
+national_tabyl(truth_set, 'truths', 7, 12, '(NATIONAL) Which of the following are true about you.')
+ constituency_tabyl(truth_set, 'truths', 7, 12, '(CONSTITUENCY) Which of the following are true about you.')
+```
+
+\elandscape
+\newpage
+
+## Question 8. Crime 
+
+Question #8 sought to uncover victimization among the youth, and thus asked each respondent whether had ever been the victim of a crime. Subsequently, for those who responded yes, the type of crime was recorded across 4 differentcategories. The first question was:
+
+> "Have you been a victim of crime?"
+
+At the national level, it can be seen that the around 10% of all respondents reported being victims of a crime. They highest incidences were reported in Belize (13.3%) and Stann Creek (10.8%). The lowset incidences were observed in Toledo (7.9%) and Corozal (7.2%).
+
+
+The constituencies that reported the highest incidence of crime were all in Belize City:
+
+* Pickstock (24.1%)
+* Fort George (20%)
+* Collett (19.5%)
+* Mesopotamia (19.1%)
+* Lake independence (18.6%)
+
+
+For youth who responded affirmatively, they were then asked,
+
+> "What type of crime were you a victim of?"
+
+With the options being
+
+* Sexual Offense
+* I am homeless
+* Extortion
+* Robbery
+* Gang violence
+* Not stated
+
+Respondents were allowed to select all choices that applied. 
+
+At the national level, the most common crime suffered was Robbery, reported by 4.3% of ALL respondents. Subsequently, Gang Violence (2.6%) and Sexual Offense (1.7%) were also reported. 
+
+
+The full results are presented at the national and constituency levels in the following tables.
+
+```{r, crime1, echo=F}
+general_tabylsn(foreignSet, 'crime_victim', 1, 3, '(NATIONAL) Have you ever been victim of a crime?')
+general_tabyls(foreignSet, 'crime_victim', 1, 3, '(CONSTITUENCY) Have you ever been victim of a crime?')
+```
+
+```{r, crime2, echo=F}
+#---Crime
+
+crime_set <- basic_info %>% pivot_longer(starts_with('type_of_crime'), names_to = 'crime', values_to = 'tval') %>% 
+  select(all_of(id_vars), crime, tval)
+
+crime_set$crime <- fct_recode(crime_set$crime,
+                               `Sexual Offense`  = 'type_of_crime__1',
+                               `Extortion` = 'type_of_crime__2',
+                               `Robbery` = 'type_of_crime__3',
+                               `Gang violence` = 'type_of_crime__4',
+                               `Not Stated` = 'type_of_crime__99'
+                               )
+
+crime_set$tval <- as.numeric(as.character(crime_set$tval))
+
+crime_set$crime <- fct_relevel(crime_set$crime,
+                               'Sexual Offense',
+                               'Extortion',
+                               'Robbery',
+                               'Gang violence',
+                               'Not Stated'
+                               )
+
+# #---Truth Plot
+# truth_set %>% ggplot(aes(x = district, fill = truths)) +
+#   geom_bar(position = 'dodge') 
+national_tabyl(crime_set, 'crime', 1, 6, '(NATIONAL) What type of crime were you a victim of?')
+constituency_tabyl(crime_set, 'crime', 1, 6, '(CONSTITUENCY) What type of crime were you a victim of?')
+```
+
+\newpage
+## Question 9. Disability 
+
+Question #9 sought to uncover the proportion of youth who had any disabilities. The first question was:
+
+> "Do you have any disability?"
+
+At the national level, it can be seen that the around 3% of all respondents reported having a disability. They highest incidences were reported in Orange Walk (6.4%) and Stann Creek (3.2%). The lowset incidences were observed in Belize (2.1%) and Corozal (2.4%).
+
+Among constituencies, those that reported the highest incidences of dibality include:
+
+* Orange Walk East (10.1%)
+* Orange Walk Central (7.8%)
+* Albert (7%)
+
+For youth who responded affirmatively, they were then asked,
+
+> "What type of disability do you have?"
+
+With the options being
+
+* Vision Impairment
+* Physical Disability
+* Autism Spectrum Disorder
+* Intellectual Disability
+* Hearing Impairment
+* Other
+* None
+
+Respondents were allowed to select all choices that applied. 
+
+At the national level, the most common disability was vision impairment, reported by 1.6% of ALL respondents. 
+
+The full results are presented at the national and constituency levels in the following tables.
+
+```{r, disability1, echo=F}
+general_tabylsn(foreignSet, 'disability', 1, 3, '(NATIONAL) Do you have any disability?')
+con_tabyls('disability', 4, '(CONSTITUENCY) Do you have any disability?')
+
+```
+\blandscape
+```{r, disability2, echo=F}
+#---disability
+
+disability_set <- basic_info %>% pivot_longer(starts_with('disability_type'), 
+                                              names_to = 'disabilities', 
+                                              values_to = 'tval') %>% 
+  select(all_of(id_vars), disabilities, tval) 
+
+disability_set$disabilities <- fct_recode(disability_set$disabilities,
+                               `Vision Impairment`  = 'disability_type__1',
+                               `Physical` = 'disability_type__2',
+                               `Autism Spectrum` = 'disability_type__3',
+                               `Intellectual` = 'disability_type__4',
+                               `Hearing Impairment` = 'disability_type__5',
+                               `Other` = 'disability_type__88',
+                               `Not Stated` = 'disability_type__99'
+                               )
+disability_set$tval <- as.numeric(as.character(disability_set$tval))
+
+disability_set$disabilities <- fct_relevel(disability_set$disabilities,
+                               'Vision Impairment',
+                               'Physical',
+                               'Autism Spectrum',
+                               'Intellectual',
+                               'Hearing Impairment',
+                               'Other',
+                               'Not Stated'
+                               )
+
+# #---Truth Plot
+# truth_set %>% ggplot(aes(x = district, fill = truths)) +
+#   geom_bar(position = 'dodge') 
+
+national_tabyl(disability_set, 'disabilities', 1, 8, '(NATIONAL) What type of disability do you have?')
+constituency_tabyl(disability_set, 'disabilities', 1, 8, '(CONSTITUENCY) What type of disability do you have?')
+```
+\elandscape
+
+\newpage
+
+## Question 10. Housing
+
+Question #10 sought to uncover youth needs pertaining to housing. The first question was:
+
+> "What do you consider to be your MOST significant concern regarding housing?"
+
+With the options being
+
+* Land Accessibility
+* Affordability
+* Accessing a Mortgage
+* Paying a Mortgage
+* Poor Housing Conditions
+* Other
+* None
+* Not Stated
+
+Respondents were allowed to select ONE option.
+
+At the national level, the need that was commonly reported as the MOST important concern was land accessibility, reported as the most important concern for 54% of the youth respondents. In second place was "affordability" reported by over a quarter of respondents (26.4%) 
+
+The full results are presented at the national and constituency levels in the following tables.
+
+
+
+\blandscape
+```{r,housingcon, echo=FALSE}
+
+foreignSet$housing <- fct_recode(foreignSet$housing,
+                               `Land`  = 'Land Accessibility',
+                               `Affordability` = 'Affordability',
+                               `Access Mortgage` = 'Accessing a Mortgage',
+                               `Pay Mortgage` = 'Paying a Mortgage',
+                               `Poor Housing` = 'Poor Housing Conditions'
+                               )
+
+
+foreignSet$housing <- fct_relevel(foreignSet$housing,
+                               'Land',
+                               'Affordability',
+                               'Access Mortgage',
+                               'Pay Mortgage',
+                               'Poor Housing',
+                               'None',
+                               'Other',
+                               'Not Stated'
+                               )
+
+general_tabylsn(foreignSet, 'housing', 1,10, 'What do you consider to be your MOST significant concern regarding housing?')
+general_tabyls(foreignSet, 'housing', 1,10, 'What do you consider to be your MOST significant concern regarding housing?')
+```
+\elandscape
+
+
+
+\newpage
+
+## Question 11. Employment
+
+Question #11 sought to uncover youth needs pertaining to employment The first question was:
+
+> "What do you consider to be your MOST significant concern regarding employment?"
+
+With the options being
+
+* Opportunity
+* Startup Funds/Financing
+* Job Preparedness
+* Income
+* Other
+* None
+* Not Stated
+
+Respondents were allowed to select ONE option.
+
+At the national level, the need that was commonly reported as the MOST important concern was opportunity, reported as the most important concern for 55.2% of the youth respondents. In second place was "job preparedness" reported by almost a fifth of respondents (19.4%) 
+
+The full results are presented at the national and constituency levels in the following tables.
+
+
+
+\blandscape
+```{r,employmentcon, echo=FALSE}
+
+foreignSet$employment <- fct_relevel(foreignSet$employment,
+                               'Opportunity',
+                               'Startup Funds/Financing',
+                               'Job Preparedness',
+                               'Income',
+                               'None',
+                               'Other',
+                               'Not Stated'
+                               )
+
+general_tabylsn(foreignSet, 'employment', 1,8, '(NATIONAL) What do you consider to be your MOST significant concern regarding employment?')
+general_tabyls(foreignSet, 'employment', 1,8, '(CONSTITUENCY) What do you consider to be your MOST significant concern regarding employment?')
+```
+\elandscape
+
+
+\newpage
+## Question 12. Sports
+Question #12 sought to uncover youth needs pertaining to sports The first question was:
+
+> "What do you consider to be your MOST significant concern regarding sports?"
+
+With the options being
+
+* Accessibility to Sporting Facility
+* Safe Space
+* Sporting Scholarship
+* Professionalism
+* Other
+* None
+* Not Stated
+
+Respondents were allowed to select ONE option.
+
+At the national level, there were three commonly reported needs. Access to a sporting facility was the most important need for 31% of the respondents, while sports scholarship (26%) and "safe space" for sports (25%) were also the most important needs each for around a quarter of respondents.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\blandscape
+```{r,sportscon, echo=FALSE}
+
+foreignSet$sports <- fct_recode(foreignSet$sports,
+                               `Accessibility to Facilities`  = 'Accessibility to Sporting Facility',
+                               `Safe Space` = 'Safe Space',
+                               `Scholarship` = 'Sporting Scholarship'
+                               )
+
+
+foreignSet$sports <- fct_relevel(foreignSet$sports,
+                               'Accessibility to Facilities',
+                               'Safe Space',
+                               'Scholarship',
+                               'Professionalism',
+                               'None',
+                               'Other',
+                               'Not Stated'
+                               )
+
+general_tabylsn(foreignSet, 'sports', 1,8, '(NATIONAL) What do you consider to be your MOST significant concern regarding sports?')
+general_tabyls(foreignSet, 'sports', 1,8, '(CONSTITUENCY) What do you consider to be your MOST significant concern regarding sports?')
+```
+
+\elandscape
+
+\newpage
+## Question 13. Youth Service Access 
+
+Question #13 sought to uncover youth needs pertaining to youth service access The first question was:
+
+> "What do you consider to be your MOST significant concern regarding youth service access?"
+
+With the options being
+
+* Counselling
+* Sex Education Training
+* Drug Awarness
+* Job Preparedness Training
+* Microsoft Suite and Coding
+* Skill Training
+* Animal Husbandry
+* Other
+* None
+* Not Stated
+
+Respondents were allowed to select ONE option.
+
+At the national level, there youth access need that was the MOST important for respondents was counselling, with 24.5% of the respondents selecting this option, while job training (24.3%) was very close behind along with skill training (22%). These last two needs are related and together they can be seen as "employment" and "training" related needs.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\blandscape
+
+```{r, servicescon, echo=FALSE}
+
+foreignSet$service_access <- fct_recode(foreignSet$service_access,
+                               `Sex Ed` = 'Sex Education Training',
+                               `Drug Awarness` = 'Drug Awarness',
+                               `Job Training` = 'Job Preparedness Training',
+                               `Microsoft Coding` = 'Microsoft Suite and Coding'
+                               )
+
+
+foreignSet$service_access <- fct_relevel(foreignSet$service_access,
+                               'Counselling',
+                               'Sex Ed',
+                               'Drug Awarness',
+                               'Job Training',
+                               'Microsoft Coding',
+                               'Skill Training',
+                               'Animal Husbandry',
+                               'None',
+                               'Other',
+                               'Not Stated'
+                               )
+
+general_tabylsn(foreignSet, 'service_access', 1,10, '(NATIONAL) What do you consider to be your MOST significant concern regarding service access?')
+
+general_tabyls(foreignSet, 'service_access', 1,10, '(CONSTITUENCY) What do you consider to be your MOST significant concern regarding service access?')
+
+```
+
+\elandscape
+
+\newpage
+## Question 14. Youth Service Needs Not Captured
+
+Question 14 was an open-ended question, intended to capture any other youth-service related needs that the youths have and that were not captured in any of the previous questions. The question was:
+
+> "Is there any other areas of needs that we did not mention in previous questions?"
+
+Analyzing the responses is difficult due to the open-ended nature of the question and the way in which the answers were captured and recorded. However, the R language provides some automated ways to parse this text,  such as finding the most commonly mentioned terms and creating word-clouds. However, differences in spelling (misspellings, etc) and other factors that happen during the data antry process will affect the accuracy of this text analysis. 
+
+A wordcloud of the most common individual words given as a response question 14 is presented below.
+
+```{r, text14, echo=FALSE}
+
+pat <- stringr::regex("no$|nope|\\bto\\b|\\bthe\\b|none|nothing|nome|##N/A##|\\ba\\b|\\bin\\b|\\bfor\\b|\\bit\\b|\\bof\\b|\\bdo\\b|\\bthey\\b|\\bthem\\b|\\bis\\b|\\bwith\\b|\\bso\\b|\\bi\\b|\\bin\\b|\\band\\b|\\balso\\b|\\bon\\b|\\bbecause\\b|\\bor\\b|\\bhas\\b|\\bim\\b|\\bwe\\b|\\\bthat\\b|\\bneed\\b|\\bwho\\b|\\bare\\b|\\babout\\b", ignore_case = T)
+
+foreignSet$needs_not_mentioned <- stringr::str_replace_all(foreignSet$needs_not_mentioned, pat, "") 
+
+foreignSet %>% 
+  tidytext::unnest_tokens(
+    word, needs_not_mentioned
+  ) %>% select(
+    word
+  ) %>% 
+  anti_join(stop_words) %>%
+  count(word, sort = TRUE) %>% as.data.frame() %>% 
+  filter(!(word %in% c('to', 'the', 'a', 'an', 'nope', 'for', 'in', 'none', 'nome'))) %>% 
+  with(wordcloud(word, n, max.words = 100))
+
+```
+
+\newpage
+
+We now present a table of n-grams. An **n-gram** is a combination of words that tends to appear together or close to each other in text. For example a two-word n-gram is a two-word combination that is commonly in the same sentence or vicinity. For the present data, a 3-word n-gram was discovered to be the most appropriate. A table with the 15 most common 3-word combinations given as an answer to question 14 is presented below. *Note*: spelling mistakes derive from data capture.
+```{r, wordc1, echo=F}
+
+bigram <- foreignSet %>% 
+  tidytext::unnest_tokens(
+    words, needs_not_mentioned, token = "ngrams", n = 3
+  ) %>% select(
+    words
+  ) %>% 
+  count(words, sort = TRUE) %>% 
+  filter(words != 'NA', !is.na(words)) %>% 
+  select(Words = words, Count = n)
+
+bigram %>% head(15) %>% kbl(caption = "Most common 3-word n-grams") |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position")
+```
+
+
+\newpage
+## Question 15. Youth Service Awareness
+
+
+Question #15 sought to uncover the proportion of youth who were aware of the youth services being offered in their area.
+
+> "Are you aware of any youth services in your area"
+
+At the national level, around 17% of youth respondents reported being aware of the youth services in their area. The youth in Corozal (22.4%) and Toledo (26.9%) were the most aware, while those in Belize (12.8%) and Cayo (13.7%) were the least aware.
+
+For youth who responded affirmatively, they were then asked,
+
+> "What is the level of awareness you have with the availability of youth services in your area? Are you.."
+
+With the options being
+
+* Not Aware at all
+* Aware
+* Slightly Aware
+* Moderately Aware
+* Very Aware
+* Extremely Aware
+
+Respondents were allowed to select only one choice. 
+
+At the national level, the most common levels of awareness were "Aware" and "Slightly Aware" at around 40 and 31 percent, respectively.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+
+```{r, yservicescon1, echo=FALSE}
+
+general_tabylsn(foreignSet, 'youth_services', 1,4, '(NATIONAL) Are you aware of any youth services in your area?')
+general_tabyls(foreignSet, 'youth_services', 1,4, '(CONSTITUENCY) Are you aware of any youth services in your area?')
+
+```
+
+\blandscape
+
+```{r, yservicescon2, echo=FALSE}
+
+general_tabylsn(foreignSet, 'youth_service_awareness', 1,8, '(NATIONAL) Are you aware of any youth services in your area?')
+general_tabyls(foreignSet, 'youth_service_awareness', 1,8, '(CONSTITUENCY) Are you aware of any youth services in your area?')
+
+```
+\elandscape
+
+
+
+\newpage
+## Question 16. Participated in Sexual and Reproductive Health Services
+
+Question #16 sought to uncover the proportion of youth who had engaged or participated in SRH services. The base question was: 
+
+> "Have you ever participated in any of the following sexual and reproductive health services?"
+
+However, this question was broken down into four subsections, where each respondent answered Yes/No to participating in SHR services related to
+
+* Health fairs
+* Workshop
+* Sexual health an reproductive training
+* Sexual health an reproductive counselling
+
+At the national level, about 19% of respondent youth reported having participated in SRH health fairs, and about 15% reported having participated in SRH workshops.Only around 10% reported ever receiving any Sexual Health and Reproductive training. 
+
+The full results are presented at the national and constituency levels in the following tables.
+
+
+```{r, participated_health_fairs, echo=FALSE}
+
+general_tabylsn(foreignSet, 'participated_health_fairs', 1,4, '(NATIONAL) A. Health Fairs')
+general_tabyls(foreignSet, 'participated_health_fairs', 1,4, '(CONSTITUENCY) A. Health Fairs')
+
+```
+
+
+```{r, participated_workshop, echo=FALSE}
+
+general_tabylsn(foreignSet, 'participated_workshop', 1,4, '(NATIONAL) B. Workshops')
+general_tabyls(foreignSet, 'participated_workshop', 1,4, '(CONSTITUENCY) B. Workshops')
+
+```
+
+
+```{r, participated_shr_traning, echo=FALSE}
+
+general_tabylsn(foreignSet, 'participated_shr_traning', 1,4, '(NATIONAL) C. Sexual Health and Reproductive Traning')
+general_tabyls(foreignSet, 'participated_shr_traning', 1,4, '(CONSTITUENCY) C. Sexual Health and Reproductive Traning')
+
+```
+
+
+```{r, participated_shr_counselling, echo=FALSE}
+
+general_tabylsn(foreignSet, 'participated_shr_counselling', 1,4, '(NATIONAL) D. Sexual Health and Reproductive Counselling')
+general_tabyls(foreignSet, 'participated_shr_counselling', 1,4, '(CONSTITUENCY) D. Sexual Health and Reproductive Counselling')
+
+```
+
+
+\newpage
+## Question 17. Received Sexual and Reproductive Health Services
+
+Question #17 sought to uncover the proportion of youth who had received particular SRH services. The base question was: 
+
+> "Have you ever RECEIVED any of the following sexual and reproductive health services?"
+
+However, this question was broken down into four subsections, where each respondent answered Yes/No to participating in SHR services related to
+
+* Contraceptives
+* STD Screening
+* Family Planning
+* HIV Testing or Information?
+
+At the national level, about 38% of respondent youth reported having received HIV testing or information, while 31% had received contraceptive services and around 28% had received family planning services. This last statistic is interesting as around 33% of respondents reported having a child, so it is possible that the majority of those with a child had received family planning services.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+
+```{r, received_contraceptives, echo=FALSE}
+
+general_tabylsn(foreignSet, 'received_contraceptives', 1,4, '(NATIONAL) A. Contraceptives')
+general_tabyls(foreignSet, 'received_contraceptives', 1,4, '(CONSTITUENCY) A. Contraceptives')
+
+```
+
+```{r, received_std_screening, echo=FALSE}
+
+general_tabylsn(foreignSet, 'received_std_screening', 1,4, '(NATIONAL) B.  STD Screening')
+general_tabyls(foreignSet, 'received_std_screening', 1,4, '(CONSTITUENCY) B.  STD Screening')
+
+```
+
+```{r, received_hiv_test, echo=FALSE}
+
+general_tabylsn(foreignSet, 'received_hiv_test', 1,4, '(NATIONAL) C. HIV Screening')
+general_tabyls(foreignSet, 'received_hiv_test', 1,4, '(CONSTITUENCY) C. HIV Screening')
+
+```
+
+```{r, received_family_planning, echo=FALSE}
+
+general_tabylsn(foreignSet, 'received_family_planning', 1,4, '(NATIONAL) D. Family Planning')
+general_tabyls(foreignSet, 'received_family_planning', 1,4, '(CONSTITUENCY) D. Family Planning')
+
+```
+\newpage
+## Question 18. Youth Service Needs Not Captured
+
+Question 18 was an open-ended question, intended to capture any other youth-service related needs that the youths have and that were not captured in any of the previous questions. The question was:
+
+> "Is there anything you would like the Ministry of Youth, Sports and E-Governance planning team to know about your experiences in regards to having access to youth services or youth needs in Belize?"
+
+Analyzing the responses is difficult due to the open-ended nature of the question and the way in which the answers were captured and recorded. However, the R language provides some automated ways to parse this text,  such as finding the most commonly mentioned terms and creating word-clouds. However, differences in spelling (misspellings, etc) and other factors that happen during the data antry process will affect the accuracy of this text analysis. 
+
+A wordcloud of the most common individual words given as a response question 18 is presented below.
+
+```{r, text18, echo=FALSE}
+
+pat <- stringr::regex("no$|nope|\\bto\\b|\\bthe\\b|none|nothing|nome|##N/A##|\\ba\\b|\\bin\\b|\\bfor\\b|\\bit\\b|\\bof\\b|\\bdo\\b|\\bthey\\b|\\bthem\\b|\\bis\\b|\\bwith\\b|\\bso\\b|\\bi\\b|\\bin\\b|\\band\\b|\\balso\\b|\\bon\\b|\\bbecause\\b|\\bor\\b|\\bhas\\b|\\bim\\b|\\bwe\\b|\\\bthat\\b|\\bneed\\b|\\bwho\\b|\\bare\\b|\\babout\\b", ignore_case = T)
+
+foreignSet$exprience_in_youth_service <- stringr::str_replace_all(foreignSet$exprience_in_youth_service, pat, "") 
+
+foreignSet %>% 
+  tidytext::unnest_tokens(
+    word, exprience_in_youth_service
+  ) %>% select(
+    word
+  ) %>% 
+  anti_join(stop_words) %>%
+  count(word, sort = TRUE) %>% as.data.frame() %>% 
+  filter(!(word %in% c('to', 'the', 'a', 'an', 'nope', 'for', 'in', 'none', 'nome'))) %>% 
+  with(wordcloud(word, n, max.words = 100))
+
+```
+
+\newpage
+
+We now present a table of n-grams. An **n-gram** is a combination of words that tends to appear together or close to each other in text. For example a two-word n-gram is a two-word combination that is commonly in the same sentence or vicinity. For the present data, a 3-word n-gram was discovered to be the most appropriate. A table with the 30 most common 3-word combinations given as an answer to question 18 is presented below. *Note*: spelling mistakes derive from data capture.
+```{r, wordc18, echo=F}
+
+bigram <- foreignSet %>% 
+  tidytext::unnest_tokens(
+    words, exprience_in_youth_service, token = "ngrams", n = 3
+  ) %>% select(
+    words
+  ) %>% 
+  count(words, sort = TRUE) %>% 
+  filter(words != 'NA', !is.na(words)) %>% 
+  select(Words = words, Count = n)
+
+bigram %>% head(30) %>% kbl(caption = "Most common 3-word n-grams") |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position")
+```
+
+
+\newpage
+
+## Question 19. COVID-19 foods
+
+Question #19 sought to uncover the types of foods that the youth were consuming during the COVID-19 pandemic. The question was
+
+> "During COVID-19, what type/s of food are you eating?"
+
+The options were:
+
+* Fruits and Vegetables
+* Sugary Drinks/Snacks and sweets
+* Carbohydrates, such as bread, rice, ramen
+* Dairy, such as cheese or milk.
+* Meats and/or fish
+* Fast foods
+* Water
+* Other
+
+Respondents were allowed to select all statements that applied. 
+
+At the national level, it can be seen that the most common foods consumed by respondents were:
+
+* Water (94%)
+* Carbs (92%)
+* Meats and fish (88%)
+* Fruits and Veg (86%)
+
+Fast foods and sugary drinks were consumed by about 73% of respondents.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\blandscape
+```{r, covidfoods, echo=F}
+#---Truth
+
+covid_set <- foreignSet %>% pivot_longer(starts_with('covid_foods'), names_to = 'covid_food', values_to = 'tval') %>% 
+  select(all_of(id_vars), covid_food, tval) 
+
+covid_set$covid_food <- fct_recode(covid_set$covid_food,
+                               `Fruit & Veg`  = 'covid_foods__1',
+                               `Sugary Drinks & Snacks` = 'covid_foods__2',
+                               Carbs = 'covid_foods__3',
+                               Dairy = 'covid_foods__4',
+                               `Meats & Fish` = 'covid_foods__5',
+                               `Fast Foods` = 'covid_foods__6',
+                               Water = 'covid_foods__7',
+                               Other = 'covid_foods__88'
+                               )
+
+covid_set$tval <- as.numeric(as.character(covid_set$tval))
+
+covid_set$covid_food <- fct_relevel(covid_set$covid_food,
+                               'Fruit & Veg',
+                               'Sugary Drinks & Snacks',
+                               'Carbs',
+                                'Dairy',
+                               'Meats & Fish',
+                               'Fast Foods',
+                               'Water',
+                               'Other'
+                               )
+
+# #---covid Plot
+# covid_set %>% ggplot(aes(x = district, fill = covids)) +
+#   geom_bar(position = 'dodge') 
+
+national_tabyl(covid_set, 'covid_food', 1, 9, 'During COVID-19, what type/s of food are you eating?')
+constituency_tabyl(covid_set, 'covid_food', 1, 9, 'During COVID-19, what type/s of food are you eating?')
+```
+\elandscape
+
+
+\newpage
+## Question 21. Worried about COVID
+
+Question #21 sought to uncover the extent to which the youth were concerned about the COvid-19 pandemic. The question was
+
+> "How worried are you about the impact of coronavirus on you personally?"
+
+The options were:
+
+* Extremely Worried
+* Very Worried
+* Somewhat Worried
+* Not so Worried
+* Not Worried At All
+
+Respondents were allowed to select ONE response.
+
+At the national level, almsot three-quarters of respondents were AT LEAST somewhat worried about COVID-19, while the remaining 25% were not so worried or not at all worried.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\blandscape
+```{r, covid_worried, echo=FALSE}
+
+general_tabylsn(foreignSet, 'covid_worried', 1,6, '(NATIONAL) How worried are you about the impact of coronavirus on you personally?')
+general_tabyls(foreignSet, 'covid_worried', 1,6, '(CONSTITUENCY) How worried are you about the impact of coronavirus on you personally?')
+
+```
+\elandscape
+
+
+## Question 22. Concerns
+
+Question #22 sought to uncover the areas in which the respondent youth were experiencing concenrs. The question was
+
+> "Are you experiencing any concerns in these areas?"
+
+The options were:
+
+* Increased Sadness
+* Anxiety
+* Anger or Fustration
+* Depression
+* Stress
+* Fear
+* Difficulty Sleeping
+* Increased Violence
+* Increased Substance Abuse
+* Other
+
+Respondents were allowed to select all statements that applied. 
+
+At the national level, it can be seen that the most common concerns reported by respondents were:
+
+* Stress (49%)
+* Anger or frustration (36%)
+* Anxiety (30%)
+
+In addition, around a quarter of respondents also reported dealing with concerns about depression.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\blandscape
+```{r, concern1, echo=F}
+#---Truth
+
+concern_set <- foreignSet %>% pivot_longer(starts_with('concerns'), names_to = 'concern', values_to = 'tval') %>% 
+  select(all_of(id_vars), concern, tval) 
+
+concern_set$concern <- fct_recode(concern_set$concern,
+                               `Increased Sadness`  = 'concerns__1',
+                               `Anxiety` = 'concerns__2',
+                               `Anger or Fustration` = 'concerns__3',
+                               Depression = 'concerns__4',
+                               `Stress` = 'concerns__5',
+                               `Fear` = 'concerns__6',
+                               `Difficulty Sleeping` = 'concerns__7',
+                               `Increased Violence` = 'concerns__8',
+                               `Increased Substance Abuse` = 'concerns__9',
+                               Other = 'concerns__88',
+                               `Not Stated` = 'concerns__99'
+                               )
+
+concern_set$tval <- as.numeric(as.character(concern_set$tval))
+
+concern_set$concern <- fct_relevel(concern_set$concern,
+                               'Increased Sadness',
+                               'Anxiety',
+                               'Anger or Fustration',
+                               'Depression',
+                               'Stress',
+                               'Fear',
+                               'Difficulty Sleeping',
+                               'Increased Violence',
+                               'Increased Substance Abuse',
+                               'Other',
+                               'Not Stated'
+                               )
+
+# #---covid Plot
+# concern_set %>% ggplot(aes(x = district, fill = covids)) +
+#   geom_bar(position = 'dodge') 
+
+national_tabyl(concern_set, 'concern', 1, 7, '(NATIONAL) Are you experiencing any concerns in these areas?')
+national_tabyl(concern_set, 'concern', 8, 12, '(NATIONAL) Are you experiencing any concerns in these areas?')
+
+constituency_tabyl(concern_set, 'concern', 1, 7, '(CONSTITUENCY) Are you experiencing any concerns in these areas?')
+constituency_tabyl(concern_set, 'concern', 8, 12, '(CONSTITUENCY) Are you experiencing any concerns in these areas?')
+```
+
+
+\elandscape
+\newpage
+## Question 23. Mental Health Support
+
+
+Question #23 sought to uncover whether the youth respondents had access to any mental health service in their area. The question was
+
+> "Is mental health support offered in your community?"
+
+The options were:
+
+* Yes
+* No
+* Don't know
+
+Respondents were allowed to select ONE response.
+
+At the national level, only 10% of respondents reported having mental health support services in their area. However, almost a third (32%) of all youth respondents simply did not know if these were even available.
+
+The full results are presented at the national and constituency levels in the following tables.
+
+```{r, support, echo=FALSE}
+
+general_tabylsn(foreignSet, 'support', 1,4, '(NATIONAL) Is mental health support offered in your community?')
+general_tabyls(foreignSet, 'support', 1,4, '(CONSTITUENCY) Is mental health support offered in your community?')
+
+```
+
+\newpage
+## Question 24. Psycho/social support
+
+
+Question #24 sought to uncover the sources of psychosocial support for the youth respondents. The base question was: 
+
+> "Are you getting any psycho/social support from any of the following persons?"
+
+However, this question was broken down into five subsections, where each respondent answered Yes/No to receiving psucho-social support from
+
+* School Counselor
+* Community Counselor
+* Health Worker
+* School Teacher
+* Youth Counselor
+
+At the national level, only a small percentage reported receiving any type of psycho-social support at all. The most common sources of support were school teachers (12%) and school counsellors (9%). Only around 5% reported receiving support from other sources, such as youth and community counsellors. 
+
+The full results are presented at the national and constituency levels in the following tables.
+
+```{r, support_school_counselor, echo=FALSE}
+
+general_tabylsn(foreignSet, 'support_school_counselor', 1,4, '(NATIONAL) A. Are you getting any psycho/social support from School Counsellor?')
+general_tabyls(foreignSet, 'support_school_counselor', 1,4, '(CONSTITUENCY) A. Are you getting any psycho/social support from School Counsellor?')
+general_tabylsn(foreignSet, 'support_community_counselor', 1,4, '(NATIONAL) B. Are you getting any psycho/social support from  Community Counsellor?')
+general_tabyls(foreignSet, 'support_community_counselor', 1,4, '(CONSTITUENCY) B. Are you getting any psycho/social support from  Community Counsellor?')
+general_tabylsn(foreignSet, 'support_health_worker', 1,4, '(NATIONAL) C. Are you getting any psycho/social support from  Health Worker?')
+general_tabyls(foreignSet, 'support_health_worker', 1,4, '(CONSTITUENCY) C. Are you getting any psycho/social support from  Health Worker?')
+general_tabylsn(foreignSet, 'support_teacher', 1,4, '(NATIONAL) D. Are you getting any psycho/social support from  School Teacher?')
+general_tabyls(foreignSet, 'support_teacher', 1,4, '(CONSTITUENCY) D. Are you getting any psycho/social support from  School Teacher?')
+general_tabylsn(foreignSet, 'support_youth_counselor', 1,4, '(NATIONAL) E. Are you getting any psycho/social support from  Youth Counsellor?')
+general_tabyls(foreignSet, 'support_youth_counselor', 1,4, '(CONSTITUENCY) E. Are you getting any psycho/social support from  Youth Counsellor?')
+
+```
+\newpage
+## Question 25. Counseling support services
+
+Question #25 sought to uncover the areas in which the respondent youth required counselling support services. The question was
+
+> "Are you experiencing any concerns in these areas?"
+
+The options were:
+
+* Grief and Loss
+* Trauma
+* Family Support
+* Abuse/Violence
+* Counselling Hotline
+* Personal Development
+* Relationship
+* Physical Health
+* Stress Managment
+* Academics
+* HIV/AIDS
+* Suicidal Thoughts
+* Other
+
+Respondents were allowed to select all statements that applied. 
+
+At the national level, it can be seen that the most common areas of needed support reported by respondents were:
+
+* Family Support (64%)
+* Academics (47%)
+* Stress Management (46%)
+* Violence (45%)
+
+**In addition, over a third of respondents reported needed counselling services relating to suicidal thoughts.**
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\blandscape
+```{r, help_needed, echo=F}
+#---Truth
+
+help_needed_set <- foreignSet %>% pivot_longer(starts_with('help_needed'), names_to = 'help', values_to = 'tval') %>% 
+  select(all_of(id_vars), help, tval) 
+
+help_needed_set$help <- fct_recode(help_needed_set$help,
+                               `Grief and Loss`  = 'help_needed__1',
+                               `Trauma` = 'help_needed__2',
+                               `Family Support` = 'help_needed__3',
+                               `Violence` = 'help_needed__4',
+                               `Counselling` = 'help_needed__5',
+                               `Personal Development` = 'help_needed__6',
+                               `Relationship` = 'help_needed__7',
+                               `Physical Health` = 'help_needed__8',
+                               `Stress Managment` = 'help_needed__9',
+                               `Academics` = 'help_needed__10',
+                               `HIV/AIDS` = 'help_needed__11',
+                               `Suicidal Thoughts` = 'help_needed__12',
+                                Other = 'help_needed__88',
+                               `Not Stated` = 'help_needed__99'
+                               )
+help_needed_set$tval <- as.numeric(as.character(help_needed_set$tval))
+
+help_needed_set$help <- fct_relevel(help_needed_set$help,
+                               'Grief and Loss',
+                               'Trauma',
+                               'Family Support',
+                               'Violence',
+                               'Counselling',
+                               'Personal Development',
+                               'Relationship',
+                               'Physical Health',
+                               'Stress Managment',
+                               'Academics',
+                               'HIV/AIDS',
+                               'Suicidal Thoughts',
+                               'Other',
+                               'Not Stated'
+                               )
+
+# #---covid Plot
+# help_needed_set %>% ggplot(aes(x = district, fill = covids)) +
+#   geom_bar(position = 'dodge') 
+
+national_tabyl(help_needed_set, 'help', 1, 8, 'Counseling Areas Needs 1')
+national_tabyl(help_needed_set, 'help', 9, 15, 'Counseling Areas Needs 2')
+
+constituency_tabyl(help_needed_set, 'help', 1, 8, 'Counseling Areas Needs 1')
+constituency_tabyl(help_needed_set, 'help', 9, 15, 'Counseling Areas Needs 2')
+```
+\elandscape
+
+\newpage
+## Questions 26 - 28. Counselling hotline
+
+Question #26 to #28 sought to reveal if the respondent youth would utilize youth and counselling services if these were available in their communities. The base questions were: 
+
+> "26. If you had access to a counselling hotline, would you use it?"
+
+> "27. If you had a need for counselling, would you access a youth-friendly counselling center in your community?"
+
+> "28. Would you encourage someone in need of counselling to access this youth- friendly counselling center?"
+
+At the national level, over three-quarters of respondents stated that they *would* use a counselling hotline; over four-fifths stated that would *would* access a youth-friendly counselling center in their community; and, over 91% stated that they *would* encourage someone in need to use these resources if they were available.
+
+The full results are presented at the national and constituency levels in the following tables.
+```{r, counselling_hotline, echo=FALSE}
+
+general_tabylsn(foreignSet, 'counselling_hotline', 1,4, '(NATIONAL) If you had access to a counselling hotline, would you use it?')
+general_tabyls(foreignSet, 'counselling_hotline', 1,4, '(CONSTITUENCY) If you had access to a counselling hotline, would you use it?')
+
+```
+
+## Question 27. Youth-friendly counselling center
+```{r, counselling_access, echo=FALSE}
+
+general_tabylsn(foreignSet, 'counselling_access', 1,4, '(NATIONAL) If you had a need for counselling, would you access a youth-friendly counselling center in your community?')
+general_tabyls(foreignSet, 'counselling_access', 1,4, '(CONSTITUENCY) If you had a need for counselling, would you access a youth-friendly counselling center in your community?')
+
+```
+
+## Question 28. Encourage counselling
+```{r, encourage_counseling, echo=FALSE}
+
+general_tabylsn(foreignSet, 'encourage_counseling', 1,4, '(NATIONAL) Would you encourage someone in need of counselling to access this youth-friendly counselling center?')
+general_tabyls(foreignSet, 'encourage_counseling', 1,4, '(CONSTITUENCY) Would you encourage someone in need of counselling to access this youth-friendly counselling center?')
+
+```
+\newpage
+## Question 29. Suggestions for assistance
+
+Question 29 was an open-ended question, intended to capture any other youth-service related needs that the youths have and that were not captured in any of the previous questions. The question was:
+
+> "Do you have any other suggestions for assistance that will allow youths to cope with their experiences easier?"
+
+Analyzing the responses is difficult due to the open-ended nature of the question and the way in which the answers were captured and recorded. However, the R language provides some automated ways to parse this text,  such as finding the most commonly mentioned terms and creating word-clouds. However, differences in spelling (misspellings, etc) and other factors that happen during the data antry process will affect the accuracy of this text analysis. 
+
+A wordcloud of the most common individual words given as a response question 29 is presented below.
+
+```{r, text29, echo=FALSE}
+
+pat <- stringr::regex("no$|nope|\\bton\\b|\\bthe\\b|none|nothing|nome|##N/A##|\\ba\\b|\\bin\\b|\\bfor\\b|\\bit\\b|\\bof\\b|\\bdo\\b|\\bthey\\b|\\bthem\\b|\\bis\\b|\\bwith\\b|\\bso\\b|\\bi\\b|\\bin\\b|\\band\\b|\\balso\\b|\\bon\\b|\\bbecause\\b|\\bor\\b|\\bhas\\b|\\bim\\b|\\bwe\\b|\\\bthat\\b|\\bneed\\b|\\bwho\\b|\\bare\\b|\\babout\\b", ignore_case = T)
+
+foreignSet$suggestion <- stringr::str_replace_all(foreignSet$suggestion, pat, "") 
+
+foreignSet %>% 
+  tidytext::unnest_tokens(
+    word, suggestion
+  ) %>% select(
+    word
+  ) %>% 
+  anti_join(stop_words) %>%
+  count(word, sort = TRUE) %>% as.data.frame() %>% 
+  filter(!(word %in% c('to', 'the', 'a', 'an', 'nope', 'for', 'in', 'none', 'nome'))) %>% 
+  with(wordcloud(word, n, max.words = 100))
+
+```
+
+\newpage
+
+We now present a table of n-grams. An **n-gram** is a combination of words that tends to appear together or close to each other in text. For example a two-word n-gram is a two-word combination that is commonly in the same sentence or vicinity. For the present data, a 3-word n-gram was discovered to be the most appropriate. A table with the 15 most common 3-word combinations given as an answer to question 29 is presented below. *Note*: spelling mistakes derive from data capture.
+
+```{r, wordc29, echo=F}
+
+bigram <- foreignSet %>% 
+  tidytext::unnest_tokens(
+    words, suggestion, token = "ngrams", n = 3
+  ) %>% select(
+    words
+  ) %>% 
+  count(words, sort = TRUE) %>% 
+  filter(words != 'NA', !is.na(words)) %>% 
+  select(Words = words, Count = n)
+
+bigram %>% head(15) %>% kbl(caption = "Most common 3-word n-grams") |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position")
+```
+
+\newpage
+## Question 30. Disruptions from COVID-19 on livelihood
+
+Question #30 sought to uncover the extent to which the youth believed that the COvid-19 pandemic would have an effect on their livelihood. The question was
+
+> "30. Looking ahead, what level of impact will the disruptions from COVID-19 have on your livelihood?"
+
+The options were:
+
+* Little to no impact
+* Some impact
+* Moderate impact
+* Moderate to severe impact
+* Severe impact
+
+Respondents were allowed to select ONE response.
+
+At the national level, over four-fifths (84%) of respondents believed that COVID-19 would have AT LEAST some impact on their livelihood, while about 16% did not believe it would have any impact. 
+
+The full results are presented at the national and constituency levels in the following tables.
+
+\blandscape
+```{r, covid_level_of_impact, echo=FALSE}
+
+general_tabylsn(foreignSet, 'covid_level_of_impact', 1,6, '(NATIONAL) Looking ahead, what level of impact will the disruptions from COVID-19 have on your livelihood?')
+general_tabyls(foreignSet, 'covid_level_of_impact', 1,6, '(CONSTITUENCY) Looking ahead, what level of impact will the disruptions from COVID-19 have on your livelihood?')
+
+```
+\elandscape
+
+\newpage
+## Question 31. Adapting to current disruptions from COVID-19
+
+Question #31 sought to uncover the extent to which the youth have found it easy or difficult to adapt to the impacts of the COVID-19 pandemic. The question was
+
+> "How are you adapting to the current disruptions from COVID-19?"
+
+The options were:
+
+* Very difficult
+* Difficult
+* Well
+* Very Well
+
+Respondents were allowed to select ONE response.
+
+At the national level, about 58 percent of all respondents reported having difficulty adapting, while the remaining 42 percent reported to be adapting well.
+
+The full results are presented at the national and constituency levels in the following tables.
+```{r, covid_adapting, echo=FALSE}
+
+general_tabylsn(foreignSet, 'covid_adapting', 1,5, '(NATIONAL) How are you adapting to the current disruptions from COVID-19?')
+general_tabyls(foreignSet, 'covid_adapting', 1,5, '(CONSTITUENCY) How are you adapting to the current disruptions from COVID-19?')
+
+```

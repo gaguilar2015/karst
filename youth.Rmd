@@ -1,0 +1,1141 @@
+---
+title: "Youth Assessment Summary"
+author: "Gian Aguilar"
+date: "12/21/2021"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document: default
+  word_document: default
+mainfont: Helvetica
+sansfont: Helvetica
+fontsize: 12pt
+geometry: margin=0.5in
+header-includes:
+-  \usepackage{pdflscape}
+-  \newcommand{\blandscape}{\begin{landscape}}
+-  \newcommand{\elandscape}{\end{landscape}}
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = TRUE, dev="cairo_pdf")
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(haven)
+library(xlsx)
+library(scales)
+library(plotly)
+library(dplyr)
+library(stringr)
+library(readxl)
+library(lubridate)
+library(janitor)
+library(ggthemes)
+library(kableExtra)
+library(RColorBrewer)
+library(patchwork)
+
+
+###
+#-----------------------
+# COLORS AND THEMING
+#-----------------------
+ygreen <- '#238722'
+primaryColor <- 'aquamarine4'
+secondaryColor <- 'tan'
+errorColor <- 'salmon2'
+
+fiveColor <- c('darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+sixColor <- c( 'tan3', 'darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+fourColors <- c('aquamarine4', 'aquamarine3', 'tan', 'tan4')
+
+#Customized Ggplot theme objects
+theme_youth <- theme_bw()  + theme(panel.border = element_blank(), 
+                                   panel.grid.minor = element_blank(), 
+                                   panel.grid.major = element_blank(),
+                                   axis.line = element_line(colour = "grey30"),
+                                   text = element_text(size = 18),
+                                   legend.position = 'bottom', 
+                                   legend.direction = 'horizontal'
+)  
+
+theme_youthx <- theme_youth + theme(
+  axis.line.x = element_blank(),
+  axis.ticks.x = element_blank(),
+  axis.text.x = element_blank()
+)
+
+theme_youthy <- theme_youth + theme(
+  axis.line.y = element_blank(),
+  axis.ticks.y = element_blank(),
+  axis.text.y = element_blank()
+)
+
+
+#4. Read files into R objects -- Foreign
+
+#construct file names
+base_path <- './youthfiles/Youths.sav'
+diagnostics_path <- './youthfiles/interview__diagnostics.sav'
+actions_path <- './youthfiles/interview__actions.sav'
+
+##base questionnaire file
+fbase <- read_sav(base_path, user_na = TRUE) %>% as_factor() 
+#diagnostics metadata file
+fdiagnostics <- read_sav(diagnostics_path) %>% as_factor()
+#interviewer actions metadata file
+#fiactions <- read_sav(actions_path, user_na = T) %>% as_factor()
+
+
+#merge all files
+foreignSet <- fbase %>%
+  left_join(fdiagnostics %>% dplyr::select(interview__key, responsible),
+            by = c("interview__key" = "interview__key"))
+
+dummy <- c("23-78-76-59", "06-99-98-78", "70-76-51-88", "85-69-04-33", "75-34-54-61", "58-44-38-20", 
+           "17-01-94-42", "19-51-99-25", "83-16-78-79", "11-84-23-09", "78-87-97-44", "15-41-99-32", 
+           "14-19-84-62", "36-55-77-94", "52-76-68-21", "96-07-95-65", "51-49-25-52", "65-44-43-34", 
+           "50-18-22-70")
+
+foreignSet <- foreignSet %>% filter(!(interview__key %in% dummy))
+
+foreignSet$age <- as.integer(as.character(foreignSet$age))
+
+foreignSet <- foreignSet %>% 
+  filter(HH_FINALRESULT == "Complete" | !is.na(disability))
+
+foreignSet <- foreignSet %>% 
+  filter(!is.na(district) & district != 'missing' & constituency != 'missing' & gender != 'missing'
+                        & age >= 14)
+
+foreignSet <- foreignSet %>% 
+  mutate(area = case_when(
+    constituency %in% c('Fort George', 'Freetown', 'Caribbean Shores', 'Pickstock') ~ "NorthSide",
+    constituency %in% c('Lake Independence', 'Port Loyola', 'Collet', 'Albert', "Queen's Square", 'Mesopotamia') ~
+      "SouthSide",
+    TRUE ~ "Other"
+  ))
+
+foreignSet$age <- as.integer(as.character(foreignSet$age))
+
+foreignSet <- foreignSet %>% 
+  mutate(age_group = case_when(
+    age >= 26 ~ '26-29',
+    age >= 22 ~ '22-25',
+    age >= 18 ~ '18-21',
+    age >= 14 ~ '14-17',
+    TRUE ~ "Missing"
+  ))
+
+id_vars <- c('district', 'constituency', 'locality', 'gender', 'age', 'ethnicity', 'marital_status')
+
+basics <- names(foreignSet)[1:43]
+basic_info <- foreignSet %>% select(basics, HH_FINALRESULT)
+
+basic_info <- modify_if(basic_info, is.factor, forcats::fct_drop)
+
+basic_info[basic_info$age==33, 'age'] <- 29
+basic_info <- basic_info %>% 
+  mutate(age_group = case_when(
+    age >= 26 ~ '26-29',
+    age >= 22 ~ '22-25',
+    age >= 18 ~ '18-21',
+    age >= 14 ~ '14-17',
+    TRUE ~ "Missing"
+  ))
+
+basic_info$ethnicity <- fct_collapse(basic_info$ethnicity, Other = c('Other', 'Not Stated', 'Mennonite', 'missing'))
+basic_info$level_of_education <- fct_collapse(basic_info$level_of_education, 
+                                              Other = c('missing', 'Primary School + Vocational Studies', 
+                                                        'High School + Vocational Studies', 
+                                                        'None'))
+
+basic_info$level_of_education <- fct_collapse(basic_info$level_of_education, College = c("Bachelor's or higher", 
+                                                                                         "Sixth Form/Associate's"))
+basic_info$level_of_education <- fct_recode(basic_info$level_of_education,
+  `Incomplete Primary` = 'Did not complete Primary School'
+)
+
+basic_info$internet_access <- fct_recode(basic_info$internet_access,
+           `Strongly Agree` = '1',
+           Agree = '2',
+           Disagree = '3',
+           `Strongly Disagree` = '4'
+           )
+
+
+################################
+##### Question DEMOGRAPHIC frequencies
+################################
+
+sexf <- basic_info |> 
+  tabyl(
+    gender
+  ) |> select(Item = gender, Count = n, Percent = percent)
+
+age_groupf <- basic_info |> 
+  tabyl(
+    age_group
+  ) |> select(Item = age_group, Count = n, Percent = percent)
+
+districtf <- basic_info |> 
+  tabyl(
+    district
+  ) |> select(Item = district, Count = n, Percent = percent)
+
+constituencyf <- basic_info |> 
+  tabyl(
+    constituency
+  ) |> select(Item = constituency, Count = n, Percent = percent) |> 
+  mutate(Item = as.character(Item))
+
+educationf <- basic_info |> 
+  tabyl(
+    level_of_education
+  ) |> select(Item = level_of_education, Count = n, Percent = percent)
+
+ethnicityf <- basic_info |> 
+  tabyl(
+    ethnicity
+  ) |> select(Item = ethnicity, Count = n, Percent = percent)
+
+maritalf <- basic_info |> 
+  tabyl(
+    marital_status
+  ) |> select(Item = marital_status, Count = n, Percent = percent)
+
+
+#Merge descriptives together
+descriptives <- rbind(sexf, age_groupf, districtf, 
+                     # constituencyf, 
+                      educationf,
+                      ethnicityf, maritalf
+                      )
+
+#Format percentages
+descriptives <- descriptives |> 
+  mutate(Percent = paste0(round(Percent, 3) * 100, '%'))
+
+
+```
+
+```{r setup2, include=FALSE}
+
+cons <- basic_info %>% distinct(district, constituency)
+
+
+
+
+con_tabyls <- function(item, limit, title="Table X. Table"){
+  basic_info %>% filter(!!as.name(item) != 'missing') %>% 
+    tabyl(constituency, !!as.name(item) , show_missing_levels = FALSE) |> adorn_totals(c('row', 'col')) |> 
+    adorn_percentages("row") |>
+    adorn_pct_formatting(digits = 1) |>
+    adorn_ns() %>% 
+    left_join(
+      cons,
+      by = 'constituency'
+    ) %>% 
+    select(
+      District = district, Constituency = constituency,
+      2:all_of(limit)
+    ) %>% 
+    arrange(District) %>% 
+    select(-District) %>% 
+    kbl(caption = title) |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position") %>% 
+    pack_rows("Corozal", 1, 4) |>
+    pack_rows("Orange Walk", 5, 8) |>
+    pack_rows("Belize", 9, 21) |>
+    pack_rows("Cayo", 22, 27) |>
+    pack_rows("Stann Creek", 28, 29) %>% 
+    pack_rows("Toledo", 30, 31)
+}
+
+general_tabyls <- function(df, item, start, end, title="Table X. Table"){
+  df %>% filter(!!as.name(item) != 'missing') %>% 
+    tabyl(constituency, !!as.name(item) , show_missing_levels = FALSE) |> adorn_totals(c('row', 'col')) |> 
+    adorn_percentages("row") |>
+    adorn_pct_formatting(digits = 1) |>
+    adorn_ns() %>% 
+    left_join(
+      cons,
+      by = 'constituency'
+    ) %>% 
+    select(
+      District = district, Constituency = constituency,
+      all_of(start):all_of(end),
+      Total
+    ) %>% 
+    arrange(District) %>% 
+    select(-District) %>% 
+    kbl(caption = title) |> 
+    kable_minimal(full_width = F)  %>% 
+    kable_styling(font_size = 10, position = "center", latex_options = "HOLD_position") %>% 
+    pack_rows("Corozal", 1, 4) |>
+    pack_rows("Orange Walk", 5, 8) |>
+    pack_rows("Belize", 9, 21) |>
+    pack_rows("Cayo", 22, 27) |>
+    pack_rows("Stann Creek", 28, 29) %>% 
+    pack_rows("Toledo", 30, 31)
+}
+
+```
+
+# Introduction
+
+Belize is developing a comprehensive strategic plan, through its Ministry of Youth, Sports and
+Governance, to improve the situation of Young People (ages 14-29). Similarly, the Ministry is
+assessing the needs of the community as it relates to the COVID-19 pandemic and its effects on the youth population. 
+
+For this reason, the Department of Youth Services (DYS) enganged in a Youth and Welness Assessment Survey (YAWAS  to help determine what services are needed to meet the needs of young
+people and to better aid individuals and families in the community.
+
+Countrywide, 5891 youth between the ages of 14 and 29 were approached to be inteviewed. Of these, a total of 5770 complete responses were obtained, for a total of response rate of 98%. However, it is worth noting that no sample design or specific survey design was followed in the administration of this survey. Therefore, the results mainly reflect the outcomes, views and characteristics of the sampled youth, and caution must be taken when applying this to the larger population. However, due to the large sample size, the results obtained are still useful as they do reflect the views and characterstics or a large section of the youth population. 
+
+\newpage
+# Characteristics of Respondents
+The table below presentes the overall, nationwide characterstics of the respondets in the major demographic categories. As seen in the table, distribution of respondents by district closely followed the national population distribution by district, but with the Belize district being slighly under-represented (~30% of the national population vs ~27% of the sample population).
+```{r freq, echo=FALSE}
+descriptives %>%
+  kbl(caption = "Descriptive Statistics") |> 
+  kable_minimal(full_width = F) %>% 
+  kable_styling(font_size = 11, position = "center", latex_options = "HOLD_position") %>% 
+  pack_rows("Sex", 1, 3) |>
+  pack_rows("Age", 4, 7) |>
+  pack_rows("District", 8, 13) |>
+  pack_rows("Education", 14, 18) |>
+  pack_rows("Ethnicity", 19, 25) %>% 
+  pack_rows("Marital Status", 26, 27)
+```
+\newpage
+
+## Key Characterstics at the National and District levels
+A visual of the distribution of respondents by district can be seen in the figure below. 
+
+```{r byDis, out.width="60%", out.height="60%", fig.align='center', echo=FALSE}
+#---District plot
+#print(fbase)
+basic_info %>% ggplot(aes(x=district)) +
+  geom_bar(fill = 'aquamarine4') +
+  geom_text(aes( y=..count.., label=..count..), size = 6, color = 'white',
+            stat="count", position=position_stack(0.5), vjust=0.5) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )
+```
+
+Respondents were almost evenly divided by gender, with 51.1% being female, 48.5% male and 0.4% identifying as 'Other'. The distribution of respondent gender by district is seen in the figure below. It can be seen that there were more female respondents in all districts except for Stann Creek and Toledo, where males answered at a slighly higher rate.
+
+```{r genderByDis, out.width="75%", out.height="65%", fig.align='center', echo=FALSE}
+#---Gender Group Plot
+basic_info$gender <- fct_relevel(basic_info$gender, 
+                                 c('Female',
+                                 'Male',
+                                 'Other')
+                                 )
+
+basic_info %>% ggplot(aes(x=gender, fill=gender)) + 
+  geom_bar(position = 'dodge', show.legend = TRUE) + 
+  geom_text(aes( y=..count.., label=..count..), size = 5, color = 'white',
+            stat="count", position=position_stack(0.5)) +
+  theme_youthy +
+  facet_wrap(~district) +
+  scale_fill_manual(values = c(secondaryColor, primaryColor, 'grey')) +
+  labs(
+    x = '',
+    y = ''
+  ) + 
+  guides(
+    fill = guide_legend(
+      
+      reverse = F,
+      title = 'Gender'
+    )
+  )
+```
+
+As it relates to age distribution, about 63% of respondents were between the ages of 14-21 years, with 31% being 14-17 years and 32% (the largest age group) being between 18-21 years. A histogram of age distribution by sex is show in the figure below.
+
+```{r, ageHist, out.width="80%", out.height="80%", fig.align='center', echo=FALSE}
+basic_info %>% ggplot(aes(x=age, fill=gender)) +
+  geom_bar() +
+  geom_text(aes( y=..count.., label=..count..), size = 4, color = 'white',
+            stat="count", position=position_stack(0.5), vjust=-0.2) +
+  scale_fill_manual(values = c(primaryColor, secondaryColor, 'grey')) +
+  theme_youth +
+  scale_x_continuous(breaks = c(14,16,18,20,22,24,26,28)) +
+  labs(
+    x = 'Age',
+    y = ''
+  ) + theme(
+    axis.line.y = element_blank()
+  ) +
+  guides(
+    fill = guide_legend(
+      title = 'Gender',
+      reverse = T
+    )
+  )
+
+```
+
+The distribution of ethnicities by district is shown in the figure below as proportions. It can be seen that although Mestizo/Hispanic is the most common ethnicity overall, the respondent composition vaires by district. For example, in the Belize district, Creole was the most common ethnicity, while Garifuna is the most common in the Stann Creek district and Maya is the most common in the Toledo district. 
+```{r, ethnicity, out.width="65%", out.height="65%", fig.align='center', echo=FALSE}
+fiveColor <- c('darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+sixColor <- c( 'tan3', 'darkcyan', 'aquamarine4', 'aquamarine3', 'bisque2', 'bisque3')
+basic_info %>% ggplot(aes(x=district, fill=ethnicity)) + 
+  geom_bar(position = 'fill') + 
+ scale_fill_manual(values = c( 'tan3', 'aquamarine3', 'aquamarine4', 'tan4', 'tan', 'bisque1')) +
+  theme_youth +
+  labs(
+    x = 'District',
+    y = 'Proportion'
+  ) +
+  guides(
+    fill = guide_legend(
+      title = "Ethnicity"
+    )
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=ifelse(
+                  x == 1 & fill %in% c('Mestizo/Hispanic', 'Creole') |
+                  x == 2 & fill %in% c('Mestizo/Hispanic', 'Creole') |
+                  x == 3 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Garifuna') |
+                  x == 4 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Maya') |
+                  x == 5 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Maya', 'Garifuna') |
+                  x == 6 & fill %in% c('Mestizo/Hispanic', 'Creole', 'Maya', 'Garifuna')
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme_youthy
+
+```
+
+As seen in Table 1, the most common "highest level of education" reported were High School and Primary School. This pattern is observed across the districts with some slight variation, such as Corozal having a higher proportion of respondents with College education and Toledo having the highest number of incomplete Primary education. This can be observed in the Figure below. 
+
+```{r, education, out.width="65%", out.height="65%", fig.align='center', echo=FALSE}
+basic_info %>% ggplot(aes(x=district, fill=level_of_education)) + 
+  geom_bar(position = 'fill') + 
+  scale_fill_manual(values = c('bisque2', 'tan4', 'tan',  'aquamarine4', 'aquamarine3')) +
+  theme_youth +
+  labs(
+    x = 'District',
+    y = 'Proportion'
+  ) +
+  guides(
+    fill = guide_legend(
+      title = "Ethnicity",
+      reverse = TRUE
+    )
+  )   + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=ifelse(
+                  fill %in% c('Did not complete Primary School', 'Other'),
+                  '',
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')
+                  )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme_youthy
+```
+
+As it relates to marital status, 86% of the respondents were single and 14% were married. However and as observed in the figure below, the proportion of married youth increased by age group. 
+
+```{r, marital, out.width="65%", out.height="65%", fig.align='center', echo=FALSE}
+
+#---Marital plot
+basic_info %>% ggplot(aes(x=age_group, fill=marital_status)) + 
+  geom_bar(position = 'fill')  + 
+  scale_fill_manual(values = c('grey', primaryColor, secondaryColor)) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%')
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5), vjust=-0.5, hjust = 0.4)+
+  guides(
+    fill = guide_legend(
+      title = 'Marital Status'
+    )
+  )
+```
+
+## Key Characteristics at the Constituency Level
+```{r,gencon, echo=FALSE}
+con_tabyls('gender', 5, 'Gender by Constituency')
+```
+```{r,agecon, echo=FALSE}
+con_tabyls('age_group', 7, 'Age Groups by Constituency')
+```
+\newpage
+\blandscape
+```{r,edconp, echo=FALSE}
+con_tabyls('level_of_education', 7, 'Level of Education by Constituency')
+```
+
+```{r,ethnicitycon, echo=FALSE}
+con_tabyls('ethnicity', 8, 'Ethnicity by Constituency')
+```
+\elandscape
+\newpage
+
+```{r,marcon, echo=FALSE}
+con_tabyls('marital_status', 4, 'Marital Status by Constituency')
+```
+
+\newpage
+
+# Results and Tables
+
+## Question 6. Internet Access
+
+```{r,  internetCon, fig.align='center', echo=FALSE}
+con_tabyls('internet_access', 6, 'Young people have adequate internet access to engage in any online jobs and services?')
+```
+
+\newpage
+The first opinion question asked to the youth in the survey was related to adequare access to the internet. Youth were read the following statement:
+
+> "Young people have adequate internet access to engage in any online jobs and services"
+
+and were asked to rate the level to which they agreed with that statement on a four-point scale, ranging from "Strongly Agree" to "Strongly Disagree". 
+
+The results show that over two-thirds of the interviewed youth have a positive opinion of the access to the internet, with 17% stating that they **Strongly Agree** with the statement and 51% stating that they **Agree**. Conversely, the other one-third of youth fall on the other end of the scale. 26% **Disagree** with the statement and  6% **Strongrly Disagree**. There are some small differences when analyzing the responses by district. Notably, youth respondents in Cayo and Toledo tend to have a slightly more negative opition on adequate internet access, having higher proportions of youth who **Disagree** with the original statement. The highest proportion of youth who **Strongly Disagree** with the statement were found in the Belize District.
+
+```{r,  internetDistrict, out.width="60%", out.height="65%", fig.align='center', echo=FALSE}
+internet_district <- basic_info %>% 
+  filter(internet_access != 'missing') %>% 
+ggplot(aes(x=district, fill=internet_access)) + 
+  geom_bar(position = 'fill') + 
+#  scale_fill_brewer(palette = 'RdYlGn') +
+  scale_fill_manual(values = fourColors) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..], 
+                label=ifelse(
+                  fill != 'missing'
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  guides(
+    fill = guide_legend(
+      title = 'Agreement'
+      
+    )
+  ) +
+  theme(
+    text = element_text(size = 16)
+  )
+
+internet_district
+```
+
+When analyzing responses by *age-group*, no pattern or difference is observed, and the distribution of responses is similar across all age groups. As seen in Figure X.
+
+```{r,  internetAge, out.width="60%", out.height="65%", fig.align='center', echo=FALSE}
+internet_age <- basic_info %>% 
+  filter(internet_access != 'missing') %>% 
+ggplot(aes(x=age_group, fill=internet_access)) + 
+  geom_bar(position = 'fill') + 
+#  scale_fill_brewer(palette = 'RdYlGn') +
+  scale_fill_manual(values = fourColors) +
+  theme_youthy +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..],
+                label=ifelse(
+                  fill != 'missing'
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme(
+    legend.spacing.x = unit(0.2, 'cm')
+  ) +
+  guides(
+    fill = guide_legend(
+      title = 'Agreement'
+      
+    )
+  ) +
+  theme(
+    text = element_text(size = 16)
+  )
+
+internet_age
+```
+
+However, when analyzing the results by level of education, there are some patterns observed. On average, persons with a lower level of education have a more negative opinion about the adequacy of internet access. Particularly, persons who did not complete Primary School have the highest proportion of answers of **Strongly Disagree** and **Disagree**. This might point to a divide where, those who had the opportunity for a complete education feel as if the resources (including the Internet) are adequate, but those less fortunate face a different reality.
+
+```{r,  internet, out.width="60%", out.height="65%", fig.align='center', echo=FALSE}
+internet_ed <- basic_info %>% 
+  filter(internet_access != 'missing') %>% 
+ggplot(aes(x=level_of_education, fill=internet_access)) + 
+  geom_bar(position = 'fill') + 
+#  scale_fill_brewer(palette = 'RdYlGn') +
+  scale_fill_manual(values = fourColors) +
+  theme_youthx +
+  labs(
+    x = 'District',
+    y = ''
+  )  + 
+  geom_text(aes(y=..count../tapply(..count.., ..x.. ,sum)[..x..],
+                label=ifelse(
+                  fill != 'missing' & fill != 'Strongly Disagree'
+                  ,
+                  paste0(round((..count../tapply(..count.., ..x.. ,sum)[..x..]), 3) * 100, '%'),
+                  ''
+                )
+  ),
+  size = 5, color = 'white',
+  stat="count", position=position_fill(0.5)) +
+  theme(
+    legend.spacing.x = unit(0.2, 'cm')
+  ) + coord_flip()  +
+  theme(
+    text = element_text(size = 16),
+    legend.justification = 'right'
+  ) +
+  guides(
+    fill = guide_legend(
+      title = 'Agreement'
+      
+    )
+  )
+
+internet_ed
+
+```
+
+## Question 7. Truths
+
+\newpage
+\blandscape
+```{r, truths, echo=F}
+#---Truth
+
+truth_set <- basic_info %>% pivot_longer(starts_with('truths'), names_to = 'truths', values_to = 'tval') %>% 
+  select(all_of(id_vars), truths, tval) %>% 
+  filter(tval == 1) %>% 
+  select(-tval)
+
+truth_set$truths <- fct_recode(truth_set$truths,
+                               `Have Child`  = 'truths__1',
+                               `Is Homeless` = 'truths__2',
+                               `Been Arrested` = 'truths__3',
+                               `Have Savings` = 'truths__4',
+                               `Live w Parents` = 'truths__5',
+                               `Been Foster Care` = 'truths__6',
+                               `English 1st Lang` = 'truths__7',
+                               `Multiple HS` = 'truths__8',
+                               `Diagnosed Mental` = 'truths__9',
+                               `LowIncome Wellfare`  = 'truths__10',
+                               None = 'truths__11'
+                               )
+
+
+truth_set$truths <- fct_relevel(truth_set$truths,
+                               'Have Child',
+                               'Is Homeless',
+                               'Been Arrested',
+                               'Have Savings',
+                               'Live w Parents',
+                               'Been Foster Care',
+                               'English 1st Lang',
+                               'Multiple HS',
+                               'Diagnosed Mental',
+                               'LowIncome Wellfare',
+                               'None'
+                               )
+
+# #---Truth Plot
+# truth_set %>% ggplot(aes(x = district, fill = truths)) +
+#   geom_bar(position = 'dodge') 
+
+general_tabyls(truth_set, 'truths', 1, 7, 'Which of the following are true about you.')
+general_tabyls(truth_set, 'truths', 8, 14, 'Which of the following are true about you.')
+```
+\elandscape
+\newpage
+
+## Question 8. Crime 
+
+```{r, crime1, echo=F}
+con_tabyls('crime_victim', 4, 'Have you ever been victim of a crime?')
+```
+
+```{r, crime2, echo=F}
+#---Crime
+
+crime_set <- basic_info %>% pivot_longer(starts_with('type_of_crime'), names_to = 'crime', values_to = 'cval') %>% 
+  select(all_of(id_vars), crime, cval) %>% 
+  filter(cval == 1) %>% 
+  select(-cval)
+
+crime_set$crime <- fct_recode(crime_set$crime,
+                               `Sexual Offense`  = 'type_of_crime__1',
+                               `Extortion` = 'type_of_crime__2',
+                               `Robbery` = 'type_of_crime__3',
+                               `Gang violence` = 'type_of_crime__4',
+                               `Not Stated` = 'type_of_crime__99'
+                               )
+
+
+crime_set$crime <- fct_relevel(crime_set$crime,
+                               'Sexual Offense',
+                               'Extortion',
+                               'Robbery',
+                               'Gang violence',
+                               'Not Stated'
+                               )
+
+# #---Truth Plot
+# truth_set %>% ggplot(aes(x = district, fill = truths)) +
+#   geom_bar(position = 'dodge') 
+
+general_tabyls(crime_set, 'crime', 1, 7, 'What type of crime were you a victim of?')
+```
+
+## Question 9. Disability 
+
+```{r, disability1, echo=F}
+con_tabyls('disability', 4, 'Do you have any disability?')
+```
+\blandscape
+```{r, disability2, echo=F}
+#---disability
+
+disability_set <- basic_info %>% pivot_longer(starts_with('disability_type'), 
+                                              names_to = 'disabilities', 
+                                              values_to = 'cval') %>% 
+  select(all_of(id_vars), disabilities, cval) %>% 
+  filter(cval == 1) %>% 
+  select(-cval)
+
+disability_set$disabilities <- fct_recode(disability_set$disabilities,
+                               `Vision Impairment`  = 'disability_type__1',
+                               `Physical` = 'disability_type__2',
+                               `Autism Spectrum` = 'disability_type__3',
+                               `Intellectual` = 'disability_type__4',
+                               `Hearing Impairment` = 'disability_type__5',
+                               `Other` = 'disability_type__88',
+                               `Not Stated` = 'disability_type__99'
+                               )
+
+
+disability_set$disabilities <- fct_relevel(disability_set$disabilities,
+                               'Vision Impairment',
+                               'Physical',
+                               'Autism Spectrum',
+                               'Intellectual',
+                               'Hearing Impairment',
+                               'Other',
+                               'Not Stated'
+                               )
+
+# #---Truth Plot
+# truth_set %>% ggplot(aes(x = district, fill = truths)) +
+#   geom_bar(position = 'dodge') 
+
+general_tabyls(disability_set, 'disabilities', 1, 9, 'What type of disability do you have?')
+```
+\elandscape
+
+\blandscape
+## Question 10. Housing
+```{r,housingcon, echo=FALSE}
+
+foreignSet$housing <- fct_recode(foreignSet$housing,
+                               `Land`  = 'Land Accessibility',
+                               `Affordability` = 'Affordability',
+                               `Access Mortgage` = 'Accessing a Mortgage',
+                               `Pay Mortgage` = 'Paying a Mortgage',
+                               `Poor Housing` = 'Poor Housing Conditions'
+                               )
+
+
+foreignSet$housing <- fct_relevel(foreignSet$housing,
+                               'Land',
+                               'Affordability',
+                               'Access Mortgage',
+                               'Pay Mortgage',
+                               'Poor Housing',
+                               'None',
+                               'Other',
+                               'Not Stated'
+                               )
+
+general_tabyls(foreignSet, 'housing', 1,10, 'What do you consider to be your MOST significant concern regarding housing?')
+```
+\elandscape
+
+\blandscape
+
+## Question 12. Sports
+```{r,sportscon, echo=FALSE}
+
+foreignSet$sports <- fct_recode(foreignSet$sports,
+                               `Accessibility to Facilities`  = 'Accessibility to Sporting Facility',
+                               `Safe Space` = 'Safe Space',
+                               `Scholarship` = 'Sporting Scholarship'
+                               )
+
+
+foreignSet$sports <- fct_relevel(foreignSet$sports,
+                               'Accessibility to Facilities',
+                               'Safe Space',
+                               'Scholarship',
+                               'Professionalism',
+                               'None',
+                               'Other',
+                               'Not Stated'
+                               )
+
+general_tabyls(foreignSet, 'sports', 1,10, 'What do you consider to be your MOST significant concern regarding sports?')
+```
+
+
+## Question 13. Youth Service Access 
+
+```{r, servicescon, echo=FALSE}
+
+foreignSet$service_access <- fct_recode(foreignSet$service_access,
+                               `Sex Ed` = 'Sex Education Training',
+                               `Drug Awarness` = 'Drug Awarness',
+                               `Job Training` = 'Job Preparedness Training',
+                               `Microsoft Coding` = 'Microsoft Suite and Coding'
+                               )
+
+
+foreignSet$service_access <- fct_relevel(foreignSet$service_access,
+                               'Counselling',
+                               'Sex Ed',
+                               'Drug Awarness',
+                               'Job Training',
+                               'Microsoft Coding',
+                               'Skill Training',
+                               'Animal Husbandry',
+                               'None',
+                               'Other',
+                               'Not Stated'
+                               )
+
+general_tabyls(foreignSet, 'service_access', 1,10, 'What do you consider to be your MOST significant concern regarding service access?')
+
+```
+
+
+\elandscape
+
+
+## Question 15. Youth Service Awareness
+
+```{r, yservicescon1, echo=FALSE}
+
+general_tabyls(foreignSet, 'youth_services', 1,4, 'Are you aware of any youth services in your area?')
+
+```
+
+\blandscape
+
+```{r, yservicescon2, echo=FALSE}
+
+general_tabyls(foreignSet, 'youth_service_awareness', 1,8, 'Are you aware of any youth services in your area?')
+
+```
+\elandscape
+
+## Question 16. Participated in Sexual and Reproductive Health Services
+
+```{r, participated_health_fairs, echo=FALSE}
+
+general_tabyls(foreignSet, 'participated_health_fairs', 1,4, 'A. Health Fairs')
+
+```
+
+
+```{r, participated_workshop, echo=FALSE}
+
+general_tabyls(foreignSet, 'participated_workshop', 1,4, 'B. Workshops')
+
+```
+
+
+```{r, participated_shr_traning, echo=FALSE}
+
+general_tabyls(foreignSet, 'participated_shr_traning', 1,4, 'C. Sexual Health and Reproductive Traning')
+
+```
+
+
+```{r, participated_shr_counselling, echo=FALSE}
+
+general_tabyls(foreignSet, 'participated_shr_counselling', 1,4, 'D. Sexual Health and Reproductive Counselling')
+
+```
+
+## Question 17. Received Sexual and Reproductive Health Services
+
+```{r, received_contraceptives, echo=FALSE}
+
+general_tabyls(foreignSet, 'received_contraceptives', 1,4, 'A. Contraceptives')
+
+```
+
+```{r, received_std_screening, echo=FALSE}
+
+general_tabyls(foreignSet, 'received_std_screening', 1,4, 'B.  STD Screening')
+
+```
+
+```{r, received_hiv_test, echo=FALSE}
+
+general_tabyls(foreignSet, 'received_hiv_test', 1,4, 'C. HIV Screening')
+
+```
+
+```{r, received_family_planning, echo=FALSE}
+
+general_tabyls(foreignSet, 'received_family_planning', 1,4, 'D. Family Planning')
+
+```
+
+\newpage
+\blandscape
+## Question 19. COVID-19 foods
+```{r, covidfoods, echo=F}
+#---Truth
+
+covid_set <- foreignSet %>% pivot_longer(starts_with('covid_foods'), names_to = 'covid_food', values_to = 'tval') %>% 
+  select(all_of(id_vars), covid_food, tval) %>% 
+  filter(tval == 1) %>% 
+  select(-tval)
+
+covid_set$covid_food <- fct_recode(covid_set$covid_food,
+                               `Fruit & Veg`  = 'covid_foods__1',
+                               `Sugary Drinks & Snacks` = 'covid_foods__2',
+                               Carbs = 'covid_foods__3',
+                               Dairy = 'covid_foods__4',
+                               `Meats & Fish` = 'covid_foods__5',
+                               `Fast Foods` = 'covid_foods__6',
+                               Water = 'covid_foods__7',
+                               Other = 'covid_foods__88'
+                               )
+
+
+covid_set$covid_food <- fct_relevel(covid_set$covid_food,
+                               'Fruit & Veg',
+                               'Sugary Drinks & Snacks',
+                               'Carbs',
+                                'Dairy',
+                               'Meats & Fish',
+                               'Fast Foods',
+                               'Water',
+                               'Other'
+                               )
+
+# #---covid Plot
+# covid_set %>% ggplot(aes(x = district, fill = covids)) +
+#   geom_bar(position = 'dodge') 
+
+general_tabyls(covid_set, 'covid_food', 1, 7, 'During COVID-19, what type/s of food are you eating?')
+```
+\elandscape
+
+
+\newpage
+\blandscape
+## Question 21. Worried about COVID
+```{r, covid_worried, echo=FALSE}
+
+general_tabyls(foreignSet, 'covid_worried', 1,6, 'How worried are you about the impact of coronavirus on you personally?')
+
+```
+
+## Question 22. Concerns
+```{r, concern1, echo=F}
+#---Truth
+
+concern_set <- foreignSet %>% pivot_longer(starts_with('concerns'), names_to = 'concern', values_to = 'tval') %>% 
+  select(all_of(id_vars), concern, tval) %>% 
+  filter(tval == 1) %>% 
+  select(-tval)
+
+concern_set$concern <- fct_recode(concern_set$concern,
+                               `Increased Sadness`  = 'concerns__1',
+                               `Anxiety` = 'concerns__2',
+                               `Anger or Fustration` = 'concerns__3',
+                               Depression = 'concerns__4',
+                               `Stress` = 'concerns__5',
+                               `Fear` = 'concerns__6',
+                               `Difficulty Sleeping` = 'concerns__7',
+                               `Increased Violence` = 'concerns__8',
+                               `Increased Substance Abuse` = 'concerns__9',
+                               Other = 'concerns__88',
+                               `Not Stated` = 'concerns__99'
+                               )
+
+
+concern_set$concern <- fct_relevel(concern_set$concern,
+                               'Increased Sadness',
+                               'Anxiety',
+                               'Anger or Fustration',
+                               'Depression',
+                               'Stress',
+                               'Fear',
+                               'Difficulty Sleeping',
+                               'Increased Violence',
+                               'Increased Substance Abuse',
+                               'Other',
+                               'Not Stated'
+                               )
+
+# #---covid Plot
+# concern_set %>% ggplot(aes(x = district, fill = covids)) +
+#   geom_bar(position = 'dodge') 
+
+general_tabyls(concern_set, 'concern', 1, 7, 'Are you experiencing any concerns in these areas?')
+general_tabyls(concern_set, 'concern', 8, 13, 'Are you experiencing any concerns in these areas?')
+```
+
+
+\elandscape
+
+## Question 23. Mental Health Support
+```{r, support, echo=FALSE}
+
+general_tabyls(foreignSet, 'support', 1,4, 'Is mental health support offered in your community?')
+
+```
+
+
+## Question 24. Psycho/social support
+```{r, support_school_counselor, echo=FALSE}
+
+general_tabyls(foreignSet, 'support_school_counselor', 1,4, 'A. Are you getting any psycho/social support from School Counsellor?')
+general_tabyls(foreignSet, 'support_community_counselor', 1,4, 'B. Are you getting any psycho/social support from  Community Counsellor?')
+general_tabyls(foreignSet, 'support_health_worker', 1,4, 'C. Are you getting any psycho/social support from  Health Worker?')
+general_tabyls(foreignSet, 'support_teacher', 1,4, 'D. Are you getting any psycho/social support from  School Teacher?')
+general_tabyls(foreignSet, 'support_youth_counselor', 1,4, 'E. Are you getting any psycho/social support from  Youth Counsellor?')
+
+```
+
+\blandscape
+## Question 25. Counseling support services
+```{r, help_needed, echo=F}
+#---Truth
+
+help_needed_set <- foreignSet %>% pivot_longer(starts_with('help_needed'), names_to = 'help', values_to = 'tval') %>% 
+  select(all_of(id_vars), help, tval) %>% 
+  filter(tval == 1) %>% 
+  select(-tval)
+
+help_needed_set$help <- fct_recode(help_needed_set$help,
+                               `Grief and Loss`  = 'help_needed__1',
+                               `Trauma` = 'help_needed__2',
+                               `Family Support` = 'help_needed__3',
+                               `Violence` = 'help_needed__4',
+                               `Counselling` = 'help_needed__5',
+                               `Personal Development` = 'help_needed__6',
+                               `Relationship` = 'help_needed__7',
+                               `Physical Health` = 'help_needed__8',
+                               `Stress Managment` = 'help_needed__9',
+                               `Academics` = 'help_needed__10',
+                               `HIV/AIDS` = 'help_needed__11',
+                               `Suicidal Thoughts` = 'help_needed__12',
+                                Other = 'help_needed__88',
+                               `Not Stated` = 'help_needed__99'
+                               )
+
+
+help_needed_set$help <- fct_relevel(help_needed_set$help,
+                               'Grief and Loss',
+                               'Trauma',
+                               'Family Support',
+                               'Violence',
+                               'Counselling',
+                               'Personal Development',
+                               'Relationship',
+                               'Physical Health',
+                               'Stress Managment',
+                               'Academics',
+                               'HIV/AIDS',
+                               'Suicidal Thoughts',
+                               'Other',
+                               'Not Stated'
+                               )
+
+# #---covid Plot
+# help_needed_set %>% ggplot(aes(x = district, fill = covids)) +
+#   geom_bar(position = 'dodge') 
+
+general_tabyls(help_needed_set, 'help', 1, 8, 'Counseling Areas Needs 1')
+general_tabyls(help_needed_set, 'help', 9, 15, 'Counseling Areas Needs 2')
+```
+\elandscape
+
+
+## Question 26. Counselling hotline
+```{r, counselling_hotline, echo=FALSE}
+
+general_tabyls(foreignSet, 'counselling_hotline', 1,4, 'If you had access to a counselling hotline, would you use it?')
+
+```
+
+## Question 27. Youth-friendly counselling center
+```{r, counselling_access, echo=FALSE}
+
+general_tabyls(foreignSet, 'counselling_access', 1,4, 'If you had a need for counselling, would you access a youth-friendly counselling center in your community?')
+
+```
+
+## Question 28. Encourage counselling
+```{r, encourage_counseling, echo=FALSE}
+
+general_tabyls(foreignSet, 'encourage_counseling', 1,4, 'Would you encourage someone in need of counselling to access this youth-friendly counselling center?')
+
+```
+
+\blandscape
+## Question 30. Disruptions from COVID-19 on livelihood
+```{r, covid_level_of_impact, echo=FALSE}
+
+general_tabyls(foreignSet, 'covid_level_of_impact', 1,6, 'Looking ahead, what level of impact will the disruptions from COVID-19 have on your livelihood?')
+
+```
+
+## Question 31. Adapting to current disruptions from COVID-19
+```{r, covid_adapting, echo=FALSE}
+
+general_tabyls(foreignSet, 'covid_adapting', 1,5, 'How are you adapting to the current disruptions from COVID-19?')
+
+```
+
+\elandscape
+
