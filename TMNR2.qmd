@@ -385,9 +385,9 @@ k2_a <- k2 |>
 
 names(listing)
 
-# write_sav(households, './respondent/households.sav')
+ write_sav(households, './dataset/households.sav')
 # write_sav(listing, './respondent/members.sav')
-# write_sav(k2, './respondent/k2.sav')
+ write_sav(k2, './dataset/k2.sav')
 
  households_wexpand <- households |> filter(!is.na(ind_weights))
  
@@ -537,7 +537,6 @@ downloadthis::download_this(
 )
 ```
 :::
-
 
 Characteristics of respondents
 
@@ -1147,12 +1146,11 @@ likert_plot_grouped <- function(df, grouped){
 ### Charts
 
 ::: panel-tabset
-
 ### Overall
 
 ::: panel-tabset
-
 ### Type 1
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1181,6 +1179,7 @@ p
 ```
 
 ### Type 2
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1190,11 +1189,10 @@ b2 <- likert_df('strata')
 
 likert_plot(b2)
 ```
-
 :::
 
-
 ### Community Type
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1205,6 +1203,7 @@ likert_plot_grouped(df, 'strata')
 ```
 
 ### Age Group
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1226,6 +1225,7 @@ likert_plot_grouped(df, 'ethnicity')
 ```
 
 ### Education Completed
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1236,6 +1236,7 @@ likert_plot_grouped(df, 'education')
 ```
 
 ### Worker Type
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -1244,12 +1245,10 @@ likert_plot_grouped(df, 'education')
 df <- likert_df('workertype_group')
 likert_plot_grouped(df, 'workertype_group')
 ```
-
 :::
 
-
-
 ### Tables
+
 ::: panel-tabset
 ### K2.1
 
@@ -1340,7 +1339,4 @@ ct_k2_avg() |>
 
 ```
 :::
-
-
 :::
-

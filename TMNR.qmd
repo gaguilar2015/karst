@@ -1432,7 +1432,7 @@ ct_single <- function(var){
 ct_gt <- function(table, tit, sub){
   
   
-  table |> 
+  table <- table |> 
     gt(rowname_col = 'Item') |> 
     tab_row_group(
       label = md('**Community Type**'),
@@ -1468,6 +1468,14 @@ ct_gt <- function(table, tit, sub){
   tab_options(
     table.font.size = '85%'
   )
+  
+  
+  gtsave(
+    table,
+    filename = paste0(str_sub(tit, 26), '.docx'),
+    path = './tables'
+  )
+  table
   
 }
 
@@ -2103,7 +2111,7 @@ households_wexpand |>
 
 df <- ct_multi_aggregate('k4')
 
-df |> 
+dfgtm <- df |> 
   select(-`1`) |> 
   ct_gt(
     tit = 'Tabulations for question K4',
@@ -2133,6 +2141,13 @@ df |>
     footnote = "Not Stated",
     locations = cells_column_labels(columns = `_999999`)
   )
+
+gtsave(
+  dfgtm,
+  './tables/k4.docx'
+)
+
+dfgtm
 
 ```
 :::
@@ -2267,7 +2282,7 @@ households_wexpand |>
 
 df <- ct_multi_aggregate('k7')
 
-df |> 
+dfgtm <- df |> 
   select(-`1`) |> 
   ct_gt(
     tit = 'Tabulations for question K7',
@@ -2305,6 +2320,13 @@ df |>
     footnote = "Not Stated",
     locations = cells_column_labels(columns = `_999999`)
   )
+
+gtsave(
+  dfgtm,
+  './tables/K7.docx'
+)
+
+dfgtm
 ```
 :::
 
@@ -2340,7 +2362,7 @@ df <- ct_multi_aggregate('k8__') |>
    .after = `_9`
   )
 
-df |> 
+dfgtm <- df |> 
   ct_gt(
     tit = 'Tabulations for question K8',
     sub = 'To your knowledge, what species of animals live in the Tapir Mountain Nature Reserve?'
@@ -2397,6 +2419,13 @@ df |>
     footnote = "Not Stated",
     locations = cells_column_labels(columns = `_999999`)
   ) 
+
+gtsave(
+  dfgtm,
+  './tables/K8.docx'
+)
+
+dfgtm
 ```
 :::
 
@@ -2544,7 +2573,7 @@ df |>
 
 df <- ct_multi_aggregate('k11') 
 
-df |> 
+dfgtm <- df |> 
   ct_gt(
     tit = 'Tabulations for question K11',
     sub = 'Have you personally noticed any of the following changes?'
@@ -2573,6 +2602,13 @@ df |>
     footnote = "Loss of soil or erosion",
     locations = cells_column_labels(columns = `_6`)
   ) 
+
+gtsave(
+  dfgtm,
+  './tables/K11.docx'
+)
+
+dfgtm
 
 ```
 :::
@@ -3517,7 +3553,7 @@ df |>
 
 df <- ct_multi_aggregate('a9') 
 
-df |> 
+dfgtm <- df |> 
   ct_gt(
     tit = 'Tabulations for question A9',
     sub = 'Do you dislike any of the following animals?'
@@ -3562,6 +3598,13 @@ df |>
     footnote = "Snakes",
     locations = cells_column_labels(columns = `_10`)
   )  
+
+gtsave(
+  dfgtm,
+  './tables/A9.docx'
+)
+
+dfgtm
 ```
 :::
 
@@ -4378,6 +4421,13 @@ df |>
     footnote = "Other",
     locations = cells_column_labels(columns = `_888888`)
   )   
+
+gtsave(
+  dfgtm,
+  './tables/P8.docx'
+)
+
+dfgtm
 ```
 
 ### Charts
