@@ -355,15 +355,57 @@ k2 <- k2 |>
 
 ```
 
+## **0. Executive Summary**
+
+**Overview:**
+
+BKHC's mission is to enhance TMNR's ecological value, promote sustainable development, and engage local communities in conservation efforts. The report underscores BKHC's multidisciplinary approach, combining scientific research, community involvement, and sustainable management practices.
+
+**Survey Objectives:**
+
+The KAP survey aims to assess community knowledge, attitudes, and practices regarding TMNR management. Specific objectives include understanding ecological awareness, identifying barriers to community involvement, providing actionable recommendations for sustainable management, and establishing a baseline for future interventions.
+
+**Survey Design:**
+
+Targeting adult populations in buffer communities, the survey employed probability sampling at the household level. Belize Analytics recognized the correlation within households and selected knowledgeable adult members to respond, ensuring accurate representation.
+
+**Recommendations:**
+
+The report offers a comprehensive set of recommendations aligned with survey findings:
+
+**Enhance Environmental Conservation Awareness:** Implement targeted awareness campaigns, collaborate with local leaders, and adapt communication methods based on community preferences.
+
+**Community Involvement in TMNR Management:**  Establish community forums, educational programs, and community-based monitoring systems. Encourage residents to actively report activities and contribute to conservation efforts.
+
+**Promote Positive Behavioral Changes:** Design behavior change communication campaigns  and implement incentive programs to encourage sustainable practices.
+
+**Improve Climate Change Education:** Address knowledge gaps through targeted educational campaigns, workshops, and seminars. Engage community leaders and influencers to promote accurate information on climate change.
+
+**Strengthen Knowledge about TMNR:** Develop informative materials, brochures, and signage. Establish partnerships with local media outlets to ensure consistent and widespread coverage.
+
+**Mitigate Wildlife Conflict:** Implement a community-based wildlife conflict resolution program. Establish a hotline for reporting conflicts and collaborate with local authorities to enforce regulations.
+
+**Promote Sustainable Agriculture:** Disseminate educational materials on sustainable agricultural practices. Collaborate with agricultural extension services and local experts to support farmers in adopting sustainable practices. Organize trainings and education.
+
+**Optimize Waste Disposal Practices:** Think about community-specific waste disposal initiatives. Conduct awareness campaigns on eco-friendly waste disposal methods and explore partnerships for affordable waste disposal services.
+
+**Utilize Diverse Media for Outreach:** Tailor communication strategies based on community media consumption habits. Collaborate with local influencers, maintain an active online presence, and expand social media efforts.
+
+**Monitor, Evaluate, and Adapt Engagement Initiatives:** Use data analytics to measure the impact of engagement initiatives. Foster an open feedback loop through surveys, feedback sessions, and community dialogues to ensure continuous improvement.
+
+**Conclusion:**
+
+BKHC's commitment to transforming TMNR into a well-managed reserve, coupled with the proposed recommendations, sets the stage for a sustainable coexistence between the reserve and the surrounding buffer communities. The success of these initiatives relies on proactive community engagement, adaptive strategies, and a shared commitment to ecological stewardship. As BKHC moves forward, the organization aims to be a model for holistic conservation efforts nationwide.
+
 ## 1. Introduction and Background
 
 ### 1.1 Overview
 
-The Belize Karst Habitat Conservation (BKHC) is in charge of co-managing the Tapir Mountain National Reserve (TMNR), which is currently perceived as a "paper park" due to a historical absence of proper management. To enact change and convert TMNR into a proper reserve, one that is protected for its ecological value and other benefits, BKHC is seeking to conduct a KAP survey in the buffer communities of the TMNR in order to assess the knowledge, attitudes and practices of the people of these communities. This will allow for the effective planning, implementation and evaluation of future interventions. The end goal is to improve community awareness and practices in order to achieve a more sustainable management of the TMNR to increase its overall function, protection and coverage, while providing value to the surrounding communities.
+The Belize Karst Habitat Conservation (BKHC) is in charge of co-managing the Tapir Mountain National Reserve (TMNR), which was previously perceived as a “paper park” due to a historical absence of proper management. To enact change and convert TMNR into a proper reserve, one that is protected for its ecological value and other benefits, BKHC is seeking to conduct a KAP survey in the buffer communities of the TMNR in order to assess the knowledge, attitudes and practices of the people of these communities. This will allow for the effective planning, implementation and evaluation of future interventions. The end goal is to improve community awareness and practices in order to achieve a more sustainable management of the TMNR to increase its overall function, protection and coverage, while providing value to the surrounding communities.
 
-The Tapir Mountain Nature Reserve (TMNR) is a vital ecosystem located in Belize, co-managed by the Belize Karst Habitat Conservation (BKHC) and the Government of Belize. The BKHC, funded by the Protected Areas Conservation Trust (PACT), aims to enhance TMNR's ecological value while promoting sustainable development through improved management, community engagement, and financial sustainability. The reserve spans a reasonable area, but the buffer zone expands across several communities. This reserve provides a sanctuary for a variety of plant and animal species. Notably, the name "Tapir Mountain" reflects the presence of tapirs, a key species in Belizean ecosystems. 
+The Tapir Mountain Nature Reserve (TMNR) is a vital ecosystem located in Belize, co-managed by the Belize Karst Habitat Conservation (BKHC) and the Government of Belize. The BKHC, funded by the Protected Areas Conservation Trust (PACT), aims to enhance TMNR’s ecological value while promoting sustainable development through improved management, community engagement, and financial sustainability. The reserve spans a reasonable area, but the buffer zone expands across several communities. This reserve provides a sanctuary for a variety of plant and animal species. Notably, the name “Tapir Mountain” reflects the presence of tapirs, a key species in Belizean ecosystems. 
 
-BKHC's role in managing the Tapir Mountain Nature Reserve extends beyond traditional conservation measures. The organization actively engages in scientific research, employing a multidisciplinary approach to understand the complex dynamics of Karst environments. Through studies on flora, fauna, and geological formations, BKHC contributes valuable insights that inform conservation strategies and enhance the scientific understanding of these unique ecosystems. 
+BKHC’s role in managing the Tapir Mountain Nature Reserve extends beyond traditional conservation measures. The organization actively engages in scientific research, employing a multidisciplinary approach to understand the complex dynamics of Karst environments. Through studies on flora, fauna, and geological formations, BKHC contributes valuable insights that inform conservation strategies and enhance the scientific understanding of these unique ecosystems. 
 
 Additionally, BKHC places a strong emphasis on community involvement and education. Recognizing the importance of local communities in the success of conservation initiatives, the organization collaborates with residents in the vicinity of TMNR. By fostering community partnerships, BKHC strives to build a shared sense of responsibility and awareness, aiming to create a harmonious coexistence between human activities and environmental preservation. 
 
@@ -377,9 +419,9 @@ To achieve these goals, a Knowledge, Attitude, and Practices (KAP) survey is pro
 
 2.  Identify barriers and opportunities for community involvement in TMNR management.
 
-3.  To provide recommendations on actions and strategies that the BKHC can undertake in order to promote sustainable management of the TMNR and increase community awareness, engagement, attitudes and practices.
+3.  Provide recommendations on actions and strategies that the BKHC can undertake in order to promote sustainable management of the TMNR and increase community awareness, engagement, attitudes and practices.
 
-4.  To establish a baseline through which future interventions and strategies can be measured against.
+4.  Establish a baseline through which future interventions and strategies can be measured against.
 
 ## 2. Survey Design
 
@@ -479,11 +521,11 @@ It is important to caution against overgeneralizing survey findings to the entir
 
 Understand that knowledge, attitudes, and practices are dynamic and may change over time. The survey captures a snapshot of the community's status at a specific point, and findings should be interpreted considering potential fluctuations, social events or evolving trends. 
 
-### **2.6.1 Recommendations for Survey Design**
+### **2.6.2 Recommendations for Survey Design**
 
 **Consider Local Sensitivities and Diversify Data Collection Methods** 
 
-To improve survey item response rates and accuracy, it would be useful carefully consider the local perceptions. nuances and sensitivities associated with personal and potentially sensitive practices such as agricultural practices, hunting, and logging in the buffer communities. As expected, survey participants were more inclined to disclose information about sensitive activities undertaken by others in their community rather than admitting to such activities themselves. Therefore, future interventions can be tailored with this in mind, asking certain questions by proxy so that more realistic results can be obtained.  
+To improve survey item response rates and accuracy, it would be useful to carefully consider the local perceptions. nuances and sensitivities associated with personal and potentially sensitive practices such as agricultural practices, hunting, and logging in the buffer communities. As expected, survey participants were more inclined to disclose information about sensitive activities undertaken by others in their community rather than admitting to such activities themselves. Therefore, future interventions can be tailored with this in mind, asking certain questions by proxy so that more realistic results can be obtained.  
 
 Supplement Computer-Assisted Personal Interviewing (CAPI) with **key informant** **interviews**. This multi-method approach can provide richer insights in agricultural, social media, hunting and logging practices. Identifying and obtaining the participation of key informants presents its own set of limitations, however, it can be beneficial to capture nuanced community perspectives that may not be fully identified through standardized KAP surveys alone. This approach is vital for comprehending the knowledge, attitudes, and practices prevalent within the population. 
 
@@ -656,6 +698,12 @@ head_ind_descriptives2 <- head_descriptives2 |>
     table.font.size = '85%'
   )
 
+  gtsave(
+    head_ind_descriptives2,
+    filename = paste0(str_sub('descriptives'), '.docx'),
+    path = './tables'
+  )
+  
 head_ind_descriptives2
 
 ```
@@ -696,7 +744,7 @@ Regarding the ***wildlife*** inhabiting TMNR, **tapirs** (76.5%), **jaguars** (6
 
 #### 3.4.1 Attitude towards conservation efforts, climate change, and sustainable development
 
-As it relates to attitudes towards the environment, people generally report positive attitudes and a healthy concern for environmental issues, as the rest of this section will show. However, when it comes to matters that personally affect residents, attitudes veer in the direction of self-interest. For example, about 47% of persons believe that "*establishing protected areas is bad*", if it is done in land that might be of economic use by the residents of the community. This sentiment was shared amongst all different groups of people, though there were some small differences worth noting. For example, persons with education "Secondary or higher" were more likely to disagree with the statement that establishing protecting areas is bad. Persons from "Other" ethnicities, which includes Mennonite persons, were also less likely to agree with the statement. Persons who agreed with the statement at a higher frequency than others include persons with "Primary" education level and persons of "Mestizo/Hispanic/Latino" ethnicity.  
+As it relates to attitudes towards the environment, people generally report positive attitudes and a healthy concern for environmental issues, as the rest of this section will show. However, when it comes to matters that personally affect residents, attitudes veer in the direction of self-interest. For example, about 47% of persons believe that "*establishing protected areas is bad*", if it is done in land that might be of economic use by the residents of the community. This sentiment was shared amongst all groups of people, though there were some small differences worth noting. For example, persons with education "Secondary or higher" were more likely to disagree with the statement that establishing protected areas is bad. Persons from "Other" ethnicities, which includes Mennonite persons, were also less likely to agree with the statement. Persons who agreed with the statement at a higher frequency than others include persons with "Primary" education level and persons of "Mestizo/Hispanic/Latino" ethnicity.  
 
 However, residents as a whole display a positive attitude towards conservation efforts. For instance, three quarters (76%) of persons agree that their community could benefit from "*a neighbourhood watch that reports forest fires, or wildlife hunting in the reserve and the surrounding communities*". Persons of "Other" ethnicities (which includes Mennonite persons) were less likely to agree, however, as were persons from Mennonite communities as a whole. Self-employed persons were also less likely to agree with the statement. This same pattern of responses was observed when respondents were asked if anyone in their household would be interested in joining the neighbourhood watch. Moreover, only 58% of persons believe that someone in their household would be interested in joining a fire task force.  
 
@@ -712,7 +760,7 @@ The survey placed a heavy emphasis on the different environmental concerns held 
 
 The first three concern items have to do with **waste disposal**, **water contamination** and **forest fires**. Of the first two, a​￼​bout half of respondents over 75% of persons reported being at least somewhat concerned, though there were relatively few cases of extremely concerned. In both cases, people also tend to perceive that this issue affects the TMNR more than it affects them personally. The levels of concern ramp up towards forest fires, however.  77% of persons report being at least somewhat concerned about first fires, and a significant 42% of all persons report being extremely concerned. This is notable because although less than half of persons (46%) believe that first forest affects them personally, over 4 in 5 people (83%) do believe it is an issue affecting the TMNR. The attitudes are consistent between groups, although persons from Mennonite communities tend to be concerned about waste disposal and water contamination at a higher frequency than those in Non-Mennonite communities. Conversely, those in Non-Mennonite communities are relatively more concerned about forest fires than those in Mennonite communities.  
 
-The next three concern items are **deforestation**, **soil erosion**, and **flooding**. Responses patterns were similar for deforestation and soil erosion. People tend to have lower levels of concern for these two items than for other items. However, once more, the majority of persons (\>75%) think that these issues affect the TMNR. On the other hand, flooding is an item that was of major significant concern for persons, to the extend that over 43% reported being extremely concerned. However, only 42% reported that floodings affect them personally. Among the different groups of people, persons in Non-ennonite communities were more likely to show concern about the three items, and particularly flooding. Creole persons also reported concern at a higher intensity than other ethnicities, particularly towards flooding.  
+The next three concern items are **deforestation**, **soil erosion**, and **flooding**. Responses patterns were similar for deforestation and soil erosion. People tend to have lower levels of concern for these two items than for other items. However, once more, the majority of persons (\>75%) think that these issues affect the TMNR. On the other hand, flooding is an item that was of major significant concern for persons, to the extend that over 43% reported being extremely concerned. However, only 42% reported that floodings affect them personally. Among the different groups of people, persons in Non-Mennonite communities were more likely to show concern about the three items, and particularly flooding. Creole persons also reported concern at a higher intensity than other ethnicities, particularly towards flooding.  
 
 The final four concern items were chemical **pesticides**, **drought**, **logging** and **hunting**. Of these items, chemical pesticides elicited the lowest levels of concern. Moreover, only 38% of respondents believe the issue affects them personally, and 68% believe it affects TMNR.  Conversely, drought was an issue that elicited high and intense levels of concern. 72% of all persons reported being at least somewhat concerned about droughts, and 45% reported being extremely concerned. A bit over half of respondents (55%) believe that droughts affect them personally, and 78% believe it affects the TMNR. Logging and hunting were interesting issues of concern. People report concern for these items at relatively low levels, and these two items are the two least likely to affect respondents personally. At the same time, these two issues were the ones reported to affect TMNR the most. Around 88% of all persons believe that logging and hunting of wildlife are issues that affect TMNR.  
 
@@ -790,63 +838,83 @@ Overall, the item that the higher number of persons responded positively to was 
 
 Between the different groups of people, persons from Mennonite communities expressed overall lower levels of enthusiasm towards the engagement items. However, there was one item (item iv, training workshops), where their likeliness (57%) surpassed those of Non-Mennonite communities (53%). This indicates that persons in Mennonite communities, who predominantly engage in farming, are more interested in practical, hands-on approaches, as opposed to other types of media-centric engagement.
 
-### Future Actions Desired By Household To Be Facilitated By KARST
+### **3.5.5 Desired Activities from Belize KARST by the Community**
 
-Soon...
+As the final question in the survey instruments, respondents were asked “What are some environmental activities or projects that you would like to see done in your community?”. The responses were varied, reflecting the pressing needs of the communities as well as their lack of understanding as to the role and mandate of Belize Karst Habitat Conservation. For example, common responses included:
+
+-   Proper garbage disposal
+
+-   Fixing the streets
+
+-   Educating kids and the public
+
+-   Water supply
+
+-   Establishing more community parks and recreational areas
+
+Out of all of these needs, the most directly addressable would be those relating to education. The other comments might not be implementable directly by BKHC but do reflect the needs of the buffer communities. The full list of comments can be observed in the Microdataset.
 
 ## 4. Recommendations
 
 ### 4.1 Enhance Environmental Conservation Awareness:
 
-To address the lower rate of awareness in communities, it is important to implement targeted awareness campaigns. These initiatives should be carefully designed and should incorporate community workshops, involvement of local leaders to deliver informative sessions, and the distribution of educational materials in accessible formats. A key aspect of this strategy involves collaboration with local educational institutions to integrate environmental conservation topics into school curricula, ensuring that future generations are equipped with a strong understanding of the importance of conservation. Furthermore, adapting communication methods to the ones most commonly used by persons of the target populations. As per the survey results, Non-Mennonite communities should be targeted through **Social Media**, the **Internet** and **Television**. Mennonite communities should be targeted primarily via **radio** and the **Internet**, which may include social media.
+To address the lower rate of awareness in communities, it is important to implement targeted awareness campaigns. These initiatives should be carefully designed and should incorporate community workshops, involvement of local leaders to deliver informative sessions, and the distribution of educational materials in accessible formats. This can include pamphlets and brochures that address environmental topic where there are awareness gaps, as well as topics and themes deemed suitable by BKHC. 
+
+Furthermore, it is important to adapt communication methods to the ones most commonly used by persons of the target populations. As per the survey results**, Non-Mennonite communities** should be targeted through Social Media, the Internet and Television. **Traditional Mennonite communities** should instead be targeted through community leaders, community forums, and printed media. Persons living in **Mennonite-adjacent communities** such as El Progresso and 7 Miles reported listening to radio at high rates..
+
+Lack of environmental awareness also reflects a possibly weak educational curricula in conservation and environmental topics. Collaborating with schools to either strengthen curricula or having open days and events to educate students would be a great initiative.
 
 ### 4.2 Community Involvement in TMNR Management
 
-Establishing community forums or village meetings presents an opportunity to actively involve residents in discussions about the benefits and opportunities related to the management of the Tapir Mountain Nature Reserve (TMNR). These forums can serve as platforms to address concerns, gather insights, and build a collaborative approach. Educational programs, workshops, and training sessions are essential for empowering community members with the knowledge and skills necessary for meaningful participation in TMNR management. Over 58% of all persons reported willingness of engaging in educational campagins by BKHC. Furthermore, persons in Mennonite communities showed a high willingness towards participating in workshops and trainings organized by the BKHC, which indicates enthusiasm towards practical, hands-on approaches and management.
+Establishing community forums or village meetings presents an opportunity to actively involve residents in discussions about the benefits and opportunities related to the management of the Tapir Mountain Nature Reserve (TMNR). These forums can serve as platforms to address concerns, gather insights, and build a collaborative approach. Educational programs, workshops, and training sessions are essential for empowering community members with the knowledge and skills necessary for meaningful participation in TMNR management. Over 58% of all persons reported willingness of engaging in educational campaigns by BKHC. Furthermore, persons in Mennonite communities showed a high willingness towards participating in workshops and trainings organized by the BKHC, which indicates enthusiasm towards practical, hands-on approaches and management.
 
-In addition, implementing community-based monitoring systems will encourage residents to actively report activities such as forest fires or wildlife hunting, fostering a sense of shared responsibility and contributing to the overall success of conservation efforts. Almost three-quarters of all persons reported willingness to join commuinty neighbourhood watches, and over half expressed willingness for their household to join a fire taskforce.
+In addition, implementing community-based monitoring systems will encourage residents to actively report activities such as forest fires or wildlife hunting, fostering a sense of shared responsibility and contributing to the overall success of conservation efforts. Almost three-quarters of all persons reported willingness to join community neighbourhood watches, and over half expressed willingness for their household to join a fire taskforce.
 
 ### 4.3 Promote Positive Behavioral Changes
 
-Designing behavior change communication and educational campaigns is crucial to emphasize the positive impact of sustainable practices on both the community's well-being and the ecological health of TMNR. Collaborating with local influencers, leaders, and community organizations can amplify the reach and effectiveness of these campaigns. Implementation of incentive programs, such as recognition or small rewards, creates a positive feedback loop, encouraging individuals and households to adopt and maintain sustainable behaviors. These initiatives collectively contribute to building a culture of environmental stewardship within the community. 
+Designing behaviour change communication and educational campaigns is crucial to emphasize the positive impact of sustainable practices on both the community’s well-being and the ecological health of TMNR. Collaborating with local influencers, leaders, and community organizations can amplify the reach and effectiveness of these campaigns. Implementation of incentive programs, such as recognition or small rewards, creates a positive feedback loop, encouraging individuals and households to adopt and maintain sustainable behaviours. 
+
+For example, if there is evidence that there is illegal hunting, logging or extraction from the reserve, then it is important to highlight why these activities are detrimental not only to the TMNR but to the surrounding communities. Consider creating an incentive program for those who report on these activities. 
+
+These initiatives collectively contribute to building a culture of environmental stewardship within the community.
 
 ### 4.4 Improve Climate Change Education
 
-Addressing knowledge gaps identified in the survey requires the development of targeted educational campaigns. These campaigns should focus on specific climate-related environmental impacts, ensuring that the information is accessible and relevant to diverse community members. For example, the proportion of persons who are familiar with climate change and its effects can be improved still. More importantly, many people are skeptical about the role of humans in climate change, even if they recognize climate change as a pressing issue. This sentiment should be addressed before it grows roots, as it has done in many areas of the world, fueled by political polarization and economic interests.
+Addressing knowledge gaps identified in the survey requires the development of targeted educational campaigns. These campaigns should focus on specific climate-related environmental impacts, ensuring that the information is accessible and relevant to diverse community members. For example, the proportion of persons who are familiar with climate change and its effects can be improved still. More importantly, many people are skeptical about the role of humans in climate change, even if they recognize climate change as a pressing issue. This sentiment should be addressed before it grows roots, as it has done in many areas of the world, fuelled by political polarization and economic interests.
 
-Once again, BKHC sould consider collaboration with local schools and community centers to organize workshops and seminars on climate change and its implications. Engaging community leaders and influencers to promote accurate information through various channels, including social media and community events, enhances the overall understanding and awareness of climate change within the community. 
+Once again, BKHC should consider collaboration with local schools and community centers to organize workshops and seminars on climate change and its implications. Engaging community leaders and influencers to promote accurate information through various channels, including social media and community events, enhances the overall understanding and awareness of climate change within the community. If persons do not believe that human activities negatively impact local and worldwide weather, climate and environmental conditions, this can lead to the persistence of practices detrimental to the TMNR and buffer communities.
 
 ### 4.5 Strengthen Knowledge about TMNR
 
-Implementing targeted awareness campaigns will go far in increasing knowledge about the Tapir Mountain Nature Reserve's boundaries, management entities, and responsibilities. Developing informative materials, brochures, and signage within and around TMNR provides clear information about its significance and management. Areas where persons are particularly lacking in knowledge include the boundaries of the park, the wildlife that inhabit it, the activities allowed within the reserve, and the benefits obtained from the reserve.
+Implementing targeted awareness campaigns will go far in increasing knowledge about the Tapir Mountain Nature Reserve’s boundaries, management entities, and responsibilities. Developing informative materials, brochures, and signage within and around TMNR provides clear information about its significance and management. Areas where persons are particularly lacking in knowledge include the boundaries of the park, the wildlife that inhabit it, the activities allowed within the reserve, and the benefits obtained from the reserve.
 
-Establishing partnerships with local media outlets ensures consistent and widespread coverage, reinforcing the importance of TMNR in the community's collective consciousness. These efforts contribute to creating a well-informed community that actively participates in the preservation of this vital natural resource. 
+Establishing partnerships with local media outlets ensures consistent and widespread coverage, reinforcing the importance of TMNR in the community’s collective consciousness. These efforts contribute to creating a well-informed community that actively participates in the preservation of this vital natural resource. 
 
-Signage should be considered at strategic places within buffer communities, which highlight and illustrate the boundaries of the park, outlines prohibited activities, and lists wildlife species endmeic to the reserve.
+Signage should be considered at strategic places within buffer communities, which highlight and illustrate the boundaries of the park, outlines prohibited activities, and lists wildlife species endemic to the reserve.
 
 ### 4.6 Mitigate Wildlife Conflict
 
-Establishing a community-based wildlife conflict resolution program can prove pivotal in providing resources and support to individuals encountering conflicts with wildlife. Conducting workshops and training sessions on non-lethal methods for mitigating human-wildlife conflicts educates residents on effective and humane strategies. Collaborating with local authorities to enforce regulations against harmful practices like poisoning or hunting wildlife in response to conflicts ensures a holistic approach to wildlife management. These initiatives aim to strike a balance between human activities and wildlife conservation within the community. 
+Overall, persons did not report frequent conflict with wildlife. Additionally, most persons are willing to report at most scare the animals involved in conflicts. Still, a small percentage admits to being willing to poison or kill wildlife in case of conflicts. Conducting workshops and training sessions on non-lethal methods for mitigating human-wildlife conflicts should educate residents on effective and humane strategies for dealing with unwanted encounters. Consider liaising with relevant and local authorities to enforce regulations against harmful practices like poisoning or hunting wildlife in response to conflicts. These initiatives aim to strike a balance between human activities and wildlife conservation within the community. 
 
-In particular, a hotline for reporting conflicts should be established, so that rangers or other personnel can be available to provide guidance in resolving the conflicts. It is possible that neighbourhood watch initiatives and this wildlife conflict iniative can be coalesced into a single channel, if BKHC deems this practical.
+In particular, a hotline for reporting conflicts should be established, so that rangers or other personnel can be available to provide guidance in resolving the conflicts. It is possible that neighbourhood watch initiatives and this wildlife conflict initiative can be coalesced into a single channel, if BKHC deems this practical.
 
 ### 4.7 Promote Sustainable Agriculture
 
-Developing and disseminating educational materials on sustainable agricultural practices is essential for promoting environmentally friendly farming techniques. Facilitating workshops and training sessions on sustainable farming, with an emphasis on improved crop production methods and biological pest control, will empower farmers to adopt more sustainable practices. The majoirty of persons who are involved in agriculture already expressed their willigness towards learning these new, sustainable practices.
+Developing and disseminating educational materials on sustainable agricultural practices will prove essential for promoting environmentally friendly farming techniques. Facilitating workshops and training sessions on sustainable farming, with an emphasis on improved crop production methods and biological pest control, will empower farmers to adopt more sustainable practices. The majority of persons who are involved in agriculture already expressed their willingness towards learning these new, sustainable practices.
 
-Collaborating with agricultural extension services, such as the University of Belize and other related organizations, as well as local experts, may provide ongoing support and guidance, fostering a community of farmers dedicated to sustainable agriculture. These initiatives will contribute to the long-term ecological health of the community and the surrounding areas. 
+Collaborating with agricultural extension services, such as the University of Belize and other related organizations, as well as local experts, may provide ongoing support and guidance, fostering a community of farmers dedicated to sustainable agriculture. These initiatives will contribute to the long-term ecological health of the community and the surrounding areas.
 
 ### 4.8 Optimize Waste Disposal Practices
 
-BKHC may consider implementing or at least promoting community-specific waste disposal initiatives. Considering the availability of municipal services and the unique characteristics of Mennonite and non-Mennonite communities, is crucial. Conducting awareness campaigns on the environmental impact of open burning and promoting alternative, eco-friendly waste disposal methods encourages responsible waste management practices. Exploring partnerships with local businesses or organizations to provide affordable waste disposal services, particularly in areas with limited access to municipal services, will help ensure that waste is managed in an environmentally conscious manner.
+BKHC may consider implementing or at least promoting community-specific waste disposal initiatives. Considering the availability of municipal services and the unique characteristics of Mennonite and non-Mennonite communities, is crucial. Conducting awareness campaigns on the environmental impact of open burning and promoting alternative, eco-friendly waste disposal methods encourage responsible waste management practices. Exploring partnerships with local businesses or organizations to provide affordable waste disposal services, particularly in areas with limited access to municipal services, will help ensure that waste is managed in an environmentally conscious manner.
 
 These efforts contribute to minimizing the ecological footprint of the community and will reduce the negative impacts of pollution and contamination on the TMNR.
 
 ### 4.9 Utilize Diverse Media for Outreach
 
-Tailoring communication strategies based on the preferred media consumption habits of different communities, including social media, radio, television, and the internet, is essential. Collaborating with local influencers and media personalities to deliver key messages will resonate with community members and will enhace the levels of cultural relevance and resonance.A
+Tailoring communication strategies based on the preferred media consumption habits of different communities, including social media, radio, television, and print publication, is essential. Collaborating with local influencers and media personalities to deliver key messages can resonate with certain sections of the communities. For other communities, such as traditional Mennonite ones, it is important to design outreach in a way that is compatible with and respectful of their beliefs and practices. During the survey activities, Mennonite communities and households were usually warm and welcoming to the survey team, so it is important not to ignore these communities bur rather build a rapport and collaborative relationship.
 
-After designing an effective outreach and communication strategy, regularly updating and maintaining a dynamic online presence is important. The BKHC website is an excellent platform for information access about TMNR, conservation efforts, and community engagement initiatives. To maximize exposure, awareness and ensure that the communities stay informed, it will also be useful to expand and double down on social media presence and efforts. In addition to just establishing social media pages on Facebook, Instagram, TikTok and Youtube, it is important to promote these pages through advertisements and campaigns. As it relates to digital ads, graphics and even videos can be developed and ads might be purchased on Facebook or Google to maximize outreach. Raffles, giveaways, community drives and "Influencer" help will also greatly enhance exposure of the organization and its media.
+After designing an effective outreach and communication strategy, regularly updating and maintaining a dynamic online presence is important. The BKHC website is an excellent platform for information access about TMNR, conservation efforts, and community engagement initiatives. To maximize exposure, awareness and ensure that the communities stay informed, it will also be useful to expand and double down on social media presence and efforts. In addition to just establishing social media pages on Facebook, Instagram, TikTok and Youtube, it is important to promote these pages through advertisements and campaigns. As it relates to digital ads, graphics and even videos can be developed and ads might be purchased on Facebook or Google to maximize outreach. Raffles, giveaways, community drives and “Influencer” help will also greatly enhance exposure of the organization and its media.
 
 These efforts collectively contribute to effective outreach and engagement across diverse media platforms and to better inform and engage the community.
 
@@ -854,13 +922,17 @@ These efforts collectively contribute to effective outreach and engagement acros
 
 Monitoring and assessing the effectiveness of engagement initiatives through surveys, feedback sessions, and ongoing community dialogues is crucial. Utilizing data analytics to measure the reach and impact of social media campaigns enables the organization to adapt strategies based on audience engagement. Fostering an open feedback loop, encouraging community members to express their opinions, suggestions, and concerns about conservation efforts and engagement programs, ensures a continuous improvement cycle.
 
-Practically, these might be implemented through satisfaction surveys developed on Google Forms and disseminated via the BKHC website and social media pages. Purchasing Facebook and especially Google ads will also provide access to analytics relating to outreach. Google Analtyics is aplatform that may be implemented into the BKHC website and social media pages in order to better understand the reach and characteristics of those engaging with TMNR media. Community forums or town halls should be useful in providing direct feedback from those in the target communities.
+Practically, these might be implemented through satisfaction surveys developed on Google Forms and disseminated via the BKHC website and social media pages. Purchasing Facebook and especially Google ads will also provide access to analytics relating to outreach. Google Analytics is a platform that may be implemented into the BKHC website and social media pages in order to better understand the reach and characteristics of those engaging with TMNR media. Community forums or town halls should be useful in providing direct feedback from those in the target communities.
 
-These evaluation and adaptation mechanisms contribute to the ongoing success and relevance of community engagement initiatives. 
+These evaluation and adaptation mechanisms contribute to the ongoing success and relevance of community engagement initiatives.
 
 ## 5. Conclusion
 
-Coming soon...
+The Belize Karst Habitat Conservation's efforts to transform the Tapir Mountain Nature Reserve (TMNR) into a properly managed nature reserve are marked by a comprehensive approach that combines scientific research, community engagement, and sustainable management practices. The Knowledge, Attitude, and Practices (KAP) survey conducted in the buffer communities surrounding TMNR represents a critical step towards achieving this goal.
+
+The survey has unearthed valuable insights into the perceptions, knowledge, and practices of the local population, forming a solid foundation for strategic interventions. The recommendations provided encompass a spectrum of initiatives, from targeted environmental awareness campaigns and community forums to wildlife conflict resolution programs and training and education on sustainable agriculture practices. Notably, the emphasis on tailored communication strategies, diverse media outreach, and continuous monitoring and adaptation mechanisms highlight the efforts towards inclusivity, relevance, and the long-term success of the conservation efforts.
+
+The effective implementation of the outlined recommendations, combined with the expert knowledge and experience of the BKHC staff, can serve as a foundational step towards data-driven, evidence-based conservation strategies. Through these targeted actions, the organization can catalyze positive behavioral changes, enhance community awareness, and establish a shared responsibility for the preservation of TMNR.
 
 ## 6. Tables and Figures
 
